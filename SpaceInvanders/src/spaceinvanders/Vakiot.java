@@ -6,11 +6,8 @@ package spaceinvanders;
 
 /**
  *
- * @author lode
+ * @author Larppa
  */
-public abstract class objekti {
-    public abstract int setHp();
-    public abstract int getHp();
-    
+public class Vakiot {
     
 }
