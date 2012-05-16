@@ -14,7 +14,11 @@ public class Kuti extends Objekti {
 
     public Kuti() {
     }
-
+/**
+     * Luo ammuksen. 
+     * @param keskitysKorkeus Ammus lähtee pelaajan aluksen keskeltä
+     * @param keskitysLeveys Ammus lähtee pelaajan aluksen keskeltä
+     */
     public Kuti(int x, int y) {
 
         ImageIcon ii = new ImageIcon(this.getClass().getResource(ammus));

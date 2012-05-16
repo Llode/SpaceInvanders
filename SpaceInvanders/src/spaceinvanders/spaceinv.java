@@ -9,6 +9,9 @@ import javax.swing.JFrame;
  * @author Larppa
  */
 public class spaceinv extends JFrame implements Asetukset{
+    /**
+     * Peli-ikkunan asetukset.
+     */
     public spaceinv(){    
     add(new Kentta());
         setTitle("Space Invanders");
@@ -16,6 +19,6 @@ public class spaceinv extends JFrame implements Asetukset{
         setSize(RuudunLeveys, RuudunKorkeus);
         setLocationRelativeTo(null);
         setVisible(true);
-        setResizable(true);
+        setResizable(false);
 }
 }
