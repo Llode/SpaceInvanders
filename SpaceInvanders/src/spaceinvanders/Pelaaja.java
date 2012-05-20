@@ -12,9 +12,7 @@ import javax.swing.ImageIcon;
  * @author Larppa
  */
 public class Pelaaja extends Objekti implements Asetukset {
-/**
-     * @param aloitus_x pelaajan aloituspiste x-akselilla
-     */
+
     private final int aloitus_x = 250;
     private final int aloitus_y = 100;
     private final String pelaaja = "../res/alus.png";
