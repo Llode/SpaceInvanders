@@ -63,7 +63,10 @@ public class Objekti {
     public int getY() {
         return y;
     }
-
+/**
+     * 
+     * @param kuolee 
+     */
     public void setKuolee(boolean kuolee) {
         this.kuolee = kuolee;
     }

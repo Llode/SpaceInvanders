@@ -14,13 +14,13 @@ import static org.junit.Assert.*;
  *
  * @author Larppa
  */
-public class spaceinvTest {
-    spaceinv SpaceInvanders;
-    public spaceinvTest() {
+public class KutiTest {
+    
+    Objekti kuti;
+    public KutiTest() {
+        kuti = new Kuti();
     }
-public void setUp(){
-    SpaceInvanders = new SpaceInvanders();
-}
+
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
@@ -39,8 +39,6 @@ public void setUp(){
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
-     @Test
-     public void GrafiikkaToimii(){
-         
-}
+    // @Test
+    // public void hello() {}
 }
