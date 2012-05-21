@@ -4,6 +4,8 @@
  */
 package spaceinvanders;
 
+import Kayttoliittymat.Spaceinv;
+
 /**
  *
  * @author lode
@@ -11,6 +13,9 @@ package spaceinvanders;
 public class SpaceInvanders {
 
     public static void main(String[] args) {
-        spaceinv spainv = new spaceinv();
+        Pelimoottori moottori = new Pelimoottori();
+        Spaceinv kayttoliittyma = new Spaceinv(moottori);
+        kayttoliittyma.run();
+        Spaceinv spainv = new Spaceinv();
     }
 }

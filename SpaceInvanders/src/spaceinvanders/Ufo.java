@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 public class Ufo extends Objekti {
 
     private UfoKuti kuti;
-    private final String ammus = "../res/kuti.png";
+    private final String ammus = "SpaceInvanders/res/kuti.png";
     
     public Ufo(int x, int y){
         this.x = x;

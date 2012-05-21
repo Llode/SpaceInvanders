@@ -2,17 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package spaceinvanders;
+package Kayttoliittymat;
+import Kayttoliittymat.Kentta;
 import javax.swing.JFrame;
+import spaceinvanders.Asetukset;
 /**
  *
  * @author Larppa
  */
-public class spaceinv extends JFrame implements Asetukset{
+public class Spaceinv extends JFrame implements Asetukset{
     /**
      * Peli-ikkunan asetukset.
      */
-    public spaceinv(){    
+    public Spaceinv(){    
     add(new Kentta());
         setTitle("Space Invanders");
         setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -9,16 +9,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import spaceinvanders.Ufo;
 
 /**
  *
  * @author Larppa
  */
-public class KutiTest {
+public class UfoTest {
     
-    Objekti kuti;
-    public KutiTest() {
-        kuti = new Kuti();
+    Ufo ufo;
+    double vertailutarkkuus = 0.0001;
+
+    public UfoTest() {
+
     }
 
     @BeforeClass
@@ -31,14 +34,21 @@ public class KutiTest {
     
     @Before
     public void setUp() {
+        ufo = new Ufo(50, 50);
     }
     
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void UfoLiikkuuKunSuuntaOnVasempaan(){
+        ufo.liikkuu(-1);
+        assertEquals(49, ufo.getX(), vertailutarkkuus);
+    }
+    @Test
+    public void UfoLiikkuuKunSuuntaOnOikeaan(){
+        ufo.liikkuu(1);
+        assertEquals(51, ufo.getX(), vertailutarkkuus);
+    }
 }

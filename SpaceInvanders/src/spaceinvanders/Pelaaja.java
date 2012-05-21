@@ -15,25 +15,29 @@ public class Pelaaja extends Objekti implements Asetukset {
 
     private final int aloitus_x = 250;
     private final int aloitus_y = 100;
-    private final String pelaaja = "../res/alus.png";
+    private final String pelaaja = "SpaceInvanders/res/alus.png";
     private int leveys;
 
-    /**Luo pelaajan aluksen kuvan
+    /**
+     * Luo pelaajan aluksen kuvan
+     *
      * @param aloitus_x pelaajan aloituspiste x-akselilla
      * @param aloitus_y pelaajan aloituspiste y-akselilla
      * @param leveys pelaajan aluksen leveys
      */
     public Pelaaja() {
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaaja));
-
-        leveys = ii.getImage().getWidth(null);
-
-        setImage(ii.getImage());
         setX(aloitus_x);
         setY(aloitus_y);
     }
-/**
-     * Liikuttaa pelaajan alusta. Alus ei pääse koordinaatiston (ruudun) 
+
+    public void asetaKuva() {
+        ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaaja));
+        leveys = ii.getImage().getWidth(null);
+        setImage(ii.getImage());
+    }
+
+    /**
+     * Liikuttaa pelaajan alusta. Alus ei pääse koordinaatiston (ruudun)
      * ulkopuolelle.
      */
     public void liikkuu() {
@@ -45,8 +49,10 @@ public class Pelaaja extends Objekti implements Asetukset {
             x = RuudunLeveys - 2 * leveys;
         }
     }
-/**
+
+    /**
      * Alus liikkuu, kun nuolinäppäimiä painetaan.
+     *
      * @param e hakee painettavan näppäimen tunnuksen
      */
     public void keyPressed(KeyEvent e) {
@@ -59,9 +65,11 @@ public class Pelaaja extends Objekti implements Asetukset {
             liike = 2;
         }
     }
-/**
+
+    /**
      * Alus pysähtyy, kun liikenapeista päästetään irti.
-     * @param e 
+     *
+     * @param e
      */
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
