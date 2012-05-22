@@ -17,6 +17,9 @@ public class Ufo extends Objekti {
         this.x = x;
         this.y = y;
         
+        kuti = new UfoKuti(x, y);
+        ImageIcon ii = new ImageIcon(this.getClass().getResource(ammus));
+        setImage(ii.getImage());
     }
     /**
      * Liikuttaa ufoa.
@@ -25,6 +28,12 @@ public class Ufo extends Objekti {
      */
     public void liikkuu(int suunta){
         this.x += suunta;
+    }
+    /**
+     * Metodia kutsutaan, kun ufo ampuu pelaajaa.
+     */
+    public UfoKuti getUfoKuti() {
+        return kuti;
     }
     
 }

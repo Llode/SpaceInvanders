@@ -40,7 +40,7 @@ public class Pelaaja extends Objekti implements Asetukset {
      * Liikuttaa pelaajan alusta. Alus ei pääse koordinaatiston (ruudun)
      * ulkopuolelle.
      */
-    public void liikkuu() {
+    public void liiku() {
         x += liike;
         if (x <= 2) {
             x = 2;

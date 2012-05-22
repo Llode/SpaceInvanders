@@ -51,7 +51,7 @@ public class PelaajaTest {
     }
     @Test
     public void alusLiikkuuKunLiikeMuutuu(){
-        pelaaja.liikkuu();
+        pelaaja.liiku();
         assertEquals(252, pelaaja.getX(), vertailutarkkuus);
     }
 }

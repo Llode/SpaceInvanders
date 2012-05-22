@@ -10,7 +10,7 @@ import Kayttoliittymat.Spaceinv;
  *
  * @author lode
  */
-public class SpaceInvanders {
+public class SpaceInvanders implements Runnable{
 
     public static void main(String[] args) {
         Pelimoottori moottori = new Pelimoottori();

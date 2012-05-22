@@ -4,23 +4,27 @@
  */
 package Kayttoliittymat;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Random;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
+import spaceinvanders.Pelimoottori;
 import spaceinvanders.Asetukset;
 
-public class Kentta extends JPanel implements Asetukset, Runnable {
-
+/**
+ *
+ * @author Larppa
+ */
+public class Kentta extends JPanel implements Asetukset{
     private Dimension d;
-
-    public Kentta() {
+    
+    public Kentta(){
         setFocusable(true);
         d = new Dimension(RuudunLeveys, RuudunKorkeus);
         setBackground(Color.black);
-
-    }
-
-    public void run() {
+        
+        Pelimoottori.Logiikka();
     }
 }
