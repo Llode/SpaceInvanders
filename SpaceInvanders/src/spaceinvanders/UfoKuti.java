@@ -22,11 +22,11 @@ public class UfoKuti extends Objekti {
         setImage(ii.getImage());
     }
     
-    public void setKuolee(boolean tuhoutuu) {
+    public void setKutiTuhoutuu(boolean tuhoutuu) {
         this.tuhoutuu = tuhoutuu;
     }
     
-    public boolean Kuolee() {
+    public boolean kutiTuhoutuu() {
         return tuhoutuu;
     }
 }

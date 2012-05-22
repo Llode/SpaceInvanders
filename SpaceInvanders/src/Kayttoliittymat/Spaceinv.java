@@ -12,12 +12,12 @@ import spaceinvanders.Asetukset;
  *
  * @author Larppa
  */
-public class Spaceinv extends JFrame implements Asetukset {
+public class Spaceinv extends JFrame implements Asetukset, Runnable {
 
     /**
      * Peli-ikkunan asetukset.
      */
-    public Spaceinv() {
+    public Spaceinv(Pelimoottori moottori) {
         add(new Pelimoottori());
         setTitle("Space Invanders");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -25,5 +25,8 @@ public class Spaceinv extends JFrame implements Asetukset {
         setLocationRelativeTo(null);
         setVisible(true);
         setResizable(false);
+    }
+
+    public void run() {
     }
 }
