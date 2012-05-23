@@ -9,24 +9,21 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import spaceinvanders.Ufo;
+import spaceinvanders.Kuti;
 
 /**
  *
  * @author Larppa
  */
-public class UfoTest {
-    
-    Ufo ufo;
+public class KutiTest {
+    Kuti kuti;
     double vertailutarkkuus = 0.0001;
-
-    public UfoTest() {
-
+    
+    public KutiTest() {
     }
 
     @BeforeClass
-    public static void setUpClass() throws NullPointerException {
-        
+    public static void setUpClass() throws Exception {
     }
 
     @AfterClass
@@ -35,21 +32,23 @@ public class UfoTest {
     
     @Before
     public void setUp() {
-        ufo = new Ufo(50, 50);
+        kuti = new Kuti(50, 50);
     }
     
     @After
     public void tearDown() {
     }
-    
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
     @Test
-    public void UfoLiikkuuKunSuuntaOnVasempaan(){
-        ufo.liikkuu(-1);
-        assertEquals(49, ufo.getX(), vertailutarkkuus);
+    public void ammuksenKeskitysTOimiiX(){
+        assertEquals(62, kuti.getX(), vertailutarkkuus);
     }
     @Test
-    public void UfoLiikkuuKunSuuntaOnOikeaan(){
-        ufo.liikkuu(1);
-        assertEquals(51, ufo.getX(), vertailutarkkuus);
+    public void ammuksenKeskitysToimiiY() {
+        assertEquals(49, kuti.getY(), vertailutarkkuus);
     }
 }

@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 
 public class Kuti extends Objekti {
 
-    private String ammus = "../res/ammus.png";
+    private String ammus = "/res/ammus.png";
     private final int keskitysLeveys = 12;
     private final int keskitysKorkeus = 1;
 

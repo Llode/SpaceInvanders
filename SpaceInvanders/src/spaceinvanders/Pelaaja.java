@@ -15,8 +15,9 @@ public class Pelaaja extends Objekti implements Asetukset {
 
     private final int aloitus_x = 250;
     private final int aloitus_y = 100;
-    private final String pelaaja = "SpaceInvanders/res/alus.png";
+    private final String pelaaja = "/res/alus.png";
     private int leveys;
+    Kuti kuti;
 
     /**
      * Luo pelaajan aluksen kuvan
@@ -28,13 +29,17 @@ public class Pelaaja extends Objekti implements Asetukset {
     public Pelaaja() {
         setX(aloitus_x);
         setY(aloitus_y);
-    }
 
-    public void asetaKuva() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaaja));
         leveys = ii.getImage().getWidth(null);
         setImage(ii.getImage());
     }
+
+//    public void asetaKuva() {
+//        ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaaja));
+//        leveys = ii.getImage().getWidth(null);
+//        setImage(ii.getImage());
+//    }
 
     /**
      * Liikuttaa pelaajan alusta. Alus ei pääse koordinaatiston (ruudun)
@@ -47,6 +52,15 @@ public class Pelaaja extends Objekti implements Asetukset {
         }
         if (x >= RuudunLeveys - 2 * leveys) {
             x = RuudunLeveys - 2 * leveys;
+        }
+    }
+
+    /**
+     * Metodia kutsutaan, kun pelaaja ampuu.
+     */
+    public void ammu() {
+        if (!kuti.isVisible()) {
+            kuti = new Kuti(x, y);
         }
     }
 

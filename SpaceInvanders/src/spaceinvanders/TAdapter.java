@@ -6,33 +6,30 @@ package spaceinvanders;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 /**
  *
  * @author Larppa
  */
-public class TAdapter extends KeyAdapter{
-    
+public class TAdapter extends KeyAdapter {
+
     private Pelaaja pelaaja;
-    private Kuti kuti;
     private boolean ingame;
 
-        public void keyReleased(KeyEvent e) {
-            pelaaja.keyReleased(e);
-        }
+    public void keyReleased(KeyEvent e) {
+        pelaaja.keyReleased(e);
+    }
 
-        public void keyPressed(KeyEvent e) {
-            pelaaja.keyPressed(e);
+    public void keyPressed(KeyEvent e) {
+        pelaaja.keyPressed(e);
 
-            int x = pelaaja.getX();
-            int y = pelaaja.getY();
+        int x = pelaaja.getX();
+        int y = pelaaja.getY();
 
-            if (ingame) {
-                if (e.isAltDown()) {
-                    if (!kuti.nakyvissa()) {
-                        kuti = new Kuti(x, y);
-                    }
-                }
+        if (ingame) {
+            if (e.isAltDown()) {
+                pelaaja.ammu();
             }
         }
     }
-
+}

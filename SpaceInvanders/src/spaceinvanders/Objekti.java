@@ -23,7 +23,7 @@ public class Objekti {
         spriteNakyy = false;
     }
 
-    public boolean nakyvissa() {
+    public boolean isVisible() {
         return spriteNakyy;
     }
 
@@ -38,7 +38,7 @@ public class Objekti {
         this.sprite = sprite;
     }
 
-    public Image getSprite() {
+    public Image getImage() {
         return sprite;
     }
 /**
@@ -71,7 +71,7 @@ public class Objekti {
         this.kuolee = kuolee;
     }
 
-    public boolean kuolee() {
+    public boolean Kuolee() {
         return this.kuolee;
     }
 }
