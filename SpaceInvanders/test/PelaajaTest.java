@@ -5,6 +5,7 @@
 
 import org.junit.*;
 import static org.junit.Assert.*;
+import spaceinvanders.Kuti;
 import spaceinvanders.Pelaaja;
 
 /**
@@ -15,6 +16,7 @@ public class PelaajaTest {
     Pelaaja pelaaja;
     int liike;
     double vertailutarkkuus = 0.0001;
+    Kuti ammus;
     
     public PelaajaTest() {
     }
@@ -30,7 +32,8 @@ public class PelaajaTest {
     @Before
     public void setUp() {
         pelaaja = new Pelaaja();
-        liike = 2;
+        ammus = new Kuti();
+
     }
     
     @After
@@ -48,6 +51,11 @@ public class PelaajaTest {
     @Test
     public void alusOnAloituskoordinaateissaY(){
         assertEquals(100, pelaaja.getY(), vertailutarkkuus);
+    }
+    @Test
+    public void pelaajaAmpuu(){
+        ammus.die();
+        pelaaja.ammu();
     }
 //    @Test
 //    public void alusLiikkuuKunLiikeMuutuu(){
