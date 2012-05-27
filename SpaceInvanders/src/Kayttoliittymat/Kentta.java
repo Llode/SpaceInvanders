@@ -37,7 +37,9 @@ public class Kentta extends JPanel implements Asetukset{
 
     
 
-    
+    /**
+     * Luo pelikentän.
+     */
     public Kentta(){
         addKeyListener(new TAdapter());
         setFocusable(true);

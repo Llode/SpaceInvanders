@@ -56,6 +56,7 @@ public class PelaajaTest {
     public void pelaajaAmpuu(){
         ammus.die();
         pelaaja.ammu();
+        assert
     }
 //    @Test
 //    public void alusLiikkuuKunLiikeMuutuu(){

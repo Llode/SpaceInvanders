@@ -31,7 +31,7 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
     private int suunta = -1;
     private int tuhotut = 0;
     private boolean ingame = true;
-    private final String UfoKuva = "/res/ufo.ong";
+    private final String UfoKuva = "/res/ufo.png";
     private String peliLoppui = "Game Over";
     private Thread animator;
 
