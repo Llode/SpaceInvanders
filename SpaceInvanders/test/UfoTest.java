@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import spaceinvanders.Ufo;
+import Pelimoottori.Ufo;
 
 /**
  *
@@ -44,12 +44,12 @@ public class UfoTest {
     
     @Test
     public void UfoLiikkuuKunSuuntaOnVasempaan(){
-        ufo.liikkuu(-1);
+        ufo.ufoLiikkuu(-1);
         assertEquals(49, ufo.getX(), vertailutarkkuus);
     }
     @Test
     public void UfoLiikkuuKunSuuntaOnOikeaan(){
-        ufo.liikkuu(1);
+        ufo.ufoLiikkuu(1);
         assertEquals(51, ufo.getX(), vertailutarkkuus);
     }
 }

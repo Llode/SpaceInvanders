@@ -4,6 +4,7 @@
  */
 package spaceinvanders;
 
+import Pelimoottori.Pelaaja;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -28,7 +29,7 @@ public class TAdapter extends KeyAdapter {
 
         if (ingame) {
             if (e.isAltDown()) {
-                pelaaja.ammu();
+                pelaaja.pelaajaAmpuu();
             }
         }
     }

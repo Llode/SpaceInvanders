@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package spaceinvanders;
+package Pelimoottori;
 
+import Pelimoottori.Objekti;
 import javax.swing.ImageIcon;
 
 public class Kuti extends Objekti {

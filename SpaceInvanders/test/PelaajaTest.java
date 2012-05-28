@@ -5,8 +5,8 @@
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import spaceinvanders.Kuti;
-import spaceinvanders.Pelaaja;
+import Pelimoottori.Kuti;
+import Pelimoottori.Pelaaja;
 
 /**
  *
@@ -16,7 +16,7 @@ public class PelaajaTest {
     Pelaaja pelaaja;
     int liike;
     double vertailutarkkuus = 0.0001;
-    Kuti ammus;
+    Kuti kuti;
     
     public PelaajaTest() {
     }
@@ -32,7 +32,7 @@ public class PelaajaTest {
     @Before
     public void setUp() {
         pelaaja = new Pelaaja();
-        ammus = new Kuti();
+        kuti = new Kuti();
 
     }
     
@@ -54,9 +54,10 @@ public class PelaajaTest {
     }
     @Test
     public void pelaajaAmpuu(){
-        ammus.die();
-        pelaaja.ammu();
-        assert
+        kuti.die();
+        pelaaja.pelaajaAmpuu();
+//        assertEquals(pelaaja.getX()+12, kuti.getX(), vertailutarkkuus);
+        assertTrue(pelaaja.pelaajaAmpuu());
     }
 //    @Test
 //    public void alusLiikkuuKunLiikeMuutuu(){

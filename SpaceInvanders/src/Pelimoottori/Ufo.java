@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package spaceinvanders;
+package Pelimoottori;
 
+import Pelimoottori.Objekti;
 import javax.swing.ImageIcon;
 
 /**
@@ -12,13 +13,17 @@ import javax.swing.ImageIcon;
  */
 public class Ufo extends Objekti {
 
-    private UfoKuti kuti;
+    private UfoKuti ufokuti;
 
+    /**
+     * Luo uuden ufon. Jokaisella ufolla on oma ammuksensa.
+     * @param x ufon sijainti
+     * @param y ufon sijainti
+     */
     public Ufo(int x, int y) {
         this.x = x;
         this.y = y;
-
-        kuti = new UfoKuti(x, y);
+        ufokuti = new UfoKuti(x, y);
     }
 
     /**
@@ -26,7 +31,7 @@ public class Ufo extends Objekti {
      * @param suunta negatiiviset luvut liikuttavat ufoa vasemmalle,
      * positiiviset oikealle.
      */
-    public void liikkuu(int suunta) {
+    public void ufoLiikkuu(int suunta) {
         this.x += suunta;
     }
 
@@ -34,6 +39,6 @@ public class Ufo extends Objekti {
      * Metodia kutsutaan, kun ufo ampuu pelaajaa.
      */
     public UfoKuti getUfoKuti() {
-        return kuti;
+        return ufokuti;
     }
 }

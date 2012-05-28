@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package spaceinvanders;
+package Pelimoottori;
 
 import java.awt.Image;
 
@@ -18,11 +18,16 @@ public class Objekti {
     public Objekti() {
         spriteNakyy = true;
     }
-
+/**
+     * Objekti katoaa kentältä.
+     */
     public void die() {
         spriteNakyy = false;
     }
-
+/**
+     * Kertoo, onko objekti näkyvissä.
+     * @return 
+     */
     public boolean isVisible() {
         return spriteNakyy;
     }

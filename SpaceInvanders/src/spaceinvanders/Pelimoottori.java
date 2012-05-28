@@ -4,6 +4,12 @@
  */
 package spaceinvanders;
 
+import Pelimoottori.UfoKuti;
+import Pelimoottori.Kuti;
+import Pelimoottori.Pelaaja;
+import Pelimoottori.Asetukset;
+import Pelimoottori.Ufo;
+import Kayttoliittymat.Grafiikka;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -32,32 +38,32 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
     private int tuhotut = 0;
     private boolean ingame = true;
     private final String UfoKuva = "/res/ufo.png";
-    private String peliLoppui = "Game Over";
+
     private Thread animator;
 
+    Grafiikka grafiikka;
+    Graphics g;
 
-    public void addNotify() {
-        super.addNotify();
-        Logiikka();
-    }
     /**
-     * ASettaa ufot riveihin, luo pelaajan
+     * ASettaa ufot riveihin, luo pelaajan, asettaa spritet objekteille.
      */
-    public void Logiikka() {
+    public void SetUp() {
         ufot = new ArrayList();
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
+//        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
         
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
                 Ufo ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * j);
-                ufo.setImage(ii.getImage());
+//                ufo.setImage(ii.getImage());
+                grafiikka.asetaKuvaUfolle();
                 ufot.add(ufo);
             }
         }
         
         pelaaja = new Pelaaja();
-//        pelaaja.asetaKuva();
+        grafiikka.asetaKuvaPelaajalle();
         kuti = new Kuti();
+        grafiikka.asetaKuvaAmmukselle();
         
         if (animator == null || !ingame) {
             animator = new Thread(this);
@@ -123,22 +129,7 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
             }
         }
     }
-/**
-     * Piirtää game over -ruudun.
-     */
-    public void peliLoppuu() {
-        Graphics g = this.getGraphics();
-        
-        g.setColor(Color.black);
-        g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
-        
-        Font small = new Font("Comic sans", Font.BOLD, 14);
-        FontMetrics metr = this.getFontMetrics(small);
-        
-        g.setColor(Color.red);
-        g.setFont(small);
-        g.drawString(peliLoppui, (RuudunLeveys - metr.stringWidth(peliLoppui))/2, RuudunLeveys/2);
-    }
+
     
     public void run() {
     }

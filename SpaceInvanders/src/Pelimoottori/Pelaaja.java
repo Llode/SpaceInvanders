@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package spaceinvanders;
+package Pelimoottori;
 
+import Pelimoottori.Asetukset;
+import Pelimoottori.Objekti;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
@@ -16,7 +18,7 @@ public class Pelaaja extends Objekti implements Asetukset {
     private final int aloitus_x = 250;
     private final int aloitus_y = 100;
     private final String pelaaja = "/res/alus.png";
-    private int leveys;
+    public int leveys;
     Kuti kuti;
 
     /**
@@ -35,17 +37,11 @@ public class Pelaaja extends Objekti implements Asetukset {
         setImage(ii.getImage());
     }
 
-//    public void asetaKuva() {
-//        ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaaja));
-//        leveys = ii.getImage().getWidth(null);
-//        setImage(ii.getImage());
-//    }
-
     /**
      * Liikuttaa pelaajan alusta. Alus ei pääse koordinaatiston (ruudun)
      * ulkopuolelle.
      */
-    public void liiku() {
+    public void pelaajaLiikkuu() {
         x += liike;
         if (x <= 2) {
             x = 2;
@@ -58,10 +54,25 @@ public class Pelaaja extends Objekti implements Asetukset {
     /**
      * Metodia kutsutaan, kun pelaaja ampuu.
      */
-    public void ammu() {
-        if (!kuti.isVisible()) {
+    public boolean pelaajaAmpuu() {
+        if (kuti.isVisible() == false) {
             kuti = new Kuti(x, y);
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    public void pelaajaLiikkuuVasempaan() {
+        liike = -2;
+    }
+
+    public void pelaajaLiikkaaOikeaan() {
+        liike = 2;
+    }
+
+    public void pelaajaPysahtyy() {
+        liike = 0;
     }
 
     /**
@@ -73,10 +84,10 @@ public class Pelaaja extends Objekti implements Asetukset {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            liike = -2;
+            pelaajaLiikkuuVasempaan();
         }
         if (key == KeyEvent.VK_RIGHT) {
-            liike = 2;
+            pelaajaLiikkaaOikeaan();
         }
     }
 
@@ -89,10 +100,10 @@ public class Pelaaja extends Objekti implements Asetukset {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            liike = 0;
+            pelaajaPysahtyy();
         }
         if (key == KeyEvent.VK_RIGHT) {
-            liike = 0;
+            pelaajaPysahtyy();
         }
     }
 }

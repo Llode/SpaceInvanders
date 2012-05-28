@@ -4,19 +4,32 @@
  */
 package spaceinvanders;
 
+import Kayttoliittymat.Grafiikka;
 import Kayttoliittymat.Spaceinv;
+import Pelimoottori.Asetukset;
+import javax.swing.JFrame;
 
 /**
  *
  * @author lode
  */
-public class SpaceInvanders {
+public class SpaceInvanders extends JFrame implements Asetukset {
 
+    /**
+     * Peli-ikkunan asetukset.
+     */
+    public SpaceInvanders() {
+        add(new Grafiikka());
+        setTitle("Space Invanders");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(RuudunLeveys, RuudunKorkeus);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setResizable(false);
+    }
 
     public static void main(String[] args) {
-        Pelimoottori moottori = new Pelimoottori();
-        Spaceinv kayttoliittyma = new Spaceinv(moottori);
-        kayttoliittyma.run();
+        new SpaceInvanders();
 
     }
 }
