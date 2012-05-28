@@ -4,7 +4,11 @@
  */
 package spaceinvanders;
 
+<<<<<<< HEAD
 import Kayttoliittymat.Grafiikka;
+=======
+import Kayttoliittymat.Kentta;
+>>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9
 import Kayttoliittymat.Spaceinv;
 import Pelimoottori.Asetukset;
 import javax.swing.JFrame;
@@ -29,7 +33,13 @@ public class SpaceInvanders extends JFrame implements Asetukset {
     }
 
     public static void main(String[] args) {
+<<<<<<< HEAD
         new SpaceInvanders();
+=======
+        Kentta pelikentta = new Kentta();
+        Spaceinv kayttoliittyma = new Spaceinv(pelikentta);
+        kayttoliittyma.run();
+>>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9
 
     }
 }

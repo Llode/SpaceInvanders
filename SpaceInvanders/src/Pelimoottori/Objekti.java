@@ -13,7 +13,7 @@ public class Objekti {
     protected int x;
     protected int y;
     protected boolean kuolee;
-    protected int liike;
+    public int liike;
 
     public Objekti() {
         spriteNakyy = true;

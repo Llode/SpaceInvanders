@@ -16,5 +16,9 @@ public interface Asetukset {
     public static final int Ufolkm = 40;
     public static final int PelaajanKorkeus = 15;
     public static final int PelaajanLeveys = 30;
+<<<<<<< HEAD:SpaceInvanders/src/Pelimoottori/Asetukset.java
 
+=======
+    //public static final String Vari = "Color.black";
+>>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9:SpaceInvanders/src/spaceinvanders/Asetukset.java
 }
