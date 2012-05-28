@@ -31,22 +31,22 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
     private int suunta = -1;
     private int tuhotut = 0;
     private boolean ingame = true;
-    private final String UfoKuva = "/res/ufo.png";
+    private final String UfoKuva = "res/ufo.png";
     private String peliLoppui = "Game Over";
     private Thread animator;
 
-
     public void addNotify() {
         super.addNotify();
-        Logiikka();
+        SetUp();
     }
+
     /**
      * ASettaa ufot riveihin, luo pelaajan
      */
-    public void Logiikka() {
+    public void SetUp() {
         ufot = new ArrayList();
         ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
-        
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
                 Ufo ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * j);
@@ -54,41 +54,46 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
                 ufot.add(ufo);
             }
         }
-        
+
         pelaaja = new Pelaaja();
-//        pelaaja.asetaKuva();
+        pelaaja.asetaKuva();
         kuti = new Kuti();
-        
+
         if (animator == null || !ingame) {
             animator = new Thread(this);
             animator.start();
         }
     }
+
     /**
-     * Piirtää ufot kentälle
+     * Piirtää ufot kentälle. Jos ufo on näkyvissä, se saa kuvan. Jos ufo on
+     * kuollut, se katoaa kentältä.
+     *
      * @param g grafiikkamoottorin parametri
      */
     public void ufotKentalle(Graphics g) {
         Iterator it = ufot.iterator();
-        
+
         while (it.hasNext()) {
             Ufo ufo = (Ufo) it.next();
-            
+
             if (ufo.isVisible()) {
                 g.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this);
             }
-            
+
             if (ufo.Kuolee()) {
                 ufo.die();
             }
         }
     }
+
     /**
-     * Piirtää pelaajan kentälle.
+     * Piirtää pelaajan kentälle. Pelaajan tuhoutuessa peli loppuu.
+     *
      * @param g grafiikkamoottorin parametri
      */
     public void pelaajaKentalle(Graphics g) {
-        
+
         if (pelaaja.isVisible()) {
             g.drawImage(pelaaja.getImage(), pelaaja.getX(), pelaaja.getY(), this);
         }
@@ -97,49 +102,54 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
             ingame = false;
         }
     }
+
     /**
      * Piirtää pelaajan ammukset kentälle
-     * @param g 
+     *
+     * @param g
      */
     public void ammusKentalle(Graphics g) {
         if (kuti.isVisible()) {
             g.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this);
         }
     }
+
     /**
      * piirtää ufojen ammukset kentälle.
-     * @param g 
+     *
+     * @param g
      */
     public void ufotAmpuu(Graphics g) {
         Iterator i3 = ufot.iterator();
-        
+
         while (i3.hasNext()) {
             Ufo ufo = (Ufo) i3.next();
-            
+
             UfoKuti ufokuti = ufo.getUfoKuti();
-            
+
             if (!ufokuti.kutiTuhoutuu()) {
                 g.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
             }
         }
     }
-/**
+
+    /**
      * Piirtää game over -ruudun.
      */
     public void peliLoppuu() {
         Graphics g = this.getGraphics();
-        
+
         g.setColor(Color.black);
         g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
-        
+
         Font small = new Font("Comic sans", Font.BOLD, 14);
         FontMetrics metr = this.getFontMetrics(small);
-        
+
         g.setColor(Color.red);
         g.setFont(small);
-        g.drawString(peliLoppui, (RuudunLeveys - metr.stringWidth(peliLoppui))/2, RuudunLeveys/2);
+        g.drawString(peliLoppui, (RuudunLeveys - metr.stringWidth(peliLoppui)) / 2, RuudunLeveys / 2);
     }
-    
+
     public void run() {
     }
 }

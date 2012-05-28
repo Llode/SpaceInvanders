@@ -13,11 +13,12 @@ import spaceinvanders.Pelaaja;
  * @author lode
  */
 public class PelaajaTest {
+
     Pelaaja pelaaja;
     int liike;
     double vertailutarkkuus = 0.0001;
-    Kuti ammus;
-    
+    Kuti kuti;
+
     public PelaajaTest() {
     }
 
@@ -28,14 +29,14 @@ public class PelaajaTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     @Before
     public void setUp() {
         pelaaja = new Pelaaja();
-        ammus = new Kuti();
+        kuti = new Kuti();
 
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -44,19 +45,21 @@ public class PelaajaTest {
     //
     // @Test
     // public void hello() {}
+
     @Test
-    public void alusOnAloituskoordinaateissaX(){
+    public void alusOnAloituskoordinaateissaX() {
         assertEquals(250, pelaaja.getX(), vertailutarkkuus);
     }
+
     @Test
-    public void alusOnAloituskoordinaateissaY(){
+    public void alusOnAloituskoordinaateissaY() {
         assertEquals(100, pelaaja.getY(), vertailutarkkuus);
     }
+
     @Test
-    public void pelaajaAmpuu(){
-        ammus.die();
+    public void pelaajaAmpuu() {
         pelaaja.ammu();
-        assert
+        assertTrue(kuti.isVisible()==true);
     }
 //    @Test
 //    public void alusLiikkuuKunLiikeMuutuu(){

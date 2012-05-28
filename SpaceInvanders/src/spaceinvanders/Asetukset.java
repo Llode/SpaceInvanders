@@ -16,5 +16,5 @@ public interface Asetukset {
     public static final int Ufolkm = 40;
     public static final int PelaajanKorkeus = 15;
     public static final int PelaajanLeveys = 30;
-    public static final String Vari = "Color.black";
+    //public static final String Vari = "Color.black";
 }

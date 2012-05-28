@@ -17,8 +17,8 @@ public class Spaceinv extends JFrame implements Asetukset, Runnable {
     /**
      * Peli-ikkunan asetukset.
      */
-    public Spaceinv(Pelimoottori moottori) {
-        add(new Pelimoottori());
+    public Spaceinv(Kentta kentta) {
+//        add(new Pelimoottori());
         setTitle("Space Invanders");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(RuudunLeveys, RuudunKorkeus);

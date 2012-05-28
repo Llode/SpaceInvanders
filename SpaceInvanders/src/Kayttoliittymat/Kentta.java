@@ -24,7 +24,6 @@ import spaceinvanders.Pelimoottori;
 import spaceinvanders.Asetukset;
 import spaceinvanders.Kuti;
 import spaceinvanders.Pelaaja;
-import spaceinvanders.TAdapter;
 
 /**
  *
@@ -46,7 +45,7 @@ public class Kentta extends JPanel implements Asetukset{
         d = new Dimension(RuudunLeveys, RuudunKorkeus);
         setBackground(Color.black);
 
-        moottori.Logiikka();
+        moottori.SetUp();
         setDoubleBuffered(true);
         
     }

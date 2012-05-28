@@ -4,6 +4,7 @@
  */
 package spaceinvanders;
 
+import Kayttoliittymat.Kentta;
 import Kayttoliittymat.Spaceinv;
 
 /**
@@ -14,8 +15,8 @@ public class SpaceInvanders {
 
 
     public static void main(String[] args) {
-        Pelimoottori moottori = new Pelimoottori();
-        Spaceinv kayttoliittyma = new Spaceinv(moottori);
+        Kentta pelikentta = new Kentta();
+        Spaceinv kayttoliittyma = new Spaceinv(pelikentta);
         kayttoliittyma.run();
 
     }
