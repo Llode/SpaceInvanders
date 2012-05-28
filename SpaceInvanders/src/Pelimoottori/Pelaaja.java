@@ -33,22 +33,13 @@ public class Pelaaja extends Objekti implements Asetukset {
         setX(aloitus_x);
         setY(aloitus_y);
 
-//        ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaaja));
-//        leveys = ii.getImage().getWidth(null);
-//        setImage(ii.getImage());
-    }
-
-    public void asetaKuva() {
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaaja));
-        leveys = ii.getImage().getWidth(null);
-        setImage(ii.getImage());
     }
 
     /**
-     * Liikuttaa pelaajan alusta. Alus ei pääse koordinaatiston (ruudun)
+     * Estää pelaajaa pääsemästä koordinaatiston (ruudun)
      * ulkopuolelle.
      */
-    public void pelaajaLiikkuu() {
+    public void pelaajaPysyyRuudulla() {
         x += liike;
         if (x <= 2) {
             x = 2;
@@ -70,12 +61,11 @@ public class Pelaaja extends Objekti implements Asetukset {
         }
     }
 
-<<<<<<< HEAD:SpaceInvanders/src/Pelimoottori/Pelaaja.java
     public void pelaajaLiikkuuVasempaan() {
         liike = -2;
     }
 
-    public void pelaajaLiikkaaOikeaan() {
+    public void pelaajaLiikkuuOikeaan() {
         liike = 2;
     }
 
@@ -95,64 +85,23 @@ public class Pelaaja extends Objekti implements Asetukset {
             pelaajaLiikkuuVasempaan();
         }
         if (key == KeyEvent.VK_RIGHT) {
-            pelaajaLiikkaaOikeaan();
+            pelaajaLiikkuuOikeaan();
         }
-=======
-//    /**
-//     * Alus liikkuu, kun nuolinäppäimiä painetaan.
-//     *
-//     * @param e hakee painettavan näppäimen tunnuksen
-//     */
-//    public void keyPressed(KeyEvent e) {
-//        int key = e.getKeyCode();
-//
-//        if (key == KeyEvent.VK_LEFT) {
-//            liike = -2;
-//        }
-//        if (key == KeyEvent.VK_RIGHT) {
-//            liike = 2;
-//        }
-//    }
-//
-//    /**
-//     * Alus pysähtyy, kun liikenapeista päästetään irti.
-//     *
-//     * @param e
-//     */
-//    public void keyReleased(KeyEvent e) {
-//        int key = e.getKeyCode();
-//
-//        if (key == KeyEvent.VK_LEFT) {
-//            liike = 0;
-//        }
-//        if (key == KeyEvent.VK_RIGHT) {
-//            liike = 0;
-//        }
-    
-        public void keyReleased(KeyEvent e) {
-        keyReleased(e);
->>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9:SpaceInvanders/src/spaceinvanders/Pelaaja.java
     }
 
-    public void keyPressed(KeyEvent e) {
-        keyPressed(e);
+    /**
+     * Alus pysähtyy, kun liikenapeista päästetään irti.
+     *
+     * @param e
+     */
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
 
-<<<<<<< HEAD:SpaceInvanders/src/Pelimoottori/Pelaaja.java
         if (key == KeyEvent.VK_LEFT) {
             pelaajaPysahtyy();
         }
         if (key == KeyEvent.VK_RIGHT) {
             pelaajaPysahtyy();
-=======
-        int x = getX();
-        int y = getY();
-
-        if (ingame) {
-            if (e.isAltDown()) {
-                ammu();
-            }
->>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9:SpaceInvanders/src/spaceinvanders/Pelaaja.java
         }
     }
-    }
-
+}

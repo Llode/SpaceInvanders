@@ -14,8 +14,8 @@ import java.awt.event.KeyEvent;
  */
 public class TAdapter extends KeyAdapter {
 
-    private Pelaaja pelaaja;
-    private boolean ingame;
+    Pelaaja pelaaja;
+    boolean ingame;
 
     public void keyReleased(KeyEvent e) {
         pelaaja.keyReleased(e);

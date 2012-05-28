@@ -36,37 +36,25 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
     private int ufoY = 5;
     private int suunta = -1;
     private int tuhotut = 0;
-    private boolean ingame = true;
-<<<<<<< HEAD
+    boolean ingame = true;
     private final String UfoKuva = "/res/ufo.png";
-
     private Thread animator;
-
     Grafiikka grafiikka;
     Graphics g;
-=======
-    private final String UfoKuva = "res/ufo.png";
-    private String peliLoppui = "Game Over";
-    private Thread animator;
 
     public void addNotify() {
         super.addNotify();
         SetUp();
     }
->>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9
 
     /**
      * ASettaa ufot riveihin, luo pelaajan, asettaa spritet objekteille.
      */
     public void SetUp() {
         ufot = new ArrayList();
-<<<<<<< HEAD
-//        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
-        
-=======
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
 
->>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9
+//        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
                 Ufo ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * j);
@@ -77,16 +65,11 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
         }
 
         pelaaja = new Pelaaja();
-<<<<<<< HEAD
+
         grafiikka.asetaKuvaPelaajalle();
         kuti = new Kuti();
         grafiikka.asetaKuvaAmmukselle();
-        
-=======
-        pelaaja.asetaKuva();
-        kuti = new Kuti();
 
->>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9
         if (animator == null || !ingame) {
             animator = new Thread(this);
             animator.start();
@@ -152,36 +135,13 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
 
         while (i3.hasNext()) {
             Ufo ufo = (Ufo) i3.next();
-
             UfoKuti ufokuti = ufo.getUfoKuti();
-
             if (!ufokuti.kutiTuhoutuu()) {
                 g.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
             }
         }
     }
 
-<<<<<<< HEAD
-    
-=======
-    /**
-     * Piirtää game over -ruudun.
-     */
-    public void peliLoppuu() {
-        Graphics g = this.getGraphics();
-
-        g.setColor(Color.black);
-        g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
-
-        Font small = new Font("Comic sans", Font.BOLD, 14);
-        FontMetrics metr = this.getFontMetrics(small);
-
-        g.setColor(Color.red);
-        g.setFont(small);
-        g.drawString(peliLoppui, (RuudunLeveys - metr.stringWidth(peliLoppui)) / 2, RuudunLeveys / 2);
-    }
-
->>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9
     public void run() {
     }
 }

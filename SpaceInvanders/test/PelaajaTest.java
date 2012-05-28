@@ -18,11 +18,7 @@ public class PelaajaTest {
     int liike;
     double vertailutarkkuus = 0.0001;
     Kuti kuti;
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9
     public PelaajaTest() {
     }
 
@@ -61,17 +57,12 @@ public class PelaajaTest {
     }
 
     @Test
-<<<<<<< HEAD
     public void pelaajaAmpuu(){
         kuti.die();
         pelaaja.pelaajaAmpuu();
 //        assertEquals(pelaaja.getX()+12, kuti.getX(), vertailutarkkuus);
         assertTrue(pelaaja.pelaajaAmpuu());
-=======
-    public void pelaajaAmpuu() {
-        pelaaja.ammu();
-        assertTrue(kuti.isVisible()==true);
->>>>>>> fa9c1da41c835fba8b47cb5a4af911f0bd1455f9
+
     }
 //    @Test
 //    public void alusLiikkuuKunLiikeMuutuu(){
