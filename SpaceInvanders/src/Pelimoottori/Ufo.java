@@ -8,7 +8,7 @@ import Pelimoottori.Objekti;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Ufot, joita pelaaja ampuu.
  * @author Larppa
  */
 public class Ufo extends Objekti {

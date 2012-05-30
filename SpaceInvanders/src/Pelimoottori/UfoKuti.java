@@ -6,9 +6,10 @@ package Pelimoottori;
 
 import Pelimoottori.Objekti;
 import javax.swing.ImageIcon;
+import Kayttoliittymat.Grafiikka;
 
 /**
- *
+ * Ufojen ampumat ammukset.
  * @author Larppa
  */
 public class UfoKuti extends Objekti {
@@ -23,8 +24,9 @@ public class UfoKuti extends Objekti {
     public UfoKuti(int x, int y) {
         this.x = x;
         this.y = y;
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(ufokuti));
-        setImage(ii.getImage());
+//        ImageIcon ii = new ImageIcon(this.getClass().getResource(ufokuti));
+//        setImage(ii.getImage());
+        
     }
 /**
      * Ammuttu ammus tuhoutuu, kun se osuu johonkin. Käytetään osumantunnistukseen.

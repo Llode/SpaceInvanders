@@ -7,6 +7,7 @@ package spaceinvanders;
 import Kayttoliittymat.Grafiikka;
 import Kayttoliittymat.Spaceinv;
 import Pelimoottori.Asetukset;
+import Pelimoottori.Pelimoottori;
 import javax.swing.JFrame;
 
 /**
@@ -18,8 +19,9 @@ public class SpaceInvanders extends JFrame implements Asetukset {
     /**
      * Peli-ikkunan asetukset.
      */
+    Pelimoottori moottori = new Pelimoottori();
     public SpaceInvanders() {
-        add(new Grafiikka());
+        add(new Grafiikka(moottori));
         setTitle("Space Invanders");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(RuudunLeveys, RuudunKorkeus);
@@ -29,6 +31,6 @@ public class SpaceInvanders extends JFrame implements Asetukset {
     }
 
     public static void main(String[] args) {
-        SpaceInvanders spaceInvanders = new SpaceInvanders();
+        new SpaceInvanders();
     }
 }

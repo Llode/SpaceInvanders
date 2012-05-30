@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Pelaajan alus
  * @author Larppa
  */
 public class Pelaaja extends Objekti implements Asetukset {
@@ -61,14 +61,22 @@ public class Pelaaja extends Objekti implements Asetukset {
         }
     }
 
+    /**
+     * pelaaja liikesuunta muuttuu vasempaan.
+     */
     public void pelaajaLiikkuuVasempaan() {
         liike = -2;
     }
 
+    /**
+     * Pelaajan liikesuunta muuttuu oikeaan
+     */
     public void pelaajaLiikkuuOikeaan() {
         liike = 2;
     }
-
+/**
+     * Pelaaja pysähtyy.
+     */
     public void pelaajaPysahtyy() {
         liike = 0;
     }

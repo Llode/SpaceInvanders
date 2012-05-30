@@ -4,7 +4,7 @@
  */
 package Kayttoliittymat;
 
-import spaceinvanders.Pelimoottori;
+import Pelimoottori.Pelimoottori;
 import javax.swing.JFrame;
 import Pelimoottori.Asetukset;
 

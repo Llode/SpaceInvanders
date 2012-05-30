@@ -7,6 +7,10 @@ package Pelimoottori;
 import Pelimoottori.Objekti;
 import javax.swing.ImageIcon;
 
+/**
+ * Pelaajan ammus.
+ * @author Larppa
+ */
 public class Kuti extends Objekti {
 
     private String ammus = "res/ammus.png";

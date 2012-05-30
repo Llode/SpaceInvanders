@@ -5,7 +5,10 @@
 package Pelimoottori;
 
 import java.awt.Image;
-
+/**
+ * Kaikkien kentällä liikkuvien objektien yliluokka.
+ * @author Larppa
+ */
 public class Objekti {
 
     private boolean spriteNakyy;
@@ -25,13 +28,15 @@ public class Objekti {
         spriteNakyy = false;
     }
 /**
-     * Kertoo, onko objekti näkyvissä.
-     * @return 
+     * @return Kertoo, onko objekti näkyvissä.
      */
     public boolean isVisible() {
         return spriteNakyy;
     }
-
+/**
+     * Asettaa objektin näkyväksi.
+     * @param spriteNakyy 
+     */
     protected void setVisible(boolean spriteNakyy) {
         this.spriteNakyy = spriteNakyy;
     }
@@ -42,7 +47,9 @@ public class Objekti {
     public void setImage(Image sprite) {
         this.sprite = sprite;
     }
-
+/**
+     * @return Noutaa objektin kuvan.
+     */
     public Image getImage() {
         return sprite;
     }
@@ -69,14 +76,16 @@ public class Objekti {
         return y;
     }
 /**
-     * 
-     * @param kuolee 
+     * Objekti tuhoutuu.
+     * @param kuolee tosi, jos objekti tuhoutuu.
      */
     public void setKuolee(boolean kuolee) {
         this.kuolee = kuolee;
     }
-
-    public boolean Kuolee() {
+/**
+     * @return kertoo mikäli objekti tuhoutui..
+     */
+    public boolean Kuoleeko() {
         return this.kuolee;
     }
 }

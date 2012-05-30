@@ -9,60 +9,63 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Iterator;
+//import java.awt.Toolkit;
+//import java.awt.event.KeyAdapter;
+//import java.awt.event.KeyEvent;
+//
+//import java.util.ArrayList;
+//import java.util.Random;
+//import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import spaceinvanders.Pelimoottori;
+import Pelimoottori.Pelimoottori;
 import Pelimoottori.Asetukset;
 import Pelimoottori.Kuti;
 import Pelimoottori.Pelaaja;
 import spaceinvanders.TAdapter;
 import Pelimoottori.Ufo;
+import Pelimoottori.UfoKuti;
 
 /**
- *
+ *Pelin sisäinen grafiikka.
  * @author Larppa
  */
 public class Grafiikka extends JPanel implements Asetukset {
 
-    private final String peliLoppui = "Game Over";
+    private final String PeliLoppui = "";
     private final String ammus = "/res/ammus.png";
     private final String pelaajakuva = "/res/pelaaja.png";
     private final String UfoKuva = "/res/ufo.png";
+    private final String rajahdys = "/res/rajahdys.png";
     private Dimension d;
+    ImageIcon objektiKuolee;
     Kuti kuti;
     Pelaaja pelaaja;
     Ufo ufo;
     Pelimoottori moottori = new Pelimoottori();
     TAdapter TAdapter;
+    UfoKuti ufokuti;
 
     /**
      * Luo pelikentän.
      */
-    public Grafiikka() {
+    public Grafiikka(Pelimoottori pelimoottori) {
         addKeyListener(new TAdapter());
         setFocusable(true);
         d = new Dimension(RuudunLeveys, RuudunKorkeus);
         setBackground(Color.black);
 
-        moottori.SetUp();
+        this.moottori.SetUp();
         setDoubleBuffered(true);
 
     }
 
-    public void addNotify() {
-        super.addNotify();
-        moottori.SetUp();
-    }
-
+//    public void addNotify() {
+//        super.addNotify();
+//        moottori.SetUp();
+//    }
     /**
      * Piirtää game over -ruudun.
      */
@@ -77,21 +80,53 @@ public class Grafiikka extends JPanel implements Asetukset {
 
         g.setColor(Color.red);
         g.setFont(small);
-        g.drawString(peliLoppui, (RuudunLeveys - metr.stringWidth(peliLoppui)) / 2, RuudunLeveys / 2);
+        g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
     }
 
+    /**
+     * Asettaa kuvan pelaajan ammuksille.
+     */
     public void asetaKuvaAmmukselle() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(ammus));
         kuti.setImage(ii.getImage());
     }
 
+    /**
+     * Asettaa kuvan pelaajalle.
+     */
     public void asetaKuvaPelaajalle() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaajakuva));
         pelaaja.leveys = ii.getImage().getWidth(null);
         pelaaja.setImage(ii.getImage());
     }
-    public void asetaKuvaUfolle(){
+
+    /**
+     * Asettaa kuvan ufolle.
+     */
+    public void asetaKuvaUfolle() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
         ufo.setImage(ii.getImage());
+    }
+
+    /**
+     * Asettaa kuvan räjähdykselle.
+     */
+    public void asetaKuvaRajahdykselle() {
+        objektiKuolee = new ImageIcon(getClass().getResource(rajahdys));
+    }
+
+    /**
+     * Ette ikinä arvaa.
+     */
+    public void asetaKuvaUfoKudille() {
+        ImageIcon ii = new ImageIcon(this.getClass().getResource(ammus));
+        ufokuti.setImage(ii.getImage());
+    }
+
+    /**
+     * @return Noutaa räjähdyksen tuhoutuvia objekteja varten.
+     */
+    public ImageIcon getRajahdys() {
+        return objektiKuolee;
     }
 }
