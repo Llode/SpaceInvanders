@@ -7,6 +7,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import Pelimoottori.Kuti;
 import Pelimoottori.Pelaaja;
+import Kayttoliittymat.Grafiikka;
 
 /**
  *
@@ -57,12 +58,19 @@ public class PelaajaTest {
     }
 
     @Test
-    public void pelaajaAmpuu(){
-        kuti.die();
+    public void pelaajaEiAmmuKunAmmusKentalla(){
         pelaaja.pelaajaAmpuu();
-//        assertEquals(pelaaja.getX()+12, kuti.getX(), vertailutarkkuus);
-        assertTrue(pelaaja.pelaajaAmpuu());
+        assertFalse(pelaaja.pelaajaAmpuu());
 
+    }
+    @Test
+    public void pelaajaEiPaaseUlosReunoista(){
+        pelaaja.liike = -250;
+        pelaaja.pelaajaLiikkuu();
+        assertEquals(2, pelaaja.getX(), vertailutarkkuus);
+        pelaaja.liike = 500;
+        pelaaja.pelaajaLiikkuu();
+        assertEquals(440, pelaaja.getX(), vertailutarkkuus);
     }
 //    @Test
 //    public void alusLiikkuuKunLiikeMuutuu(){

@@ -47,6 +47,7 @@ public class Grafiikka extends JPanel implements Asetukset {
     Pelimoottori moottori = new Pelimoottori();
     TAdapter TAdapter;
     UfoKuti ufokuti;
+    public int pelaajanLeveys;
 
     /**
      * Luo pelikentän.
@@ -96,7 +97,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      */
     public void asetaKuvaPelaajalle() {
         ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaajakuva));
-        pelaaja.leveys = ii.getImage().getWidth(null);
+//        pelaaja.leveys = ii.getImage().getWidth(null);
         pelaaja.setImage(ii.getImage());
     }
 

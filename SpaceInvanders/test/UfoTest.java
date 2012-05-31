@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import Pelimoottori.Ufo;
+import Pelimoottori.UfoKuti;
 
 /**
  *
@@ -18,6 +19,7 @@ import Pelimoottori.Ufo;
 public class UfoTest {
     
     Ufo ufo;
+    UfoKuti ufokuti;
     double vertailutarkkuus = 0.0001;
 
     public UfoTest() {
@@ -36,6 +38,7 @@ public class UfoTest {
     @Before
     public void setUp() {
         ufo = new Ufo(50, 50);
+
     }
     
     @After
@@ -52,4 +55,5 @@ public class UfoTest {
         ufo.ufoLiikkuu(1);
         assertEquals(51, ufo.getX(), vertailutarkkuus);
     }
+
 }

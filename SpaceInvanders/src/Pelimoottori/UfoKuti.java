@@ -21,6 +21,8 @@ public class UfoKuti extends Objekti {
      * @param x koordinaatit, joista ammus lähtee
      * @param y koordinaatit, joista ammus lähtee
      */
+
+    
     public UfoKuti(int x, int y) {
         this.x = x;
         this.y = y;

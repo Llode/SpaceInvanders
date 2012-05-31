@@ -138,7 +138,7 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
      */
     public void ufotAmpuu(Graphics g) {
         grafiikka.asetaKuvaUfoKudille();
-        
+
         Iterator i3 = ufot.iterator();
 
         while (i3.hasNext()) {
@@ -149,7 +149,8 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
             }
         }
     }
-/**
+
+    /**
      * Sisältää pelin logiikan.
      */
     public void toiminta() {
@@ -160,7 +161,7 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
         }
 
         //Pelaaja
-        pelaaja.pelaajaPysyyRuudulla();
+        pelaaja.pelaajaLiikkuu();
 
         //Pelaajan ammukset
         if (kuti.isVisible()) {
@@ -234,31 +235,31 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
                 ufo.ufoLiikkuu(suunta);
             }
         }
-        
+
         //Ufojen ammukset        
         Iterator i3 = ufot.iterator();
         Random rng = new Random();
-        
-        while (i3.hasNext()){
+
+        while (i3.hasNext()) {
             int ampuu = rng.nextInt(15);
             Ufo ufo = (Ufo) i3.next();
             UfoKuti ufokuti = ufo.getUfoKuti();
-            if(ampuu == UfonAmpumaTodNak && ufo.isVisible() && ufokuti.kutiTuhoutuu()){
+            if (ampuu == UfonAmpumaTodNak && ufo.isVisible() && ufokuti.kutiTuhoutuu()) {
                 ufokuti.setKutiTuhoutuu(false);
                 ufokuti.setX(ufo.getX());
                 ufokuti.setY(ufo.getY());
             }
-            
+
             int ufokutiX = ufokuti.getX();
             int ufokutiY = ufokuti.getY();
             int pelaajaX = pelaaja.getX();
             int pelaajaY = pelaaja.getY();
-            
-            if(pelaaja.isVisible() && !ufokuti.kutiTuhoutuu()){
-                if(ufokutiX >= pelaajaX &&
-                   ufokutiX <= (pelaajaX + PelaajanLeveys) &&
-                   ufokutiY >= pelaajaY &&
-                   ufokutiY <= (pelaajaY + PelaajanKorkeus)) {
+
+            if (pelaaja.isVisible() && !ufokuti.kutiTuhoutuu()) {
+                if (ufokutiX >= pelaajaX
+                        && ufokutiX <= (pelaajaX + PelaajanLeveys)
+                        && ufokutiY >= pelaajaY
+                        && ufokutiY <= (pelaajaY + PelaajanKorkeus)) {
                     pelaaja.setImage(grafiikka.getRajahdys().getImage());
                     pelaaja.setKuolee(true);
                     ufokuti.setKutiTuhoutuu(true);

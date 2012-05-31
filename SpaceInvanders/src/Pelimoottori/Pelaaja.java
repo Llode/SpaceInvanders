@@ -8,6 +8,7 @@ import Pelimoottori.Asetukset;
 import Pelimoottori.Objekti;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import Kayttoliittymat.Grafiikka;
 
 /**
  * Pelaajan alus
@@ -18,8 +19,9 @@ public class Pelaaja extends Objekti implements Asetukset {
     private final int aloitus_x = 250;
     private final int aloitus_y = 100;
     private final String pelaaja = "/res/alus.png";
-    public int leveys;
-    Kuti kuti;
+    Grafiikka grafiikka;
+    public int leveys = PelaajanLeveys;
+    Kuti kuti = new Kuti();
     private boolean ingame;
 
     /**
@@ -36,16 +38,18 @@ public class Pelaaja extends Objekti implements Asetukset {
     }
 
     /**
-     * Estää pelaajaa pääsemästä koordinaatiston (ruudun)
+     * Liikuttaa pelaajaa sekä estää sitä pääsemästä koordinaatiston (ruudun)
      * ulkopuolelle.
      */
-    public void pelaajaPysyyRuudulla() {
+
+    
+    public void pelaajaLiikkuu() {
         x += liike;
         if (x <= 2) {
             x = 2;
         }
-        if (x >= RuudunLeveys - 2 * leveys) {
-            x = RuudunLeveys - 2 * leveys;
+        if (x >= RuudunLeveys - (2 * leveys)) {
+            x = RuudunLeveys - (2 * leveys);
         }
     }
 
@@ -53,7 +57,7 @@ public class Pelaaja extends Objekti implements Asetukset {
      * Metodia kutsutaan, kun pelaaja ampuu.
      */
     public boolean pelaajaAmpuu() {
-        if (kuti.isVisible() == false) {
+        if (!kuti.isVisible()) {
             kuti = new Kuti(x, y);
             return true;
         } else {
