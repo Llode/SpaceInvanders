@@ -58,13 +58,13 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
     public void SetUp() {
         ufot = new ArrayList();
 
-//        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
+        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
                 Ufo ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * j);
-//                ufo.setImage(ii.getImage());
-                grafiikka.asetaKuvaUfolle();
+                ufo.setImage(ii.getImage());
+//                grafiikka.asetaKuvaUfolle();
                 ufot.add(ufo);
             }
         }

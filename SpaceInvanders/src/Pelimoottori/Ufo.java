@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  */
 public class Ufo extends Objekti {
 
-    private UfoKuti ufokuti;
+    UfoKuti ufokuti;
 
     /**
      * Luo uuden ufon. Jokaisella ufolla on oma ammuksensa.
