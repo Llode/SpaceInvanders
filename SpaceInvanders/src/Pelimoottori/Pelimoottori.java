@@ -28,28 +28,35 @@ import javax.swing.JPanel;
 
 /**
  * Pelin toimintalogiikka löytyy täältä.
+ *
  * @author Larppa
  */
-public class Pelimoottori extends JPanel implements Asetukset, Runnable {
+public class Pelimoottori implements Asetukset{
 
     //private Dimension d;
     private Pelaaja pelaaja;
     private Kuti kuti;
     private ArrayList ufot;
 //    private Ufo ufo;
-    private int ufoX = 150;
-    private int ufoY = 5;
-    private int suunta = -1;
-    private int tuhotut = 0;
-    boolean ingame = true;
-    private final String UfoKuva = "/res/ufo.png";
+    private int ufoX;
+    private int ufoY;
+    private int suunta;
+    private int tuhotut;
+    boolean ingame;
+    private String UfoKuva;
     private Thread animator;
     Grafiikka grafiikka;
     Graphics g;
 
-    public void addNotify() {
-        super.addNotify();
-        SetUp();
+
+
+    public void Pelimoottori() {
+        tuhotut = 0;
+        suunta = -1;
+        ufoY = 5;
+        ufoX = 10;
+        UfoKuva = "ufo.png";
+        ingame = true;
     }
 
     /**
@@ -58,7 +65,7 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
     public void SetUp() {
         ufot = new ArrayList();
 
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
+        ImageIcon ii = new ImageIcon(UfoKuva);
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
@@ -162,8 +169,27 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
 
         //Pelaaja
         pelaaja.pelaajaLiikkuu();
+        pelaajanAmmuksetAnimaatioSyklissa();
 
-        //Pelaajan ammukset
+        //Ufot
+        Iterator it1 = ufot.iterator();
+
+        while (it1.hasNext()) {
+            Ufo ufo1 = (Ufo) it1.next();
+            int x = ufo1.getX();
+            ufotAlemmasOikeassaReunassa(x);
+            ufotAlemmasVasReunassa(x);
+        }
+        Iterator it = ufot.iterator();
+
+        while (it.hasNext()) {
+            Ufo ufo = (Ufo) it.next();
+            ufotSaavuttavatMaan(ufo);
+        }
+        ufonAmmuksetToimintasyklissa();
+    }
+
+    private void pelaajanAmmuksetAnimaatioSyklissa() {
         if (kuti.isVisible()) {
             Iterator it = ufot.iterator();
             int kutiX = kuti.getX();
@@ -175,68 +201,30 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
                 int ufoY = ufo.getY();
 
                 if (ufo.isVisible() && kuti.isVisible()) {
-                    if (kutiX >= ufoX
-                            && kutiX <= (ufoX + UfonLeveys)
-                            && kutiY >= ufoY
-                            && kutiY <= (ufoY + UfonKorkeus)) {
-                        grafiikka.asetaKuvaRajahdykselle();
-                        ufo.setImage(grafiikka.getRajahdys().getImage());
-                        ufo.setKuolee(true);
-                        tuhotut++;
-                        kuti.die();
+                    if (ufonOsumaTunnistus(kutiX, ufoX, kutiY, ufoY)) {
+                        ufoTuhoutuuOsumasta(ufo);
                     }
                 }
             }
-            int y = kuti.getY();
-            y -= 4;
-            if (y < 0) {
-                kuti.die();
-            } else {
-                kuti.setY(y);
-            }
+            pelaajanAmmusLiikkuu();
         }
-
-        //Ufot
-        Iterator it1 = ufot.iterator();
-
-        while (it1.hasNext()) {
-            Ufo ufo1 = (Ufo) it1.next();
-            int x = ufo1.getX();
-
-            if (x >= RuudunLeveys - RuudunOikeaReuna && suunta != -1) {
-                suunta = -1;
-                Iterator i1 = ufot.iterator();
-                while (i1.hasNext()) {
-                    Ufo ufo2 = (Ufo) i1.next();
-                    ufo2.setY(ufo2.getY() + UfotLiikkuvatRivinALas);
-                }
-            }
-            if (x <= RuudunVasenReuna && suunta != 1) {
-                suunta = 1;
-
-                Iterator i2 = ufot.iterator();
-                while (i2.hasNext()) {
-                    Ufo ufo = (Ufo) i2.next();
-                    ufo.setY(ufo.getY() + UfotLiikkuvatRivinALas);
-                }
-            }
+    }
+/**
+ * Liikuttaa pelaajan ampumaa ammusta. Ammus katoaa, mikäli se menee yli kentän reunan.
+ */
+    private void pelaajanAmmusLiikkuu() {
+        int y = kuti.getY();
+        y -= 4;
+        if (y < 0) {
+            kuti.die();
+        } else {
+            kuti.setY(y);
         }
-        Iterator it = ufot.iterator();
-
-        while (it.hasNext()) {
-            Ufo ufo = (Ufo) it.next();
-            if (ufo.isVisible()) {
-                int y = ufo.getY();
-
-                if (y > UfojenMaaliViiva - UfonKorkeus) {
-                    ingame = false;
-                    //Peli löppuu invaasioon
-                }
-                ufo.ufoLiikkuu(suunta);
-            }
-        }
-
-        //Ufojen ammukset        
+    }
+/**
+ * Ohjaa ufokutien toimintaa.
+ */
+    private void ufonAmmuksetToimintasyklissa() {
         Iterator i3 = ufot.iterator();
         Random rng = new Random();
 
@@ -244,11 +232,7 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
             int ampuu = rng.nextInt(15);
             Ufo ufo = (Ufo) i3.next();
             UfoKuti ufokuti = ufo.getUfoKuti();
-            if (ampuu == UfonAmpumaTodNak && ufo.isVisible() && ufokuti.kutiTuhoutuu()) {
-                ufokuti.setKutiTuhoutuu(false);
-                ufokuti.setX(ufo.getX());
-                ufokuti.setY(ufo.getY());
-            }
+            ufoAmpuuJosArpaSuosii(ampuu, ufo, ufokuti);
 
             int ufokutiX = ufokuti.getX();
             int ufokutiY = ufokuti.getY();
@@ -256,18 +240,117 @@ public class Pelimoottori extends JPanel implements Asetukset, Runnable {
             int pelaajaY = pelaaja.getY();
 
             if (pelaaja.isVisible() && !ufokuti.kutiTuhoutuu()) {
-                if (ufokutiX >= pelaajaX
-                        && ufokutiX <= (pelaajaX + PelaajanLeveys)
-                        && ufokutiY >= pelaajaY
-                        && ufokutiY <= (pelaajaY + PelaajanKorkeus)) {
-                    pelaaja.setImage(grafiikka.getRajahdys().getImage());
-                    pelaaja.setKuolee(true);
-                    ufokuti.setKutiTuhoutuu(true);
+                if (pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY)) {
+                    pelaajaTuhoutuuOsumasta(ufokuti);
                 }
             }
         }
     }
-
-    public void run() {
+/**
+ * Ufot ampuvat, mikäli todennäköisyydet osuvat kohdalleen.
+ * @param ampuu RNGn tuottama numero.
+ * @param ufo ampuva ufo.
+ * @param ufokuti ufon ampuma ammus.
+ */
+    private void ufoAmpuuJosArpaSuosii(int ampuu, Ufo ufo, UfoKuti ufokuti) {
+        if (ampuu == UfonAmpumaTodNak && ufo.isVisible() && ufokuti.kutiTuhoutuu()) {
+            ufokuti.setKutiTuhoutuu(false);
+            ufokuti.setX(ufo.getX());
+            ufokuti.setY(ufo.getY());
+        }
     }
+/**
+ * Peli hävitään, mikäli ufot pääsevät laskeutumaan liian alas.
+ * @param ufo 
+ */
+    private void ufotSaavuttavatMaan(Ufo ufo) {
+        if (ufo.isVisible()) {
+            int y = ufo.getY();
+
+            if (y > UfojenMaaliViiva - UfonKorkeus) {
+                ingame = false;
+                //Peli loppuu invaasioon
+            }
+            ufo.ufoLiikkuu(suunta);
+        }
+    }
+/**
+ * Ufot laskeutuvat rivin alemmas, kun ruudun vasen reuna saavutetaan.
+ * @param x Ufojen koordinaatti
+ */
+    private void ufotAlemmasVasReunassa(int x) {
+        if (x <= RuudunVasenReuna && suunta != 1) {
+            suunta = 1;
+
+            Iterator i2 = ufot.iterator();
+            while (i2.hasNext()) {
+                Ufo ufo = (Ufo) i2.next();
+                ufo.setY(ufo.getY() + UfotLiikkuvatRivinALas);
+            }
+        }
+    }
+/**
+ * Ufot laskeutuvat rivin alemmas, kun ruudun oikea reuna saavutetaan.
+ * @param x Ufojen koordinaatti
+ */
+    private void ufotAlemmasOikeassaReunassa(int x) {
+        if (x >= RuudunLeveys - RuudunOikeaReuna && suunta != -1) {
+            suunta = -1;
+            Iterator i1 = ufot.iterator();
+            while (i1.hasNext()) {
+                Ufo ufo2 = (Ufo) i1.next();
+                ufo2.setY(ufo2.getY() + UfotLiikkuvatRivinALas);
+            }
+        }
+    }
+/**
+ * Pelaajan alus tuhoutuu, kun ufojen ammukset osuvat siihen.
+ * @param ufokuti 
+ */
+    private void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
+        pelaaja.setImage(grafiikka.getRajahdys().getImage());
+        pelaaja.setKuolee(true);
+        ufokuti.setKutiTuhoutuu(true);
+    }
+/**
+ * Tutkii pelaajan aluksen ja ufojen ammusten törmäystä.
+ * @param ufokutiX
+ * @param pelaajaX
+ * @param ufokutiY
+ * @param pelaajaY
+ * @return jos tosi, pelaaja tuhoutuu.
+ */
+    private boolean pelaajanOsumatunnistus(int ufokutiX, int pelaajaX, int ufokutiY, int pelaajaY) {
+        return ufokutiX >= pelaajaX
+                && ufokutiX <= (pelaajaX + PelaajanLeveys)
+                && ufokutiY >= pelaajaY
+                && ufokutiY <= (pelaajaY + PelaajanKorkeus);
+    }
+/**
+ * Ufo tuhoutuu, kun pelaaja osuu siihen ammuksellaan.
+ * @param ufo 
+ */
+    private void ufoTuhoutuuOsumasta(Ufo ufo) {
+        grafiikka.asetaKuvaRajahdykselle();
+        ufo.setImage(grafiikka.getRajahdys().getImage());
+        ufo.setKuolee(true);
+        tuhotut++;
+        kuti.die();
+    }
+/**
+ * Tutkii pelaajan ammusten ja ufojen törmäyksiä.
+ * @param kutiX
+ * @param ufoX
+ * @param kutiY
+ * @param ufoY
+ * @return jos tosi, ufo tuhoutuu.
+ */
+    private boolean ufonOsumaTunnistus(int kutiX, int ufoX, int kutiY, int ufoY) {
+        return kutiX >= ufoX
+                && kutiX <= (ufoX + UfonLeveys)
+                && kutiY >= ufoY
+                && kutiY <= (ufoY + UfonKorkeus);
+    }
+
+
 }

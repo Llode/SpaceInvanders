@@ -32,13 +32,13 @@ import Pelimoottori.UfoKuti;
  *Pelin sisäinen grafiikka.
  * @author Larppa
  */
-public class Grafiikka extends JPanel implements Asetukset {
+public class Grafiikka extends JPanel implements Asetukset, Runnable {
 
     private final String PeliLoppui = "";
-    private final String ammus = "/res/ammus.png";
-    private final String pelaajakuva = "/res/pelaaja.png";
-    private final String UfoKuva = "/res/ufo.png";
-    private final String rajahdys = "/res/rajahdys.png";
+    private final String ammus = "ammus.png";
+    private final String pelaajakuva = "pelaaja.png";
+    private final String UfoKuva = "ufo.png";
+    private final String rajahdys = "rajahdys.png";
     private Dimension d;
     ImageIcon objektiKuolee;
     Kuti kuti;
@@ -88,7 +88,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      * Asettaa kuvan pelaajan ammuksille.
      */
     public void asetaKuvaAmmukselle() {
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(ammus));
+        ImageIcon ii = new ImageIcon(ammus);
         kuti.setImage(ii.getImage());
     }
 
@@ -96,7 +96,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      * Asettaa kuvan pelaajalle.
      */
     public void asetaKuvaPelaajalle() {
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(pelaajakuva));
+        ImageIcon ii = new ImageIcon(pelaajakuva);
 //        pelaaja.leveys = ii.getImage().getWidth(null);
         pelaaja.setImage(ii.getImage());
     }
@@ -105,7 +105,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      * Asettaa kuvan ufolle.
      */
     public void asetaKuvaUfolle() {
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(UfoKuva));
+        ImageIcon ii = new ImageIcon(UfoKuva);
         ufo.setImage(ii.getImage());
     }
 
@@ -113,14 +113,14 @@ public class Grafiikka extends JPanel implements Asetukset {
      * Asettaa kuvan räjähdykselle.
      */
     public void asetaKuvaRajahdykselle() {
-        objektiKuolee = new ImageIcon(getClass().getResource(rajahdys));
+        objektiKuolee = new ImageIcon(rajahdys);
     }
 
     /**
      * Ette ikinä arvaa.
      */
     public void asetaKuvaUfoKudille() {
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(ammus));
+        ImageIcon ii = new ImageIcon(ammus);
         ufokuti.setImage(ii.getImage());
     }
 

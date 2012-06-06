@@ -36,7 +36,7 @@ public class UfoKuti extends Objekti {
     public void setKutiTuhoutuu(boolean tuhoutuu) {
         this.tuhoutuu = tuhoutuu;
     }
-/*'
+/**
      * Kertoo, onko ammus tuhoutunut.
      */
     public boolean kutiTuhoutuu() {
