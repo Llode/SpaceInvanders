@@ -29,7 +29,7 @@ public class TAdapter extends KeyAdapter {
 
         if (ingame) {
             if (e.isAltDown()) {
-                pelaaja.pelaajaAmpuu();
+                pelaaja.Ammu();
             }
         }
     }

@@ -59,8 +59,14 @@ public class PelaajaTest {
 
     @Test
     public void pelaajaEiAmmuKunAmmusKentalla(){
-        pelaaja.pelaajaAmpuu();
-        assertFalse(pelaaja.pelaajaAmpuu());
+        assertTrue(kuti.isVisible());
+        kuti.die();
+        assertFalse(kuti.isVisible());
+        pelaaja.Ammu();
+        //pelaajan koordinaatti oikein:
+        assertEquals(250, pelaaja.getX(), vertailutarkkuus);
+        //kuti ei saa oikeita koordinaatteja.
+        assertEquals(pelaaja.getX() + 15, kuti.getX(), vertailutarkkuus);
 
     }
     @Test

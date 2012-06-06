@@ -12,6 +12,7 @@ import Kayttoliittymat.Grafiikka;
 
 /**
  * Pelaajan alus
+ *
  * @author Larppa
  */
 public class Pelaaja extends Objekti implements Asetukset {
@@ -41,8 +42,6 @@ public class Pelaaja extends Objekti implements Asetukset {
      * Liikuttaa pelaajaa sekä estää sitä pääsemästä koordinaatiston (ruudun)
      * ulkopuolelle.
      */
-
-    
     public void pelaajaLiikkuu() {
         x += liike;
         if (x <= 2) {
@@ -56,12 +55,11 @@ public class Pelaaja extends Objekti implements Asetukset {
     /**
      * Metodia kutsutaan, kun pelaaja ampuu.
      */
-    public boolean pelaajaAmpuu() {
+    public void Ammu() {
+//        int kutiX = this.x;
+//        int kutiY = this.y;
         if (!kuti.isVisible()) {
-            kuti = new Kuti(x, y);
-            return true;
-        } else {
-            return false;
+            kuti = new Kuti(this.x, this.y);
         }
     }
 
@@ -78,7 +76,8 @@ public class Pelaaja extends Objekti implements Asetukset {
     public void pelaajaLiikkuuOikeaan() {
         liike = 2;
     }
-/**
+
+    /**
      * Pelaaja pysähtyy.
      */
     public void pelaajaPysahtyy() {

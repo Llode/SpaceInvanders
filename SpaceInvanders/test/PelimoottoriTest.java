@@ -3,10 +3,7 @@
  * and open the template in the editor.
  */
 
-import Pelimoottori.Pelaaja;
-import Pelimoottori.Ufo;
-import Pelimoottori.UfoKuti;
-import Pelimoottori.Pelimoottori;
+import Pelimoottori.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -27,6 +24,7 @@ public class PelimoottoriTest {
     Pelaaja pelaaja;
     Ufo ufo;
     UfoKuti ufokuti;
+    Kuti kuti;
 
     public PelimoottoriTest() {
     }
@@ -42,21 +40,77 @@ public class PelimoottoriTest {
     @Before
     public void setUp() {
         moottori = new Pelimoottori();
+        pelaaja = new Pelaaja();
+        kuti = new Kuti(50, 12);
+        ufo = new Ufo(10, 375);
+        ufokuti = new UfoKuti(279, 114);
     }
 
     @After
     public void tearDown() {
     }
-    
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
     // @Test
     // public void hello() {}
+//    @Test
+//    public void SetUpLuoObjektit(){
+//        moottori.SetUp();
+//    assertTrue(pelaaja.isVisible());
+//}
     @Test
-    public void SetUpLuoObjektit(){
-        moottori.SetUp();
-    assertTrue(pelaaja.isVisible());
-}
+    public void PelaajanOsumaTunnistusToimii() {
+        int ufokutiX = ufokuti.getX();
+        int ufokutiY = ufokuti.getY();
+        int pelaajaX = pelaaja.getX();
+        int pelaajaY = pelaaja.getY();
+        assertTrue(moottori.pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY));
+    }
+
+    @Test
+    public void UfonOsumatunnistusToimii() {
+        int kutiX = kuti.getX();
+        int kutiY = kuti.getY();
+        int ufoX = ufo.getX();
+        int ufoY = ufo.getY();
+        assertFalse(moottori.ufonOsumaTunnistus(kutiX, ufoX, kutiY, ufoY));
+        kutiX = 100;
+        kutiY = 100;
+        ufoX = 95;
+        ufoY = 95;
+        assertTrue(moottori.ufonOsumaTunnistus(kutiX, ufoX, kutiY, ufoY));
+    }
+
+    @Test
+    public void UfoTuhoutuuKunSaaOsuman() {
+        assertTrue(kuti.isVisible());
+        moottori.ufoTuhoutuuOsumasta(ufo);
+        kuti = new Kuti(100, 100);
+        assertEquals(1, moottori.tuhotut);
+        moottori.ufoTuhoutuuOsumasta(ufo);
+        assertEquals(2, moottori.tuhotut);
+        assertFalse(kuti.isVisible());
+    }
+
+    @Test
+    public void UfoKatoaaKuollessa() {
+        ufo.setKuolee(true);
+        moottori.ufoKatoaaKuollessaan(ufo);
+        assertFalse(ufo.isVisible());
+    }
+
+    @Test
+    public void PelaajanAmmusKatoaaRuudunUlkopuolella() {
+        moottori.pelaajanAmmusLiikkuu();
+        moottori.pelaajanAmmusLiikkuu();
+        assertTrue(kuti.isVisible());
+        moottori.pelaajanAmmusLiikkuu();
+        assertFalse(kuti.isVisible());
+    }
+    @Test
+    public void UfotOsuuMaaha(){
+        moottori.ufot
+    }
 }

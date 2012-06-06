@@ -45,7 +45,7 @@ public class KutiTest {
     // public void hello() {}
     @Test
     public void ammuksenKeskitysTOimiiX(){
-        assertEquals(62, kuti.getX(), vertailutarkkuus);
+        assertEquals(65, kuti.getX(), vertailutarkkuus);
     }
     @Test
     public void ammuksenKeskitysToimiiY() {
