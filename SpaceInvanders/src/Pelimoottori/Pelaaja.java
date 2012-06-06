@@ -9,6 +9,7 @@ import Pelimoottori.Objekti;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import Kayttoliittymat.Grafiikka;
+import Kayttoliittymat.TAdapter;
 
 /**
  * Pelaajan alus
@@ -23,7 +24,6 @@ public class Pelaaja extends Objekti implements Asetukset {
     Grafiikka grafiikka;
     public int leveys = PelaajanLeveys;
     Kuti kuti = new Kuti();
-    private boolean ingame;
 
     /**
      * Luo pelaajan aluksen kuvan
@@ -35,7 +35,6 @@ public class Pelaaja extends Objekti implements Asetukset {
     public Pelaaja() {
         setX(aloitus_x);
         setY(aloitus_y);
-
     }
 
     /**
@@ -89,30 +88,49 @@ public class Pelaaja extends Objekti implements Asetukset {
      *
      * @param e hakee painettavan näppäimen tunnuksen
      */
-    public void keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-            pelaajaLiikkuuVasempaan();
-        }
-        if (key == KeyEvent.VK_RIGHT) {
-            pelaajaLiikkuuOikeaan();
-        }
+//    public void keyPressed(KeyEvent e) {
+//        int key = e.getKeyCode();
+//
+//        if (key == KeyEvent.VK_LEFT) {
+//            pelaajaLiikkuuVasempaan();
+//        }
+//        if (key == KeyEvent.VK_RIGHT) {
+//            pelaajaLiikkuuOikeaan();
+//        }
+//    }
+//
+//    /**
+//     * Alus pysähtyy, kun liikenapeista päästetään irti.
+//     *
+//     * @param e
+//     */
+//    public void keyReleased(KeyEvent e) {
+//        int key = e.getKeyCode();
+//
+//        if (key == KeyEvent.VK_LEFT) {
+//            pelaajaPysahtyy();
+//        }
+//        if (key == KeyEvent.VK_RIGHT) {
+//            pelaajaPysahtyy();
+//        }
+//    }
+    
+    
+    
+        public void keyReleased(KeyEvent e) {
+        keyReleased(e);
     }
 
-    /**
-     * Alus pysähtyy, kun liikenapeista päästetään irti.
-     *
-     * @param e
-     */
-    public void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
+    public void keyPressed(KeyEvent e) {
+        keyPressed(e);
 
-        if (key == KeyEvent.VK_LEFT) {
-            pelaajaPysahtyy();
-        }
-        if (key == KeyEvent.VK_RIGHT) {
-            pelaajaPysahtyy();
+        int x = getX();
+        int y = getY();
+
+        if (ingame) {
+            if (e.isAltDown()) {
+                Ammu();
+            }
         }
     }
 }

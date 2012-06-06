@@ -4,16 +4,8 @@
  */
 package Pelimoottori;
 
-import Pelimoottori.UfoKuti;
-import Pelimoottori.Kuti;
-import Pelimoottori.Pelaaja;
-import Pelimoottori.Asetukset;
-import Pelimoottori.Ufo;
+
 import Kayttoliittymat.Grafiikka;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -42,11 +34,12 @@ public class Pelimoottori extends JPanel implements Asetukset {
     private int ufoY;
     private int suunta;
     public int tuhotut;
-    boolean ingame;
+    public boolean ingame;
     private String UfoKuva;
     private Thread animator;
     Grafiikka grafiikka;
     Graphics g;
+    public String Loppusanat = "";
 
     public void Pelimoottori() {
         tuhotut = 0;
@@ -58,13 +51,25 @@ public class Pelimoottori extends JPanel implements Asetukset {
     }
 
     /**
-     * ASettaa ufot riveihin, luo pelaajan, asettaa spritet objekteille.
+     * ASettaa Luo ufot ja pelaajan, asettaa spritet objekteille.
      */
     public void SetUp() {
         ufot = new ArrayList();
 
         ImageIcon ii = new ImageIcon(UfoKuva);
+        asetaUfotRiveihin(ii);
 
+        pelaaja = new Pelaaja();
+        grafiikka.asetaKuvaPelaajalle();
+
+        kuti = new Kuti();
+        grafiikka.asetaKuvaAmmukselle();
+    }
+/**
+ * Asettaa ufot neljään riviin.
+ * @param ii ufon imgaicon
+ */
+    private void asetaUfotRiveihin(ImageIcon ii) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
                 Ufo ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * j);
@@ -73,17 +78,6 @@ public class Pelimoottori extends JPanel implements Asetukset {
                 ufot.add(ufo);
             }
         }
-
-        pelaaja = new Pelaaja();
-
-        grafiikka.asetaKuvaPelaajalle();
-        kuti = new Kuti();
-        grafiikka.asetaKuvaAmmukselle();
-
-//        if (animator == null || !ingame) {
-//            animator = new Thread(this);
-//            animator.start();
-//        }
     }
 
     /**
@@ -154,10 +148,7 @@ public class Pelimoottori extends JPanel implements Asetukset {
      */
     public void toiminta() {
 
-        if (tuhotut == Ufolkm) {
-            ingame = false;
-//            peliVoitettu = true;
-        }
+        peliLoppuuUfojenTuhoamiseen();
 
         //Pelaaja
         pelaaja.pelaajaLiikkuu();
@@ -179,6 +170,16 @@ public class Pelimoottori extends JPanel implements Asetukset {
             ufotSaavuttavatMaan(ufo);
         }
         ufonAmmuksetToimintasyklissa();
+    }
+
+    /**
+     * Pelaaja voittaa pelin kaikkien ufojen tuhoutuessa.
+     */
+    private void peliLoppuuUfojenTuhoamiseen() {
+        if (tuhotut == Ufolkm) {
+            ingame = false;
+            Loppusanat = "Voitit pelin!";
+        }
     }
 
     private void pelaajanAmmuksetAnimaatioSyklissa() {
@@ -268,7 +269,7 @@ public class Pelimoottori extends JPanel implements Asetukset {
 
             if (y > UfojenMaaliViiva - UfonKorkeus) {
                 ingame = false;
-                //Peli loppuu invaasioon
+                Loppusanat = "Ufot ovat valloittaneet maailman!";
             }
             ufo.ufoLiikkuu(suunta);
         }
@@ -308,17 +309,6 @@ public class Pelimoottori extends JPanel implements Asetukset {
     }
 
     /**
-     * Pelaajan alus tuhoutuu, kun ufojen ammukset osuvat siihen.
-     *
-     * @param ufokuti
-     */
-    private void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
-        pelaaja.setImage(grafiikka.getRajahdys().getImage());
-        pelaaja.setKuolee(true);
-        ufokuti.setKutiTuhoutuu(true);
-    }
-
-    /**
      * Tutkii pelaajan aluksen ja ufojen ammusten törmäystä.
      *
      * @param ufokutiX
@@ -335,13 +325,24 @@ public class Pelimoottori extends JPanel implements Asetukset {
     }
 
     /**
+     * Pelaajan alus tuhoutuu, kun ufojen ammukset osuvat siihen.
+     *
+     * @param ufokuti
+     */
+    private void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
+        pelaaja.setImage(grafiikka.getRajahdys().getImage());
+        pelaaja.setKuolee(true);
+        ufokuti.setKutiTuhoutuu(true);
+    }
+
+    /**
      * Ufo tuhoutuu, kun pelaaja osuu siihen ammuksellaan.
      *
      * @param ufo
      */
     public void ufoTuhoutuuOsumasta(Ufo ufo) {
-//        grafiikka.asetaKuvaRajahdykselle();
-//        ufo.setImage(grafiikka.getRajahdys().getImage());
+        grafiikka.asetaKuvaRajahdykselle();
+        ufo.setImage(grafiikka.getRajahdys().getImage());
         ufo.setKuolee(true);
         tuhotut++;
         kuti.die();
@@ -363,13 +364,23 @@ public class Pelimoottori extends JPanel implements Asetukset {
                 && kutiY <= (ufoY + UfonKorkeus);
     }
 
+    /**
+     * pelaaja.setKuolee() johtaa pelaajan katoamiseen kentältä sekä pelin
+     * loppumiseen.
+     */
     private void peliLoppuuPelaajanKuollessa() {
         if (pelaaja.Kuoleeko()) {
             pelaaja.die();
             ingame = false;
+            Loppusanat = "Hävisit pelin!";
         }
     }
 
+    /**
+     * ufo.setKuolee() johtaa ufon katoamiseen kentältä.
+     *
+     * @param ufo
+     */
     public void ufoKatoaaKuollessaan(Ufo ufo) {
         if (ufo.Kuoleeko()) {
             ufo.die();

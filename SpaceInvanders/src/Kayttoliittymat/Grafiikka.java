@@ -4,37 +4,20 @@
  */
 package Kayttoliittymat;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-//import java.awt.Toolkit;
-//import java.awt.event.KeyAdapter;
-//import java.awt.event.KeyEvent;
-//
-//import java.util.ArrayList;
-//import java.util.Random;
-//import java.util.Iterator;
-
+import Pelimoottori.*;
+import java.awt.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
-import Pelimoottori.Pelimoottori;
-import Pelimoottori.Asetukset;
-import Pelimoottori.Kuti;
-import Pelimoottori.Pelaaja;
 import spaceinvanders.TAdapter;
-import Pelimoottori.Ufo;
-import Pelimoottori.UfoKuti;
 
 /**
- *Pelin sisäinen grafiikka.
+ * Pelin sisäinen grafiikka.
+ *
  * @author Larppa
  */
 public class Grafiikka extends JPanel implements Asetukset, Runnable {
 
-    private final String PeliLoppui = "";
+    private String PeliLoppui;
     private final String ammus = "ammus.png";
     private final String pelaajakuva = "pelaaja.png";
     private final String UfoKuva = "ufo.png";
@@ -47,30 +30,56 @@ public class Grafiikka extends JPanel implements Asetukset, Runnable {
     Pelimoottori moottori = new Pelimoottori();
     TAdapter TAdapter;
     UfoKuti ufokuti;
-    public int pelaajanLeveys;
+    private Thread animator;
 
     /**
      * Luo pelikentän.
      */
     public Grafiikka(Pelimoottori pelimoottori) {
+
         addKeyListener(new TAdapter());
         setFocusable(true);
         d = new Dimension(RuudunLeveys, RuudunKorkeus);
         setBackground(Color.black);
 
-        this.moottori.SetUp();
+        moottori.SetUp();
+        if (animator == null || !pelimoottori.ingame) {
+            animator = new Thread(this);
+            animator.start();
+        }
         setDoubleBuffered(true);
 
     }
 
-//    public void addNotify() {
-//        super.addNotify();
-//        moottori.SetUp();
-//    }
+    public void addNotify() {
+        super.addNotify();
+        moottori.SetUp();
+    }
+
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        g.setColor(Color.black);
+        g.fillRect(0, 0, d.width, d.height);
+        g.setColor(Color.red);
+
+        if (moottori.ingame) {
+            g.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
+            moottori.ufotKentalle(g);
+            moottori.pelaajaKentalle(g);
+            moottori.ammusKentalle(g);
+            moottori.ufotAmpuu(g);
+        }
+
+        Toolkit.getDefaultToolkit().sync();
+        g.dispose();
+    }
+
     /**
      * Piirtää game over -ruudun.
      */
     public void peliLoppuu() {
+        PeliLoppui = moottori.Loppusanat;
         Graphics g = this.getGraphics();
 
         g.setColor(Color.black);
@@ -97,7 +106,7 @@ public class Grafiikka extends JPanel implements Asetukset, Runnable {
      */
     public void asetaKuvaPelaajalle() {
         ImageIcon ii = new ImageIcon(pelaajakuva);
-//        pelaaja.leveys = ii.getImage().getWidth(null);
+        pelaaja.leveys = ii.getImage().getWidth(null);
         pelaaja.setImage(ii.getImage());
     }
 
@@ -130,7 +139,12 @@ public class Grafiikka extends JPanel implements Asetukset, Runnable {
     public ImageIcon getRajahdys() {
         return objektiKuolee;
     }
-    public void run(){
-        
+
+    public void run() {
+        while (moottori.ingame) {
+            repaint();
+            moottori.toiminta();
+        }
+        peliLoppuu();
     }
 }
