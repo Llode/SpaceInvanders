@@ -4,18 +4,19 @@
  */
 package Kayttoliittymat;
 
+import Pelimoottori.Pelaaja;
+import Pelimoottori.Pelimoottori;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import Pelimoottori.Pelaaja;
 
 /**
- *
+ * Tulkkaa näppäimistöä ja pelaajan inputia.
  * @author Larppa
  */
 public class TAdapter extends KeyAdapter {
 
-    private Pelaaja pelaaja;
-    private boolean ingame;
+    Pelaaja pelaaja;
+    Pelimoottori moottori;
 
     /**
      * Alus liikkuu, kun nuolinäppäimiä painetaan.
@@ -26,10 +27,13 @@ public class TAdapter extends KeyAdapter {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            pelaaja.liike = -2;
+            pelaaja.pelaajaLiikkuuVasempaan();
         }
         if (key == KeyEvent.VK_RIGHT) {
-            pelaaja.liike = 2;
+            pelaaja.pelaajaLiikkuuOikeaan();
+        }
+        if (e.isAltDown()) {
+            moottori.pelaajaAmpuu();
         }
     }
 
@@ -42,10 +46,10 @@ public class TAdapter extends KeyAdapter {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            pelaaja.liike = 0;
+            pelaaja.pelaajaPysahtyy();
         }
         if (key == KeyEvent.VK_RIGHT) {
-            pelaaja.liike = 0;
+            pelaaja.pelaajaPysahtyy();
         }
 
 //    public void keyReleased(KeyEvent e) {

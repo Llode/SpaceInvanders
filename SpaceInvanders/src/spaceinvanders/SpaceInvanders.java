@@ -5,13 +5,12 @@
 package spaceinvanders;
 
 import Kayttoliittymat.Grafiikka;
-import Kayttoliittymat.Spaceinv;
 import Pelimoottori.Asetukset;
 import Pelimoottori.Pelimoottori;
 import javax.swing.JFrame;
 
 /**
- *
+ * Maini. Kaiken pitäisi startata täältä.
  * @author lode
  */
 public class SpaceInvanders extends JFrame implements Asetukset {
@@ -31,6 +30,6 @@ public class SpaceInvanders extends JFrame implements Asetukset {
     }
 
     public static void main(String[] args) {
-        new SpaceInvanders();
+        SpaceInvanders spaceInvanders = new SpaceInvanders();
     }
 }

@@ -1,3 +1,5 @@
+package Pelimoottori;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -57,18 +59,7 @@ public class PelaajaTest {
         assertEquals(100, pelaaja.getY(), vertailutarkkuus);
     }
 
-    @Test
-    public void pelaajaEiAmmuKunAmmusKentalla(){
-        assertTrue(kuti.isVisible());
-        kuti.die();
-        assertFalse(kuti.isVisible());
-        pelaaja.Ammu();
-        //pelaajan koordinaatti oikein:
-        assertEquals(250, pelaaja.getX(), vertailutarkkuus);
-        //kuti ei saa oikeita koordinaatteja.
-        assertEquals(pelaaja.getX() + 15, kuti.getX(), vertailutarkkuus);
 
-    }
     @Test
     public void pelaajaEiPaaseUlosReunoista(){
         pelaaja.liike = -250;

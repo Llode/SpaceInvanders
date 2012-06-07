@@ -20,6 +20,9 @@ public class Objekti {
     protected boolean kuolee;
     public int liike;
 
+    /**
+     * Yleinen konstruktori ero objekteille.
+     */
     public Objekti() {
         spriteNakyy = true;
     }

@@ -4,10 +4,7 @@
  */
 package Pelimoottori;
 
-import Pelimoottori.Asetukset;
-import Pelimoottori.Objekti;
 import java.awt.event.KeyEvent;
-import javax.swing.ImageIcon;
 import Kayttoliittymat.Grafiikka;
 import Kayttoliittymat.TAdapter;
 
@@ -23,7 +20,7 @@ public class Pelaaja extends Objekti implements Asetukset {
     private final String pelaaja = "/res/alus.png";
     Grafiikka grafiikka;
     public int leveys = PelaajanLeveys;
-    Kuti kuti = new Kuti();
+    Kuti kuti;
 
     /**
      * Luo pelaajan aluksen kuvan
@@ -54,13 +51,13 @@ public class Pelaaja extends Objekti implements Asetukset {
     /**
      * Metodia kutsutaan, kun pelaaja ampuu.
      */
-    public void Ammu() {
+//    public void Ammu() {
 //        int kutiX = this.x;
 //        int kutiY = this.y;
-        if (!kuti.isVisible()) {
-            kuti = new Kuti(this.x, this.y);
-        }
-    }
+//        if (!kuti.isVisible()) {
+//            kuti = new Kuti(kutiX, kutiY);
+//        }
+//    }
 
     /**
      * pelaaja liikesuunta muuttuu vasempaan.
@@ -81,56 +78,5 @@ public class Pelaaja extends Objekti implements Asetukset {
      */
     public void pelaajaPysahtyy() {
         liike = 0;
-    }
-
-    /**
-     * Alus liikkuu, kun nuolinäppäimiä painetaan.
-     *
-     * @param e hakee painettavan näppäimen tunnuksen
-     */
-//    public void keyPressed(KeyEvent e) {
-//        int key = e.getKeyCode();
-//
-//        if (key == KeyEvent.VK_LEFT) {
-//            pelaajaLiikkuuVasempaan();
-//        }
-//        if (key == KeyEvent.VK_RIGHT) {
-//            pelaajaLiikkuuOikeaan();
-//        }
-//    }
-//
-//    /**
-//     * Alus pysähtyy, kun liikenapeista päästetään irti.
-//     *
-//     * @param e
-//     */
-//    public void keyReleased(KeyEvent e) {
-//        int key = e.getKeyCode();
-//
-//        if (key == KeyEvent.VK_LEFT) {
-//            pelaajaPysahtyy();
-//        }
-//        if (key == KeyEvent.VK_RIGHT) {
-//            pelaajaPysahtyy();
-//        }
-//    }
-    
-    
-    
-        public void keyReleased(KeyEvent e) {
-        keyReleased(e);
-    }
-
-    public void keyPressed(KeyEvent e) {
-        keyPressed(e);
-
-        int x = getX();
-        int y = getY();
-
-        if (ingame) {
-            if (e.isAltDown()) {
-                Ammu();
-            }
-        }
     }
 }

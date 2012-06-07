@@ -1,3 +1,5 @@
+package Pelimoottori;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,17 +11,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import Pelimoottori.Kuti;
+import Pelimoottori.UfoKuti;
 
 /**
  *
  * @author Larppa
  */
-public class KutiTest {
-    Kuti kuti;
-    double vertailutarkkuus = 0.0001;
-    
-    public KutiTest() {
+public class UfoKutiTest {
+    UfoKuti ufokuti;
+    Double vertailutarkkuus = 0.0001;
+    public UfoKutiTest() {
     }
 
     @BeforeClass
@@ -32,7 +33,7 @@ public class KutiTest {
     
     @Before
     public void setUp() {
-        kuti = new Kuti(50, 50);
+        ufokuti = new UfoKuti(50, 50);
     }
     
     @After
@@ -44,11 +45,16 @@ public class KutiTest {
     // @Test
     // public void hello() {}
     @Test
-    public void ammuksenKeskitysTOimiiX(){
-        assertEquals(65, kuti.getX(), vertailutarkkuus);
+    public void UfoKutiOnNakyvilla(){
+        assertTrue(ufokuti.isVisible());
+    }
+    @Test public void UfoKutiKatoaaKuollessaan(){
+        ufokuti.die();
+        assertFalse(ufokuti.isVisible());
     }
     @Test
-    public void ammuksenKeskitysToimiiY() {
-        assertEquals(49, kuti.getY(), vertailutarkkuus);
+    public void UfokutiTuhoutuu(){
+        ufokuti.setKutiTuhoutuu(true);
+        assertTrue(ufokuti.kutiTuhoutuu());
     }
 }

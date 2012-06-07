@@ -1,3 +1,5 @@
+package Pelimoottori;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -25,6 +27,7 @@ public class PelimoottoriTest {
     Ufo ufo;
     UfoKuti ufokuti;
     Kuti kuti;
+    double vertailutarkkuus = 0.0001;
 
     public PelimoottoriTest() {
     }
@@ -87,7 +90,8 @@ public class PelimoottoriTest {
     public void UfoTuhoutuuKunSaaOsuman() {
         assertTrue(kuti.isVisible());
         moottori.ufoTuhoutuuOsumasta(ufo);
-        kuti = new Kuti(100, 100);
+        assertTrue(kuti.isVisible());
+//        kuti = new Kuti(100, 100);
         assertEquals(1, moottori.tuhotut);
         moottori.ufoTuhoutuuOsumasta(ufo);
         assertEquals(2, moottori.tuhotut);
@@ -103,6 +107,7 @@ public class PelimoottoriTest {
 
     @Test
     public void PelaajanAmmusKatoaaRuudunUlkopuolella() {
+        moottori.pelaajaAmpuu();
         moottori.pelaajanAmmusLiikkuu();
         moottori.pelaajanAmmusLiikkuu();
         assertTrue(kuti.isVisible());
@@ -111,6 +116,18 @@ public class PelimoottoriTest {
     }
     @Test
     public void UfotOsuuMaaha(){
-        moottori.ufot
+
+    }
+        @Test
+    public void pelaajaEiAmmuKunAmmusKentalla(){
+        assertTrue(kuti.isVisible());
+        kuti.die();
+        assertFalse(kuti.isVisible());
+        moottori.pelaajaAmpuu();
+        //pelaajan koordinaatti oikein:
+        assertEquals(250, pelaaja.getX(), vertailutarkkuus);
+        //kuti ei saa oikeita koordinaatteja.
+        assertEquals(pelaaja.getX() + 15, kuti.getX(), vertailutarkkuus);
+
     }
 }
