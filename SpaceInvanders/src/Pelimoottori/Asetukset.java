@@ -20,8 +20,8 @@ public interface Asetukset {
     public static final int PelaajanLeveys = 30;
     public static final int RuudunVasenReuna = 5;
     public static final int RuudunOikeaReuna = 30;
-    public static final int UfotLiikkuvatRivinALas = 15;
-    public static final int UfojenMaaliViiva = 400;
+    public static final int UfotLiikkuvatRivinALas = 25;
+    public static final int UfojenMaaliViiva = 350;
     public static final int UfonAmpumaTodNak = 5;
     public static final int Delay = 17;
 }

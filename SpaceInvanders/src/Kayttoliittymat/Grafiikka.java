@@ -6,7 +6,6 @@ package Kayttoliittymat;
 
 import Pelimoottori.*;
 import java.awt.*;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -42,7 +41,6 @@ public class Grafiikka extends JPanel implements Asetukset, Runnable {
         setBackground(Color.black);
         Kaynnistys(pelimoottori);
         setDoubleBuffered(true);
-
     }
 
     /**
@@ -71,9 +69,9 @@ public class Grafiikka extends JPanel implements Asetukset, Runnable {
     public void paint(Graphics g) {
         super.paint(g);
 
-        g.setColor(Color.black);
-        g.fillRect(0, 0, d.width, d.height);
         g.setColor(Color.green);
+        g.fillRect(0, 0, d.width, d.height);
+        g.setColor(Color.red);
         piirraTavaratKentalle(g);
 
         Toolkit.getDefaultToolkit().sync();
@@ -87,7 +85,8 @@ public class Grafiikka extends JPanel implements Asetukset, Runnable {
         if(!moottori.ingame){
         PeliLoppui = moottori.Loppusanat;
         Graphics g = this.getGraphics();
-
+        
+            System.out.println("lol");
         g.setColor(Color.white);
         g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
         
@@ -104,54 +103,6 @@ public class Grafiikka extends JPanel implements Asetukset, Runnable {
         g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
         }
     }
-
-    /**
-     * Asettaa kuvan pelaajan ammuksille.
-     */
-//    public void asetaKuvaAmmukselle() {
-//        ImageIcon ii = new ImageIcon(ammus);
-//        kuti.setImage(ii.getImage());
-//    }
-
-    /**
-     * Asettaa kuvan pelaajalle.
-     */
-//    public void asetaKuvaPelaajalle() {
-//        ImageIcon ii = new ImageIcon(pelaajakuva);
-//        pelaaja.leveys = ii.getImage().getWidth(null);
-//        pelaaja.setImage(ii.getImage());
-//    }
-
-    /**
-     * Asettaa kuvan ufolle.
-     */
-//    public void asetaKuvaUfolle() {
-//        ImageIcon ii = new ImageIcon(UfoKuva);
-//        ufo.setImage(ii.getImage());
-//    }
-
-    /**
-     * Asettaa kuvan räjähdykselle.
-     */
-//    public void asetaKuvaRajahdykselle() {
-//        objektiKuolee = new ImageIcon(rajahdys);
-//    }
-
-    /**
-     * Ette ikinä arvaa.
-     */
-//    public void asetaKuvaUfoKudille() {
-//        ImageIcon ii = new ImageIcon(ammus);
-//        ufokuti.setImage(ii.getImage());
-//    }
-
-    /**
-     * @return Noutaa räjähdyksen tuhoutuvia objekteja varten.
-     */
-//    public ImageIcon getRajahdys() {
-//        return objektiKuolee;
-//    }
-    
     
 /**
  * Piirtää ufon kentälle.

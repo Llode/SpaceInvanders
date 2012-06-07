@@ -18,8 +18,8 @@ import javax.swing.ImageIcon;
  */
 public class Pelimoottori implements Asetukset {
 
-    protected Pelaaja pelaaja;
-    protected Kuti kuti;
+    public Pelaaja pelaaja;
+    public Kuti kuti;
     protected Ufo ufo;
     protected UfoKuti ufokuti;
     private ArrayList ufot;
@@ -41,7 +41,7 @@ public class Pelimoottori implements Asetukset {
         tuhotut = 0;
         suunta = -1;
         ufoY = 5;
-        ufoX = 300;
+        ufoX = 50;
         ingame = true;
     }
 
@@ -127,11 +127,8 @@ public class Pelimoottori implements Asetukset {
     }
 
     public void pelaajaAmpuu() {
-
-        int kutiX = pelaaja.getX();
-        int kutiY = pelaaja.getY();
         if (!kuti.isVisible()) {
-            kuti = new Kuti(kutiX, kutiY);
+            kuti = new Kuti(pelaaja.getX(), pelaaja.getY());
         }
     }
 
@@ -408,31 +405,49 @@ public class Pelimoottori implements Asetukset {
         }
     }
 
+    /**
+     * Asettaa kuvan pelaajalle.
+     */
     private void asetaKuvaPelaajalle() {
         ImageIcon ii = new ImageIcon(pelaajakuva);
         pelaaja.leveys = ii.getImage().getWidth(null);
         pelaaja.setImage(ii.getImage());
     }
 
+    /**
+     * Asettaa kuvan pelaajan ammuksille.
+     */
     private void asetaKuvaAmmukselle() {
         ImageIcon ii = new ImageIcon(ammus);
         kuti.setImage(ii.getImage());
     }
 
+    /**
+     * Asettaa kuvan ufolle.
+     */
     private void asetaKuvaUfolle() {
         ImageIcon ii = new ImageIcon(UfoKuva);
         ufo.setImage(ii.getImage());
     }
 
+    /**
+     * Asettaa kuvan räjähdykselle.
+     */
     private void asetaKuvaRajahdykselle() {
         objektiKuolee = new ImageIcon(rajahdys);
     }
 
+    /**
+     * Ette ikinä arvaa.
+     */
     private void asetaKuvaUfoKudille() {
         ImageIcon ii = new ImageIcon(ammus);
         ufokuti.setImage(ii.getImage());
     }
 
+    /**
+     * @return Noutaa räjähdyksen tuhoutuvia objekteja varten.
+     */
     private ImageIcon getRajahdys() {
         return objektiKuolee;
     }
