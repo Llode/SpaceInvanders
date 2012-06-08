@@ -2,16 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Kayttoliittymat;
+package spaceinvanders;
 
-import Kayttoliittymat.Grafiikka;
+import Kayttoliittymat.Kayttoliittyma;
 import Pelimoottori.Asetukset;
 import Pelimoottori.Pelimoottori;
 import javax.swing.JFrame;
 
 /**
  * Maini. Kaiken pitäisi startata täältä.
- * @author lode
+ * @author Lauri Lode
  */
 public class SpaceInvanders extends JFrame implements Asetukset {
 
@@ -20,12 +20,13 @@ public class SpaceInvanders extends JFrame implements Asetukset {
      */
     Pelimoottori moottori = new Pelimoottori();
     public SpaceInvanders() {
-        add(new Grafiikka(moottori));
+        
         setTitle("Space Invanders");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(RuudunLeveys, RuudunKorkeus);
         setLocationRelativeTo(null);
         setVisible(true);
+        add(new Kayttoliittyma(moottori));
         setResizable(false);
     }
 

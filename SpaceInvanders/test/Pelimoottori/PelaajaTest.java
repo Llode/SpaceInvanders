@@ -9,7 +9,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import Pelimoottori.Kuti;
 import Pelimoottori.Pelaaja;
-import Kayttoliittymat.Grafiikka;
+import Kayttoliittymat.Kayttoliittyma;
 
 /**
  *

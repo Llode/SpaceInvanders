@@ -38,11 +38,11 @@ public class Pelimoottori implements Asetukset {
     private ImageIcon objektiKuolee;
 
     public void Pelimoottori() {
-        tuhotut = 0;
-        suunta = -1;
-        ufoY = 5;
-        ufoX = 50;
-        ingame = true;
+//        tuhotut = 0;
+//        suunta = -1;
+//        ufoY = 5;
+//        ufoX = 50;
+//        ingame = true;
     }
 
     public boolean onkoPeliLoppu() {
@@ -52,10 +52,16 @@ public class Pelimoottori implements Asetukset {
     /**
      * ASettaa Luo ufot ja pelaajan, asettaa spritet objekteille.
      */
-    public void SetUp() {
+    public void GameInit() {
+        tuhotut = 0;
+        suunta = -1;
+        ufoY = 5;
+        ufoX = 50;
+        ingame = true;
+
         ufot = new ArrayList();
-        ImageIcon ii = new ImageIcon("ufo.png");
-        asetaUfotRiveihin(ii);
+//        ImageIcon ii = new ImageIcon("ufo.png");
+        asetaUfotRiveihin();
 
         pelaaja = new Pelaaja();
         asetaKuvaPelaajalle();
@@ -161,12 +167,12 @@ public class Pelimoottori implements Asetukset {
      *
      * @param ii ufon imageicon
      */
-    private void asetaUfotRiveihin(ImageIcon ii) {
+    private void asetaUfotRiveihin() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
                 ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * j);
-//                grafiikka.asetaKuvaUfolle();
-                ufo.setImage(ii.getImage());
+                asetaKuvaUfolle();
+//                ufo.setImage(ii.getImage());
                 ufot.add(ufo);
             }
         }

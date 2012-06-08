@@ -5,7 +5,7 @@
 package Pelimoottori;
 
 import java.awt.event.KeyEvent;
-import Kayttoliittymat.Grafiikka;
+import Kayttoliittymat.Kayttoliittyma;
 import Kayttoliittymat.TAdapter;
 
 /**
@@ -16,19 +16,15 @@ import Kayttoliittymat.TAdapter;
 public class Pelaaja extends Objekti implements Asetukset {
 
     private final int aloitus_x = 250;
-    private final int aloitus_y = 100;
+    private final int aloitus_y = 400;
     private final String pelaaja = "/res/alus.png";
-    Grafiikka grafiikka;
+    Kayttoliittyma grafiikka;
     public int leveys = PelaajanLeveys;
     Kuti kuti;
 
-    /**
-     * Luo pelaajan aluksen kuvan
-     *
-     * @param aloitus_x pelaajan aloituspiste x-akselilla
-     * @param aloitus_y pelaajan aloituspiste y-akselilla
-     * @param leveys pelaajan aluksen leveys
-     */
+/**
+ * Luo pelaajan aluksen.
+ */
     public Pelaaja() {
         setX(aloitus_x);
         setY(aloitus_y);

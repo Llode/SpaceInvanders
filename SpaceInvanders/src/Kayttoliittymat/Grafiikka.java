@@ -5,138 +5,64 @@
 package Kayttoliittymat;
 
 import Pelimoottori.*;
-import java.awt.*;
+import java.awt.Graphics;
 import javax.swing.JPanel;
 
 /**
- * Pelin sisäinen grafiikka.
  *
  * @author Larppa
  */
-public class Grafiikka extends JPanel implements Asetukset, Runnable {
+public class Grafiikka extends JPanel implements Asetukset {
 
-    private String PeliLoppui;
-    private final String ammus = "ammus.png";
-    private final String pelaajakuva = "pelaaja.png";
-    private final String UfoKuva = "ufo.png";
-    private final String rajahdys = "rajahdys.png";
-    private Dimension d;
-    private Pelimoottori moottori = new Pelimoottori();
-    private Thread animator;
 
-    public Kuti kuti;
-    public Pelaaja pelaaja;
-    public Ufo ufo;
-    public TAdapter TAdapter;
-    public UfoKuti ufokuti;
+    Pelimoottori moottori;
+    UfoKuti ufokuti;
+    Pelaaja pelaaja;
+    Ufo ufo;
+    Kuti kuti;
 
     /**
-     * Luo pelikentän.
-     */
-    public Grafiikka(Pelimoottori pelimoottori) {
-
-        addKeyListener(new TAdapter());
-        setFocusable(true);
-        d = new Dimension(RuudunLeveys, RuudunKorkeus);
-        setBackground(Color.black);
-        Kaynnistys(pelimoottori);
-        setDoubleBuffered(true);
-    }
-
-    /**
-     * Käynnistää animaattorin (ja toivottavasti myös pelin).
-     *
-     * @param pelimoottori
-     */
-    private void Kaynnistys(Pelimoottori pelimoottori) {
-        moottori.SetUp();
-        if (animator == null || !pelimoottori.ingame) {
-            animator = new Thread(this);
-            animator.start();
-        }
-    }
-
-    public void addNotify() {
-        super.addNotify();
-        moottori.SetUp();
-    }
-
-    /**
-     * Piirtää taustan sekä objektit kentälle.
+     * Piirtää ufon kentälle.
      *
      * @param g
      */
-    public void paint(Graphics g) {
-        super.paint(g);
-
-        g.setColor(Color.green);
-        g.fillRect(0, 0, d.width, d.height);
-        g.setColor(Color.red);
-        piirraTavaratKentalle(g);
-
-        Toolkit.getDefaultToolkit().sync();
-        g.dispose();
-    }
-
-    /**
-     * Piirtää game over -ruudun.
-     */
-    public void peliLoppuu() {
-        if(!moottori.ingame){
-        PeliLoppui = moottori.Loppusanat;
-        Graphics g = this.getGraphics();
-        
-            System.out.println("lol");
-        g.setColor(Color.white);
-        g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
-        
-        g.setColor(new Color (0, 32, 48));
-        g.fillRect(50, RuudunLeveys/2 -30, RuudunLeveys-100, 50);
-        g.setColor(Color.white);
-        g.drawRect(50, RuudunLeveys/2 -30, RuudunLeveys-100, 50);
-
-        Font small = new Font("Comic sans", Font.BOLD, 14);
-        FontMetrics metr = this.getFontMetrics(small);
-
-        g.setColor(Color.red);
-        g.setFont(small);
-        g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
-        }
-    }
-    
-/**
- * Piirtää ufon kentälle.
- * @param g 
- */
     public void piirraUfo(Graphics g) {
         g.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this);
     }
-/**
- * Piirtää pelaajan kentälle.
- * @param g 
- */
+
+    /**
+     * Piirtää pelaajan kentälle.
+     *
+     * @param g
+     */
     public void piirraPelaaja(Graphics g) {
         g.drawImage(pelaaja.getImage(), pelaaja.getX(), pelaaja.getY(), this);
     }
-/**
- * Piirtää kuudin kentälle.
- * @param g 
- */
+
+    /**
+     * Piirtää kuudin kentälle.
+     *
+     * @param g
+     */
     public void piirraKuti(Graphics g) {
         g.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this);
     }
-/**
- * Piirtää Ufokudin kentälle
- * @param g 
- */
+
+    /**
+     * Piirtää Ufokudin kentälle
+     *
+     * @param g
+     */
     public void piirraUfoKuti(Graphics g) {
         g.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
     }
-/**
- * Piirtää (ja 'animoi') peligrafiikan.
- * @param g 
- */
-    private void piirraTavaratKentalle(Graphics g) {
+
+    /**
+     * Piirtää (ja 'animoi') peligrafiikan.
+     *
+     * @param g
+     */
+    public void piirraTavaratKentalle(Graphics g) {
         if (moottori.ingame) {
             g.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
             moottori.ufotKentalle(g);
@@ -144,30 +70,5 @@ public class Grafiikka extends JPanel implements Asetukset, Runnable {
             moottori.ammusKentalle(g);
             moottori.ufotAmpuu(g);
         }
-    }
-
-    public void run() {
-        
-        long beforeTime, timeDiff, sleep;
-        
-        beforeTime = System.currentTimeMillis();
-        
-        while (moottori.ingame) {
-            repaint();
-            moottori.toiminta();
-            
-            timeDiff = (System.currentTimeMillis() - beforeTime);
-            sleep = Delay - timeDiff;
-            
-            if (sleep < 0)
-                sleep = 2;
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                System.out.println("interrupted");
-            }
-            beforeTime = System.currentTimeMillis();
-        }
-        peliLoppuu();
     }
 }
