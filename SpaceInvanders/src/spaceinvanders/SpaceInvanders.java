@@ -4,13 +4,14 @@
  */
 package spaceinvanders;
 
-import Kayttoliittymat.Kayttoliittyma;
+import Kayttoliittymat.GameMain;
 import Pelimoottori.Asetukset;
-import Pelimoottori.Pelimoottori;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  * Maini. Kaiken pitäisi startata täältä.
+ *
  * @author Lauri Lode
  */
 public class SpaceInvanders extends JFrame implements Asetukset {
@@ -18,19 +19,29 @@ public class SpaceInvanders extends JFrame implements Asetukset {
     /**
      * Peli-ikkunan asetukset.
      */
-    Pelimoottori moottori = new Pelimoottori();
-    public SpaceInvanders() {
-        
-        setTitle("Space Invanders");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(RuudunLeveys, RuudunKorkeus);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        add(new Kayttoliittyma(moottori));
-        setResizable(false);
-    }
-
+//    Pelimoottori moottori = new Pelimoottori();
+//
+//    public SpaceInvanders() {
+//        GameCanvas canvas = new GameCanvas(moottori);
+//        canvas.(moottori);
+//        canvas.setPreferredSize(new Dimension(RuudunLeveys, RuudunKorkeus));
+//        this.setContentPane(canvas);
+//        setTitle("Space Invanders");
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        this.pack();
+//        setLocationRelativeTo(null);
+//        setVisible(true);
+//        setResizable(false);
+//    }
     public static void main(String[] args) {
-        SpaceInvanders spaceInvanders = new SpaceInvanders();
+
+        SwingUtilities.invokeLater(new Runnable() {
+
+
+            @Override
+            public void run() {
+                new GameMain();
+            }
+        });
     }
 }

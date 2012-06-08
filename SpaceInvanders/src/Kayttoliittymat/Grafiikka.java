@@ -5,6 +5,9 @@
 package Kayttoliittymat;
 
 import Pelimoottori.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
@@ -14,7 +17,7 @@ import javax.swing.JPanel;
  */
 public class Grafiikka extends JPanel implements Asetukset {
 
-
+    private String PeliLoppui;
     Pelimoottori moottori;
     UfoKuti ufokuti;
     Pelaaja pelaaja;
@@ -69,6 +72,32 @@ public class Grafiikka extends JPanel implements Asetukset {
             moottori.pelaajaKentalle(g);
             moottori.ammusKentalle(g);
             moottori.ufotAmpuu(g);
+        }
+    }
+
+    /**
+     * Piirtää game over -ruudun.
+     */
+    public void peliLoppuu() {
+        if (!moottori.ingame) {
+            PeliLoppui = moottori.Loppusanat;
+            Graphics g = this.getGraphics();
+
+            System.out.println("lol");
+            g.setColor(Color.white);
+            g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
+
+            g.setColor(new Color(0, 32, 48));
+            g.fillRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
+            g.setColor(Color.white);
+            g.drawRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
+
+            Font small = new Font("Comic sans", Font.BOLD, 14);
+            FontMetrics metr = this.getFontMetrics(small);
+
+            g.setColor(Color.red);
+            g.setFont(small);
+            g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
         }
     }
 }

@@ -5,16 +5,13 @@ package Pelimoottori;
  * and open the template in the editor.
  */
 
-import Pelimoottori.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import javax.swing.JPanel;
-import java.awt.Graphics;
-import java.awt.Toolkit;
+
 
 /**
  *

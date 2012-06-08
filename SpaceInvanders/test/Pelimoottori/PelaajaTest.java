@@ -7,9 +7,8 @@ package Pelimoottori;
 
 import org.junit.*;
 import static org.junit.Assert.*;
-import Pelimoottori.Kuti;
-import Pelimoottori.Pelaaja;
-import Kayttoliittymat.Kayttoliittyma;
+
+
 
 /**
  *

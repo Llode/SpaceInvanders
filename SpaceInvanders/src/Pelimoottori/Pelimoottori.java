@@ -60,7 +60,6 @@ public class Pelimoottori implements Asetukset {
         ingame = true;
 
         ufot = new ArrayList();
-//        ImageIcon ii = new ImageIcon("ufo.png");
         asetaUfotRiveihin();
 
         pelaaja = new Pelaaja();
