@@ -40,8 +40,8 @@ public class PelimoottoriTest {
 
     @Before
     public void setUp() {
-        grafiikka = new Grafiikka();
-        moottori = new Pelimoottori(grafiikka);
+        moottori = new Pelimoottori();
+        grafiikka = new Grafiikka(moottori);
         moottori.GameInit();
         pelaaja = new Pelaaja();
         ufo = new Ufo(10, 331);

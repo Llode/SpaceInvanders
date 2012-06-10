@@ -5,9 +5,6 @@
 package Kayttoliittymat;
 
 import Pelimoottori.*;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -19,7 +16,6 @@ import javax.swing.JPanel;
  */
 public class Grafiikka extends JPanel implements Asetukset {
 
-//    Pelimoottori moottori = new Pelimoottori(this);
     UfoKuti ufokuti;
     Pelaaja pelaaja;
     Ufo ufo;
@@ -32,11 +28,11 @@ public class Grafiikka extends JPanel implements Asetukset {
     private Pelimoottori moottori;
 
     public Grafiikka(Pelimoottori moottori) {
-        this.moottori = moottori;
-        kuti = this.moottori.kuti;
-        pelaaja = this.moottori.pelaaja;
-        ufo = this.moottori.ufo;
-        ufokuti = this.moottori.ufokuti;
+//        this.moottori = moottori;
+//        kuti = this.moottori.kuti;
+//        pelaaja = this.moottori.pelaaja;
+//        ufo = this.moottori.ufo;
+//        ufokuti = this.moottori.ufokuti;
 
     }
 

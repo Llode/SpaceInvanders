@@ -39,17 +39,6 @@ public class Pelaaja extends Objekti implements Asetukset {
     }
 
     /**
-     * Metodia kutsutaan, kun pelaaja ampuu.
-     */
-//    public void Ammu() {
-//        int kutiX = this.x;
-//        int kutiY = this.y;
-//        if (!kuti.isVisible()) {
-//            kuti = new Kuti(kutiX, kutiY);
-//        }
-//    }
-
-    /**
      * pelaaja liikesuunta muuttuu vasempaan.
      */
     public void pelaajaLiikkuuVasempaan() {

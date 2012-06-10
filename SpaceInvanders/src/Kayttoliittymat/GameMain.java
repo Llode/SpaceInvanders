@@ -25,9 +25,8 @@ public class GameMain extends JFrame implements Asetukset {
     public GameMain() {
         moottori = new Pelimoottori();
         moottori.GameInit();
-//        grafiikka = new Grafiikka(moottori);
-        canvas = new GameCanvas(grafiikka, moottori);
 
+        canvas = new GameCanvas(grafiikka, moottori);
         canvas.setPreferredSize(new Dimension(RuudunLeveys, RuudunKorkeus));
         this.setContentPane(canvas);
 
@@ -82,7 +81,7 @@ public class GameMain extends JFrame implements Asetukset {
             }
             beforeTime = System.currentTimeMillis();
         }
-        repaint();
+//        repaint();
     }
 }
 

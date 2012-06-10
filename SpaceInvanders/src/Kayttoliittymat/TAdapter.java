@@ -70,21 +70,5 @@ public class TAdapter extends KeyAdapter {
             System.out.println("HAMMERZEIT");
         }
 
-//    public void keyReleased(KeyEvent e) {
-//        pelaaja.keyReleased(e);
-//    }
-//
-//    public void keyPressed(KeyEvent e) {
-//        pelaaja.keyPressed(e);
-//
-//        int x = pelaaja.getX();
-//        int y = pelaaja.getY();
-//
-//        if (ingame) {
-//            if (e.isAltDown()) {
-//                pelaaja.ammu();
-//            }
-//        }
-//    }
     }
 }
