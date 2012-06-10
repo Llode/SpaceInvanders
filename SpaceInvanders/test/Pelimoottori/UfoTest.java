@@ -39,6 +39,7 @@ public class UfoTest {
     @Before
     public void setUp() {
         ufo = new Ufo(50, 50);
+        ufokuti = new UfoKuti();
 
     }
     

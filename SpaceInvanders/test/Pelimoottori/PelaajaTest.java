@@ -55,7 +55,7 @@ public class PelaajaTest {
 
     @Test
     public void alusOnAloituskoordinaateissaY() {
-        assertEquals(100, pelaaja.getY(), vertailutarkkuus);
+        assertEquals(400, pelaaja.getY(), vertailutarkkuus);
     }
 
 

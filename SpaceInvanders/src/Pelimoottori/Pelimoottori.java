@@ -10,7 +10,6 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-import javax.swing.ImageIcon;
 
 /**
  * Pelin toimintalogiikka löytyy täältä.
@@ -42,9 +41,6 @@ public class Pelimoottori implements Asetukset {
         ingame = true;
     }
 
-    public boolean onkoPeliLoppu() {
-        return ingame;
-    }
 
     /**
      * ASettaa Luo ufot ja pelaajan, asettaa spritet objekteille.
@@ -125,11 +121,15 @@ public class Pelimoottori implements Asetukset {
         }
     }
 
-    public void pelaajaAmpuu() {
-        if (!kuti.isVisible()) {
-            kuti = new Kuti(pelaaja.getX(), pelaaja.getY());
-        }
-    }
+//    public Kuti pelaajaAmpuu() {
+//        int pelaajaX = this.pelaaja.getX();
+//        int pelaajaY = this.pelaaja.getY();
+//        if (!kuti.isVisible()) {
+//            kuti = new Kuti(pelaajaX, pelaajaY);
+//            return kuti;
+//        }
+//        return null;
+//    }
 
     /**
      * Sisältää pelin logiikan.
@@ -163,7 +163,7 @@ public class Pelimoottori implements Asetukset {
     private void asetaUfotRiveihin() {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
-                ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * j);
+                ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * i);
                 grafiikka.asetaKuvaUfolle();
 //                ufo.setImage(ii.getImage());
                 ufot.add(ufo);
@@ -212,11 +212,11 @@ public class Pelimoottori implements Asetukset {
 
                 if (ufo.isVisible() && kuti.isVisible()) {
                     if (ufonOsumaTunnistus(kutiX, ufox, kutiY, ufoy)) {
-                        ufoTuhoutuuOsumasta(ufo);
+                        ufoTuhoutuuOsumasta(ufo, kuti);
                     }
                 }
             }
-            pelaajanAmmusLiikkuu();
+            pelaajanAmmusLiikkuu(kuti);
         }
     }
 
@@ -224,7 +224,7 @@ public class Pelimoottori implements Asetukset {
      * Liikuttaa pelaajan ampumaa ammusta. Ammus katoaa, mikäli se menee yli
      * kentän reunan.
      */
-    protected void pelaajanAmmusLiikkuu() {
+    protected void pelaajanAmmusLiikkuu(Kuti kuti) {
         int y = kuti.getY();
         y -= 4;
         if (y < 0) {
@@ -373,7 +373,7 @@ public class Pelimoottori implements Asetukset {
      *
      * @param ufo ufo, jota tarkastellaan.
      */
-    protected void ufoTuhoutuuOsumasta(Ufo ufo) {
+    protected void ufoTuhoutuuOsumasta(Ufo ufo, Kuti kuti) {
         grafiikka.asetaKuvaRajahdykselle();
         ufo.setImage(grafiikka.getRajahdys().getImage());
         ufo.setKuolee(true);

@@ -1,17 +1,17 @@
 package Pelimoottori;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
  */
-
+import Kayttoliittymat.Grafiikka;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+import java.util.Iterator;
 
 /**
  *
@@ -24,6 +24,7 @@ public class PelimoottoriTest {
     Ufo ufo;
     UfoKuti ufokuti;
     Kuti kuti;
+    Grafiikka grafiikka;
     double vertailutarkkuus = 0.0001;
 
     public PelimoottoriTest() {
@@ -39,11 +40,12 @@ public class PelimoottoriTest {
 
     @Before
     public void setUp() {
+        grafiikka = new Grafiikka();
         moottori = new Pelimoottori();
+        moottori.GameInit();
         pelaaja = new Pelaaja();
-        kuti = new Kuti(50, 12);
-        ufo = new Ufo(10, 375);
-        ufokuti = new UfoKuti(279, 114);
+        ufo = new Ufo(10, 331);
+        kuti = new Kuti();
     }
 
     @After
@@ -62,6 +64,7 @@ public class PelimoottoriTest {
 //}
     @Test
     public void PelaajanOsumaTunnistusToimii() {
+        ufokuti = new UfoKuti(255, 401);
         int ufokutiX = ufokuti.getX();
         int ufokutiY = ufokuti.getY();
         int pelaajaX = pelaaja.getX();
@@ -71,6 +74,7 @@ public class PelimoottoriTest {
 
     @Test
     public void UfonOsumatunnistusToimii() {
+        kuti = new Kuti(50, 12);
         int kutiX = kuti.getX();
         int kutiY = kuti.getY();
         int ufoX = ufo.getX();
@@ -86,11 +90,11 @@ public class PelimoottoriTest {
     @Test
     public void UfoTuhoutuuKunSaaOsuman() {
         assertTrue(kuti.isVisible());
-        moottori.ufoTuhoutuuOsumasta(ufo);
-        assertTrue(kuti.isVisible());
-//        kuti = new Kuti(100, 100);
+        moottori.ufoTuhoutuuOsumasta(ufo, kuti);
+        assertFalse(kuti.isVisible());
+        kuti = new Kuti(100, 100);
         assertEquals(1, moottori.tuhotut);
-        moottori.ufoTuhoutuuOsumasta(ufo);
+        moottori.ufoTuhoutuuOsumasta(ufo, kuti);
         assertEquals(2, moottori.tuhotut);
         assertFalse(kuti.isVisible());
     }
@@ -104,27 +108,41 @@ public class PelimoottoriTest {
 
     @Test
     public void PelaajanAmmusKatoaaRuudunUlkopuolella() {
-        moottori.pelaajaAmpuu();
-        moottori.pelaajanAmmusLiikkuu();
-        moottori.pelaajanAmmusLiikkuu();
-        assertTrue(kuti.isVisible());
-        moottori.pelaajanAmmusLiikkuu();
-        assertFalse(kuti.isVisible());
-    }
-    @Test
-    public void UfotOsuuMaaha(){
+        kuti = new Kuti(50, 12);
+        moottori.pelaajanAmmusLiikkuu(kuti);
+        moottori.pelaajanAmmusLiikkuu(kuti);
 
-    }
-        @Test
-    public void pelaajaEiAmmuKunAmmusKentalla(){
         assertTrue(kuti.isVisible());
-        kuti.die();
+        moottori.pelaajanAmmusLiikkuu(kuti);
+//        assertEquals(4, kuti.getY(), vertailutarkkuus);
         assertFalse(kuti.isVisible());
-        moottori.pelaajaAmpuu();
-        //pelaajan koordinaatti oikein:
-        assertEquals(250, pelaaja.getX(), vertailutarkkuus);
-        //kuti ei saa oikeita koordinaatteja.
-        assertEquals(pelaaja.getX() + 15, kuti.getX(), vertailutarkkuus);
+    }
+
+    @Test
+    public void UfotSaavuttavatMaan() {
+        moottori.ingame = true;
+        moottori.ufotSaavuttavatMaan(ufo);
+        assertFalse(moottori.ingame);
+    }
+
+    @Test
+    public void ToimintaSykliTOimii() {
+        assertTrue(moottori.ingame);
+        moottori.tuhotut = 40;
+        moottori.toiminta();
+        assertFalse(moottori.ingame);
+        moottori.ingame = true;
+        moottori.toiminta();
+        pelaaja.setKuolee(true);
+        assertFalse(moottori.ingame);
+        moottori.ingame = true;
+        ufokuti = new UfoKuti(11,11);
+        pelaaja.setX(10);
+        pelaaja.setY(10);
+        moottori.toiminta();
+        assertTrue(pelaaja.Kuoleeko());
+        assertFalse(moottori.ingame);
+
 
     }
 }

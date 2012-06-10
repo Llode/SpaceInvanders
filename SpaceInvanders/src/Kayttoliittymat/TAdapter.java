@@ -4,6 +4,7 @@
  */
 package Kayttoliittymat;
 
+import Pelimoottori.Kuti;
 import Pelimoottori.Pelaaja;
 import Pelimoottori.Pelimoottori;
 import java.awt.event.KeyAdapter;
@@ -17,23 +18,36 @@ public class TAdapter extends KeyAdapter {
 
     Pelaaja pelaaja;
     Pelimoottori moottori;
+    Kuti kuti;
+    
+    public TAdapter(){
+        pelaaja = new Pelaaja();
+        moottori = new Pelimoottori();
+        kuti = new Kuti();
+    }
 
     /**
      * Alus liikkuu, kun nuolinäppäimiä painetaan.
      *
      * @param e hakee painettavan näppäimen tunnuksen
      */
+    @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
             pelaaja.pelaajaLiikkuuVasempaan();
+            System.out.println("vasenoaab");
         }
         if (key == KeyEvent.VK_RIGHT) {
             pelaaja.pelaajaLiikkuuOikeaan();
+            System.out.println("oikeaan");
         }
         if (e.isAltDown()) {
-            moottori.pelaajaAmpuu();
+            if(kuti.isVisible()){
+                kuti = new Kuti(pelaaja.getX(), pelaaja.getY());
+            }
+            System.out.println("piupiut");
         }
     }
 
@@ -42,14 +56,17 @@ public class TAdapter extends KeyAdapter {
      *
      * @param e
      */
+    @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
             pelaaja.pelaajaPysahtyy();
+            System.out.println("HALT");
         }
         if (key == KeyEvent.VK_RIGHT) {
             pelaaja.pelaajaPysahtyy();
+            System.out.println("HAMMERZEIT");
         }
 
 //    public void keyReleased(KeyEvent e) {

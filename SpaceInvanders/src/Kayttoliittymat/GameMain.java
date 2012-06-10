@@ -6,10 +6,7 @@ package Kayttoliittymat;
 
 import Pelimoottori.Asetukset;
 import Pelimoottori.Pelimoottori;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JFrame;
@@ -35,9 +32,11 @@ public class GameMain extends JFrame implements Asetukset {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
         this.setTitle("SPACE INVADELS");
-        this.setVisible(true);
-        this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
+
     }
 
     public void gameStart() {
@@ -78,7 +77,6 @@ public class GameMain extends JFrame implements Asetukset {
         }
 //        grafiikka.peliLoppuu();
     }
-
 //    public void gameDraw(Graphics2D g2d) {
 //        if (moottori.ingame) {
 //            grafiikka.piirraPelaaja(g2d);
@@ -98,7 +96,7 @@ public class GameMain extends JFrame implements Asetukset {
 
 class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
-    private GameMain gamemain;
+
     private Pelimoottori moottori;
     private Grafiikka grafiikka;
 
@@ -109,14 +107,14 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         addKeyListener(new TAdapter());
         grafiikka = new Grafiikka();
         moottori = new Pelimoottori();
-        gamemain = new GameMain();
+
     }
 
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g2d);
-        setBackground(Color.red);
+        setBackground(Color.black);
         gameDraw(g2d);
     }
 
@@ -146,6 +144,8 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
             grafiikka.piirraUfoKuti(g2d);
             System.out.println("ufokuti");
             g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
+            Toolkit.getDefaultToolkit().sync();
+            g2d.dispose();
         } else {
             grafiikka.peliLoppuu();
         };
