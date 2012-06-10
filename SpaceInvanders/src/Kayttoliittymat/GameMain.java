@@ -4,8 +4,7 @@
  */
 package Kayttoliittymat;
 
-import Pelimoottori.Asetukset;
-import Pelimoottori.Pelimoottori;
+import Pelimoottori.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,9 +24,10 @@ public class GameMain extends JFrame implements Asetukset {
 
     public GameMain() {
         moottori = new Pelimoottori();
-        grafiikka = new Grafiikka(moottori);
-        canvas = new GameCanvas(grafiikka);
         moottori.GameInit();
+//        grafiikka = new Grafiikka(moottori);
+        canvas = new GameCanvas(grafiikka, moottori);
+
         canvas.setPreferredSize(new Dimension(RuudunLeveys, RuudunKorkeus));
         this.setContentPane(canvas);
 
@@ -94,16 +94,25 @@ public class GameMain extends JFrame implements Asetukset {
 class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
     private Pelimoottori moottori;
-    private Grafiikka grafiikka = new Grafiikka(moottori);
+    private Grafiikka grafiikka;
     ;
     private String PeliLoppui;
+    private Pelaaja pelaaja;
+    private Ufo ufo;
+    private UfoKuti ufokuti;
+    private Kuti kuti;
 
-    public GameCanvas(Grafiikka grafiikka) {
+    public GameCanvas(Grafiikka grafiikka, Pelimoottori moottori) {
 
         setFocusable(true);
         requestFocus();
-        addKeyListener(new TAdapter());
-        moottori = new Pelimoottori();
+        this.moottori = moottori;
+        addKeyListener(new TAdapter(moottori));
+        ufokuti = this.moottori.ufokuti;
+        ufo = this.moottori.ufo;
+        pelaaja = this.moottori.pelaaja;
+        kuti = this.moottori.kuti;
+
     }
 
     @Override
@@ -135,15 +144,23 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
      * @param g2d
      */
     private void gameDraw(Graphics2D g2d) {
+        if (moottori.PiirraPelaaja) {
+            grafiikka.piirraPelaaja(g2d, pelaaja);
+            System.out.println("pelaaja");
+        }
+        if (moottori.PiirraUfo) {
+            grafiikka.piirraUfo(g2d, ufo);
+            System.out.println("ufo");
+        }
+        if (moottori.PiirraKuti) {
+            grafiikka.piirraKuti(g2d, kuti);
+            System.out.println("kuti");
+        }
+        if (moottori.PiirraUfokuti) {
+            grafiikka.piirraUfoKuti(g2d, ufokuti);
+            System.out.println("ufokuti");
+        }
 
-        grafiikka.piirraPelaaja(g2d);
-        System.out.println("pelaaja");
-        grafiikka.piirraUfo(g2d);
-        System.out.println("ufo");
-        grafiikka.piirraKuti(g2d);
-        System.out.println("kuti");
-        grafiikka.piirraUfoKuti(g2d);
-        System.out.println("ufokuti");
         g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
 
         peliLoppuu(g2d);

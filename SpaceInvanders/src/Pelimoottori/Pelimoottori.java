@@ -5,7 +5,6 @@
 package Pelimoottori;
 
 import Kayttoliittymat.Grafiikka;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,24 +19,34 @@ public class Pelimoottori implements Asetukset {
 
     public Pelaaja pelaaja;
     public Kuti kuti;
-    protected Ufo ufo;
-    protected UfoKuti ufokuti;
+    public Ufo ufo;
+    public UfoKuti ufokuti;
     private ArrayList ufot;
     private int ufoX;
     private int ufoY;
     private int suunta;
     public int tuhotut;
     public boolean ingame;
+    public boolean PiirraUfo;
+    public boolean PiirraPelaaja;
+    public boolean PiirraKuti;
+    public boolean PiirraUfokuti;
     Grafiikka grafiikka;
-    Graphics g;
     public String Loppusanat = "";
 
     public Pelimoottori() {
+
         tuhotut = 0;
         suunta = -1;
         ufoY = 5;
         ufoX = 50;
         ingame = true;
+        PiirraUfo = false;
+        PiirraPelaaja = false;
+        PiirraKuti = false;
+        PiirraUfokuti = false;
+
+
     }
 
     /**
@@ -45,13 +54,11 @@ public class Pelimoottori implements Asetukset {
      */
     public void GameInit() {
         ufot = new ArrayList();
-
         kuti = new Kuti();
         pelaaja = new Pelaaja();
-
         grafiikka = new Grafiikka(this);
-        grafiikka.asetaKuvaPelaajalle();
-        grafiikka.asetaKuvaAmmukselle();
+        grafiikka.asetaKuvaPelaajalle(pelaaja);
+        grafiikka.asetaKuvaAmmukselle(kuti);
         asetaUfotRiveihin();
     }
 
@@ -68,7 +75,7 @@ public class Pelimoottori implements Asetukset {
             ufo = (Ufo) it.next();
 
             if (ufo.isVisible()) {
-                grafiikka.piirraUfo(g);
+                PiirraUfo = true;
             }
             ufoKatoaaKuollessaan(ufo);
         }
@@ -82,7 +89,7 @@ public class Pelimoottori implements Asetukset {
     public void pelaajaKentalle(Graphics2D g) {
 
         if (pelaaja.isVisible()) {
-            grafiikka.piirraPelaaja(g);
+            PiirraPelaaja = true;
         }
         peliLoppuuPelaajanKuollessa();
     }
@@ -93,9 +100,9 @@ public class Pelimoottori implements Asetukset {
      * @param g
      */
     public void ammusKentalle(Graphics2D g) {
-        grafiikka.asetaKuvaAmmukselle();
+        grafiikka.asetaKuvaAmmukselle(kuti);
         if (kuti.isVisible()) {
-            grafiikka.piirraKuti(g);
+            PiirraUfo = true;
         }
     }
 
@@ -105,14 +112,14 @@ public class Pelimoottori implements Asetukset {
      * @param g
      */
     public void ufotAmpuu(Graphics2D g) {
-        grafiikka.asetaKuvaUfoKudille();
+        grafiikka.asetaKuvaUfoKudille(ufokuti);
 
         Iterator i3 = ufot.iterator();
         while (i3.hasNext()) {
             ufo = (Ufo) i3.next();
             ufokuti = ufo.getUfoKuti();
             if (!ufokuti.kutiTuhoutuu()) {
-                grafiikka.piirraUfoKuti(g);
+                PiirraUfokuti = true;
             }
         }
     }
@@ -171,7 +178,7 @@ public class Pelimoottori implements Asetukset {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
                 ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * i);
-                grafiikka.asetaKuvaUfolle();
+                grafiikka.asetaKuvaUfolle(ufo);
 //                ufo.setImage(ii.getImage());
                 ufot.add(ufo);
             }
@@ -345,7 +352,7 @@ public class Pelimoottori implements Asetukset {
      * @param pelaajaY
      * @return jos tosi, pelaaja tuhoutuu.
      */
-    protected boolean pelaajanOsumatunnistus(int ufokutiX, int pelaajaX, int ufokutiY, int pelaajaY) {
+    public boolean pelaajanOsumatunnistus(int ufokutiX, int pelaajaX, int ufokutiY, int pelaajaY) {
         return ufokutiX >= pelaajaX
                 && ufokutiX <= (pelaajaX + PelaajanLeveys)
                 && ufokutiY >= pelaajaY

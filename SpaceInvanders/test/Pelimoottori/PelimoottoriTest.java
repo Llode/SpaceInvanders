@@ -40,8 +40,8 @@ public class PelimoottoriTest {
 
     @Before
     public void setUp() {
-
-        moottori = new Pelimoottori();
+        grafiikka = new Grafiikka();
+        moottori = new Pelimoottori(grafiikka);
         moottori.GameInit();
         pelaaja = new Pelaaja();
         ufo = new Ufo(10, 331);
@@ -136,7 +136,7 @@ public class PelimoottoriTest {
         pelaaja.setKuolee(true);
         assertFalse(moottori.ingame);
         moottori.ingame = true;
-        ufokuti = new UfoKuti(11,11);
+        ufokuti = new UfoKuti(11, 11);
         pelaaja.setX(10);
         pelaaja.setY(10);
         moottori.toiminta();

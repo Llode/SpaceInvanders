@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * Tulkkaa näppäimistöä ja pelaajan inputia.
+ *
  * @author Larppa
  */
 public class TAdapter extends KeyAdapter {
@@ -19,11 +20,11 @@ public class TAdapter extends KeyAdapter {
     Pelaaja pelaaja;
     Pelimoottori moottori;
     Kuti kuti;
-    
-    public TAdapter(){
-        pelaaja = new Pelaaja();
-        moottori = new Pelimoottori();
-        kuti = new Kuti();
+
+    public TAdapter(Pelimoottori moottori) {
+        this.moottori = moottori;
+        pelaaja = this.moottori.pelaaja;
+        kuti = this.moottori.kuti;
     }
 
     /**
@@ -44,7 +45,7 @@ public class TAdapter extends KeyAdapter {
             System.out.println("oikeaan");
         }
         if (e.isShiftDown()) {
-            if(kuti.isVisible()){
+            if (kuti.isVisible()) {
                 kuti = new Kuti(pelaaja.getX(), pelaaja.getY());
             }
             System.out.println("piupiut");

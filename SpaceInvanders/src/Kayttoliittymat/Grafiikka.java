@@ -13,13 +13,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- *Sisältää peligrafiikat.
+ * Sisältää peligrafiikat.
+ *
  * @author Larppa
  */
 public class Grafiikka extends JPanel implements Asetukset {
 
-
-    Pelimoottori moottori;
+//    Pelimoottori moottori = new Pelimoottori(this);
     UfoKuti ufokuti;
     Pelaaja pelaaja;
     Ufo ufo;
@@ -29,12 +29,15 @@ public class Grafiikka extends JPanel implements Asetukset {
     private final String UfoKuva = "ufo.png";
     private final String rajahdys = "rajahdys.png";
     private ImageIcon objektiKuolee;
+    private Pelimoottori moottori;
 
     public Grafiikka(Pelimoottori moottori) {
-        kuti = new Kuti();
-        pelaaja = new Pelaaja();
-        ufo = new Ufo();
-        ufokuti = new UfoKuti();
+        this.moottori = moottori;
+        kuti = this.moottori.kuti;
+        pelaaja = this.moottori.pelaaja;
+        ufo = this.moottori.ufo;
+        ufokuti = this.moottori.ufokuti;
+
     }
 
     /**
@@ -42,7 +45,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraUfo(Graphics2D g2d) {
+    public void piirraUfo(Graphics2D g2d, Ufo ufo) {
         g2d.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this);
         if (g2d.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this)) {
             System.out.println("ufo toimii");
@@ -54,7 +57,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraPelaaja(Graphics2D g2d) {
+    public void piirraPelaaja(Graphics2D g2d, Pelaaja pelaaja) {
         g2d.drawImage(pelaaja.getImage(), pelaaja.getX(), pelaaja.getY(), this);
         if (g2d.drawImage(pelaaja.getImage(), pelaaja.getX(), pelaaja.getY(), this)) {
             System.out.println("pelaaja toimii");
@@ -66,7 +69,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraKuti(Graphics2D g2d) {
+    public void piirraKuti(Graphics2D g2d, Kuti kuti) {
         g2d.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this);
         if (g2d.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this)) {
             System.out.println("kuti toimii");
@@ -78,7 +81,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraUfoKuti(Graphics2D g2d) {
+    public void piirraUfoKuti(Graphics2D g2d, UfoKuti ufokuti) {
         g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
         if (g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this)) {
             System.out.println("ufokuti toimii");
@@ -86,27 +89,10 @@ public class Grafiikka extends JPanel implements Asetukset {
     }
 
     /**
-     * Piirtää (ja 'animoi') peligrafiikan.
-     *
-     * @param g
-     */
-    public void piirraTavaratKentalle(Graphics2D g) {
-        if (moottori.ingame) {
-            g.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
-            moottori.ufotKentalle(g);
-            moottori.pelaajaKentalle(g);
-            moottori.ammusKentalle(g);
-            moottori.ufotAmpuu(g);
-        }
-    }
-
-
-
-    /**
      * Asettaa kuvan pelaajalle.
      */
-    public void asetaKuvaPelaajalle() {
- 
+    public void asetaKuvaPelaajalle(Pelaaja pelaaja) {
+
         ImageIcon ii = new ImageIcon(pelaajakuva);
         pelaaja.leveys = ii.getImage().getWidth(null);
         pelaaja.setImage(ii.getImage());
@@ -115,7 +101,7 @@ public class Grafiikka extends JPanel implements Asetukset {
     /**
      * Asettaa kuvan pelaajan ammuksille.
      */
-    public void asetaKuvaAmmukselle() {
+    public void asetaKuvaAmmukselle(Kuti kuti) {
         ImageIcon ii = new ImageIcon(ammus);
         kuti.setImage(ii.getImage());
     }
@@ -123,7 +109,7 @@ public class Grafiikka extends JPanel implements Asetukset {
     /**
      * Asettaa kuvan ufolle.
      */
-    public void asetaKuvaUfolle() {
+    public void asetaKuvaUfolle(Ufo ufo) {
         ImageIcon ii = new ImageIcon(UfoKuva);
         ufo.setImage(ii.getImage());
 
@@ -139,7 +125,7 @@ public class Grafiikka extends JPanel implements Asetukset {
     /**
      * Ette ikinä arvaa.
      */
-    public void asetaKuvaUfoKudille() {
+    public void asetaKuvaUfoKudille(UfoKuti ufokuti) {
         ImageIcon ii = new ImageIcon(ammus);
         ufokuti.setImage(ii.getImage());
     }
