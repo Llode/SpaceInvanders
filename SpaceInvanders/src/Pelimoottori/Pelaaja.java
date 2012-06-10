@@ -4,10 +4,6 @@
  */
 package Pelimoottori;
 
-import java.awt.event.KeyEvent;
-import Kayttoliittymat.GameMain;
-import Kayttoliittymat.TAdapter;
-
 /**
  * Pelaajan alus
  *

@@ -32,11 +32,7 @@ public class Pelimoottori implements Asetukset {
     Grafiikka grafiikka;
     Graphics g;
     public String Loppusanat = "";
-    private final String ammus = "ammus.png";
-    private final String pelaajakuva = "pelaaja.png";
-    private final String UfoKuva = "ufo.png";
-    private final String rajahdys = "rajahdys.png";
-    private ImageIcon objektiKuolee;
+
 
     public Pelimoottori() {
         tuhotut = 0;

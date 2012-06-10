@@ -79,21 +79,21 @@ public class GameMain extends JFrame implements Asetukset {
 //        grafiikka.peliLoppuu();
     }
 
-    public void gameDraw(Graphics2D g2d) {
-        if (moottori.ingame) {
-            grafiikka.piirraPelaaja(g2d);
-            System.out.println("pelaaja");
-            grafiikka.piirraUfo(g2d);
-            System.out.println("ufo");
-            grafiikka.piirraKuti(g2d);
-            System.out.println("kuti");
-            grafiikka.piirraUfoKuti(g2d);
-            System.out.println("ufokuti");
-            g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
-        } else {
-            grafiikka.peliLoppuu();
-        };
-    }
+//    public void gameDraw(Graphics2D g2d) {
+//        if (moottori.ingame) {
+//            grafiikka.piirraPelaaja(g2d);
+//            System.out.println("pelaaja");
+//            grafiikka.piirraUfo(g2d);
+//            System.out.println("ufo");
+//            grafiikka.piirraKuti(g2d);
+//            System.out.println("kuti");
+//            grafiikka.piirraUfoKuti(g2d);
+//            System.out.println("ufokuti");
+//            g2d.drawLine(0, 100, RuudunLeveys, 150);
+//        } else {
+//            grafiikka.peliLoppuu();
+//        };
+//    }
 }
 
 class GameCanvas extends JPanel implements Asetukset, KeyListener {
@@ -117,7 +117,7 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g2d);
         setBackground(Color.red);
-        gamemain.gameDraw(g2d);
+        gameDraw(g2d);
     }
 
     @Override
