@@ -32,6 +32,7 @@ public class Grafiikka extends JPanel implements Asetukset {
         pelaaja = new Pelaaja();
         ufo = new Ufo();
         ufokuti = new UfoKuti();
+        moottori = new Pelimoottori();
     }
 
     /**

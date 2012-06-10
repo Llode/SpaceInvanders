@@ -23,6 +23,7 @@ public class GameMain extends JFrame implements Asetukset {
     private Grafiikka grafiikka;
 
     public GameMain() {
+        grafiikka = new Grafiikka();
         moottori = new Pelimoottori();
         moottori.GameInit();
         canvas = new GameCanvas();
@@ -36,7 +37,7 @@ public class GameMain extends JFrame implements Asetukset {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-
+        gameStart();
     }
 
     public void gameStart() {
@@ -57,26 +58,29 @@ public class GameMain extends JFrame implements Asetukset {
 
         beforeTime = System.currentTimeMillis();
 
-        while (true) {
+        while (moottori.ingame == true) {
             moottori.toiminta();
             repaint();
 
-
-            timeDiff = (System.currentTimeMillis() - beforeTime);
-            sleep = Delay - timeDiff;
-
-            if (sleep < 0) {
-                sleep = 2;
-            }
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                System.out.println("interrupted");
-            }
-            beforeTime = System.currentTimeMillis();
         }
-//        grafiikka.peliLoppuu();
+        grafiikka.peliLoppuu();
+
+
+
+        timeDiff = (System.currentTimeMillis() - beforeTime);
+        sleep = Delay - timeDiff;
+
+        if (sleep < 0) {
+            sleep = 2;
+        }
+        try {
+            Thread.sleep(sleep);
+        } catch (InterruptedException e) {
+            System.out.println("interrupted");
+        }
+        beforeTime = System.currentTimeMillis();
     }
+}
 //    public void gameDraw(Graphics2D g2d) {
 //        if (moottori.ingame) {
 //            grafiikka.piirraPelaaja(g2d);
@@ -92,10 +96,8 @@ public class GameMain extends JFrame implements Asetukset {
 //            grafiikka.peliLoppuu();
 //        };
 //    }
-}
 
 class GameCanvas extends JPanel implements Asetukset, KeyListener {
-
 
     private Pelimoottori moottori;
     private Grafiikka grafiikka;

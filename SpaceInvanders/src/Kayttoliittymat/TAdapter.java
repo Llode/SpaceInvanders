@@ -43,7 +43,7 @@ public class TAdapter extends KeyAdapter {
             pelaaja.pelaajaLiikkuuOikeaan();
             System.out.println("oikeaan");
         }
-        if (e.isAltDown()) {
+        if (e.isShiftDown()) {
             if(kuti.isVisible()){
                 kuti = new Kuti(pelaaja.getX(), pelaaja.getY());
             }

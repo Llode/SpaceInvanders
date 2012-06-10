@@ -32,7 +32,6 @@ public class Pelimoottori implements Asetukset {
     Graphics g;
     public String Loppusanat = "";
 
-
     public Pelimoottori() {
         tuhotut = 0;
         suunta = -1;
@@ -41,14 +40,13 @@ public class Pelimoottori implements Asetukset {
         ingame = true;
     }
 
-
     /**
      * ASettaa Luo ufot ja pelaajan, asettaa spritet objekteille.
      */
     public void GameInit() {
 
         grafiikka = new Grafiikka();
-        
+
         ufot = new ArrayList();
         asetaUfotRiveihin();
 
@@ -130,12 +128,11 @@ public class Pelimoottori implements Asetukset {
 //        }
 //        return null;
 //    }
-
     /**
      * Sisältää pelin logiikan.
      */
     public void toiminta() {
-
+        toimitaVarmistus();
         peliLoppuuUfojenTuhoamiseen();
 
         //Pelaaja
@@ -145,6 +142,7 @@ public class Pelimoottori implements Asetukset {
         //Ufot
         Iterator it1 = ufot.iterator();
         ufotLiikkuvatKentalla(it1);
+        System.out.println("ufot liikkuu");
         Iterator it = ufot.iterator();
 
         while (it.hasNext()) {
@@ -154,7 +152,15 @@ public class Pelimoottori implements Asetukset {
         ufonAmmuksetToimintasyklissa();
     }
 
+    private void toimitaVarmistus() {
+        if (ingame) {
+            System.out.println("ingame");
+        } else {
+            System.out.println("outgame");
+        }
+    }
     //Tästä alaspäin vain apumetodeja.
+
     /**
      * Asettaa ufot neljään riviin.
      *
@@ -183,6 +189,7 @@ public class Pelimoottori implements Asetukset {
             int x = ufo1.getX();
             ufotAlemmasOikeassaReunassa(x);
             ufotAlemmasVasReunassa(x);
+            System.out.println("ufoliikkuu");
         }
     }
 
@@ -273,6 +280,7 @@ public class Pelimoottori implements Asetukset {
             ufokuti.setKutiTuhoutuu(false);
             ufokuti.setX(ufo.getX());
             ufokuti.setY(ufo.getY());
+            System.out.println("Ufo ampuu");
         }
     }
 
@@ -306,6 +314,7 @@ public class Pelimoottori implements Asetukset {
                 ufo = (Ufo) i2.next();
                 ufo.setY(ufo.getY() + UfotLiikkuvatRivinALas);
             }
+            System.out.println("rivi alas");
         }
     }
 
@@ -322,6 +331,7 @@ public class Pelimoottori implements Asetukset {
                 Ufo ufo2 = (Ufo) i1.next();
                 ufo2.setY(ufo2.getY() + UfotLiikkuvatRivinALas);
             }
+            System.out.println("rivi alas");
         }
     }
 
