@@ -6,6 +6,7 @@ package Pelimoottori;
 
 import Kayttoliittymat.Grafiikka;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -37,12 +38,12 @@ public class Pelimoottori implements Asetukset {
     private final String rajahdys = "rajahdys.png";
     private ImageIcon objektiKuolee;
 
-    public void Pelimoottori() {
-//        tuhotut = 0;
-//        suunta = -1;
-//        ufoY = 5;
-//        ufoX = 50;
-//        ingame = true;
+    public Pelimoottori() {
+        tuhotut = 0;
+        suunta = -1;
+        ufoY = 5;
+        ufoX = 50;
+        ingame = true;
     }
 
     public boolean onkoPeliLoppu() {
@@ -53,20 +54,17 @@ public class Pelimoottori implements Asetukset {
      * ASettaa Luo ufot ja pelaajan, asettaa spritet objekteille.
      */
     public void GameInit() {
-        tuhotut = 0;
-        suunta = -1;
-        ufoY = 5;
-        ufoX = 50;
-        ingame = true;
 
+        grafiikka = new Grafiikka();
+        
         ufot = new ArrayList();
         asetaUfotRiveihin();
 
         pelaaja = new Pelaaja();
-        asetaKuvaPelaajalle();
+        grafiikka.asetaKuvaPelaajalle();
 
         kuti = new Kuti();
-        asetaKuvaAmmukselle();
+        grafiikka.asetaKuvaAmmukselle();
     }
 
     /**
@@ -75,7 +73,7 @@ public class Pelimoottori implements Asetukset {
      *
      * @param g grafiikkamoottorin parametri
      */
-    public void ufotKentalle(Graphics g) {
+    public void ufotKentalle(Graphics2D g) {
         Iterator it = ufot.iterator();
 
         while (it.hasNext()) {
@@ -93,7 +91,7 @@ public class Pelimoottori implements Asetukset {
      *
      * @param g grafiikkamoottorin parametri
      */
-    public void pelaajaKentalle(Graphics g) {
+    public void pelaajaKentalle(Graphics2D g) {
 
         if (pelaaja.isVisible()) {
             grafiikka.piirraPelaaja(g);
@@ -106,8 +104,8 @@ public class Pelimoottori implements Asetukset {
      *
      * @param g
      */
-    public void ammusKentalle(Graphics g) {
-        asetaKuvaAmmukselle();
+    public void ammusKentalle(Graphics2D g) {
+        grafiikka.asetaKuvaAmmukselle();
         if (kuti.isVisible()) {
             grafiikka.piirraKuti(g);
         }
@@ -118,8 +116,8 @@ public class Pelimoottori implements Asetukset {
      *
      * @param g
      */
-    public void ufotAmpuu(Graphics g) {
-        asetaKuvaUfoKudille();
+    public void ufotAmpuu(Graphics2D g) {
+        grafiikka.asetaKuvaUfoKudille();
 
         Iterator i3 = ufot.iterator();
         while (i3.hasNext()) {
@@ -170,7 +168,7 @@ public class Pelimoottori implements Asetukset {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 10; j++) {
                 ufo = new Ufo(ufoX + 18 * j, ufoY + 18 * j);
-                asetaKuvaUfolle();
+                grafiikka.asetaKuvaUfolle();
 //                ufo.setImage(ii.getImage());
                 ufot.add(ufo);
             }
@@ -353,7 +351,7 @@ public class Pelimoottori implements Asetukset {
      * @param ufokuti
      */
     private void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
-        pelaaja.setImage(getRajahdys().getImage());
+        pelaaja.setImage(grafiikka.getRajahdys().getImage());
         pelaaja.setKuolee(true);
         ufokuti.setKutiTuhoutuu(true);
     }
@@ -380,8 +378,8 @@ public class Pelimoottori implements Asetukset {
      * @param ufo ufo, jota tarkastellaan.
      */
     protected void ufoTuhoutuuOsumasta(Ufo ufo) {
-        asetaKuvaRajahdykselle();
-        ufo.setImage(getRajahdys().getImage());
+        grafiikka.asetaKuvaRajahdykselle();
+        ufo.setImage(grafiikka.getRajahdys().getImage());
         ufo.setKuolee(true);
         tuhotut++;
         kuti.die();
@@ -408,52 +406,5 @@ public class Pelimoottori implements Asetukset {
         if (ufo.Kuoleeko()) {
             ufo.die();
         }
-    }
-
-    /**
-     * Asettaa kuvan pelaajalle.
-     */
-    private void asetaKuvaPelaajalle() {
-        ImageIcon ii = new ImageIcon(pelaajakuva);
-        pelaaja.leveys = ii.getImage().getWidth(null);
-        pelaaja.setImage(ii.getImage());
-    }
-
-    /**
-     * Asettaa kuvan pelaajan ammuksille.
-     */
-    private void asetaKuvaAmmukselle() {
-        ImageIcon ii = new ImageIcon(ammus);
-        kuti.setImage(ii.getImage());
-    }
-
-    /**
-     * Asettaa kuvan ufolle.
-     */
-    private void asetaKuvaUfolle() {
-        ImageIcon ii = new ImageIcon(UfoKuva);
-        ufo.setImage(ii.getImage());
-    }
-
-    /**
-     * Asettaa kuvan räjähdykselle.
-     */
-    private void asetaKuvaRajahdykselle() {
-        objektiKuolee = new ImageIcon(rajahdys);
-    }
-
-    /**
-     * Ette ikinä arvaa.
-     */
-    private void asetaKuvaUfoKudille() {
-        ImageIcon ii = new ImageIcon(ammus);
-        ufokuti.setImage(ii.getImage());
-    }
-
-    /**
-     * @return Noutaa räjähdyksen tuhoutuvia objekteja varten.
-     */
-    private ImageIcon getRajahdys() {
-        return objektiKuolee;
     }
 }

@@ -12,6 +12,10 @@ public class Ufo extends Objekti {
 
     UfoKuti ufokuti;
 
+    
+    public Ufo(){
+        
+    }
     /**
      * Luo uuden ufon. Jokaisella ufolla on oma ammuksensa.
      * @param x ufon sijainti

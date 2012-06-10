@@ -28,7 +28,6 @@ public class GameMain extends JFrame implements Asetukset {
     public GameMain() {
         moottori = new Pelimoottori();
         moottori.GameInit();
-
         canvas = new GameCanvas();
         canvas.setPreferredSize(new Dimension(RuudunLeveys, RuudunKorkeus));
         this.setContentPane(canvas);
@@ -83,9 +82,13 @@ public class GameMain extends JFrame implements Asetukset {
     public void gameDraw(Graphics2D g2d) {
         if (moottori.ingame) {
             grafiikka.piirraPelaaja(g2d);
+            System.out.println("pelaaja");
             grafiikka.piirraUfo(g2d);
+            System.out.println("ufo");
             grafiikka.piirraKuti(g2d);
+            System.out.println("kuti");
             grafiikka.piirraUfoKuti(g2d);
+            System.out.println("ufokuti");
             g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
         } else {
             grafiikka.peliLoppuu();
@@ -96,11 +99,17 @@ public class GameMain extends JFrame implements Asetukset {
 class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
     private GameMain gamemain;
+    private Pelimoottori moottori;
+    private Grafiikka grafiikka;
 
     public GameCanvas() {
+
         setFocusable(true);
         requestFocus();
         addKeyListener(new TAdapter());
+        grafiikka = new Grafiikka();
+        moottori = new Pelimoottori();
+        gamemain = new GameMain();
     }
 
     @Override
@@ -124,5 +133,21 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         this.keyReleased(e);
+    }
+
+    private void gameDraw(Graphics2D g2d) {
+        if (moottori.ingame) {
+            grafiikka.piirraPelaaja(g2d);
+            System.out.println("pelaaja");
+            grafiikka.piirraUfo(g2d);
+            System.out.println("ufo");
+            grafiikka.piirraKuti(g2d);
+            System.out.println("kuti");
+            grafiikka.piirraUfoKuti(g2d);
+            System.out.println("ufokuti");
+            g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
+        } else {
+            grafiikka.peliLoppuu();
+        };
     }
 }

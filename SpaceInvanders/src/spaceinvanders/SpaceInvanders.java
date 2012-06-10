@@ -40,7 +40,7 @@ public class SpaceInvanders extends JFrame implements Asetukset {
 
             @Override
             public void run() {
-                new GameMain();
+                GameMain gameMain = new GameMain();
             }
         });
     }

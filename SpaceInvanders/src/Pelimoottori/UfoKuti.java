@@ -13,6 +13,9 @@ public class UfoKuti extends Objekti {
 
     private boolean tuhoutuu;
 
+    public UfoKuti(){
+        
+    }
     /**
      * Luo ufon ampuman ammuksen.
      *

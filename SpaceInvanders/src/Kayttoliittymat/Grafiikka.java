@@ -5,10 +5,8 @@
 package Kayttoliittymat;
 
 import Pelimoottori.*;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
+import java.awt.*;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -23,14 +21,29 @@ public class Grafiikka extends JPanel implements Asetukset {
     Pelaaja pelaaja;
     Ufo ufo;
     Kuti kuti;
+    private final String ammus = "ammus.png";
+    private final String pelaajakuva = "pelaaja.png";
+    private final String UfoKuva = "ufo.png";
+    private final String rajahdys = "rajahdys.png";
+    private ImageIcon objektiKuolee;
+
+    public Grafiikka() {
+        kuti = new Kuti();
+        pelaaja = new Pelaaja();
+        ufo = new Ufo();
+        ufokuti = new UfoKuti();
+    }
 
     /**
      * Piirtää ufon kentälle.
      *
      * @param g
      */
-    public void piirraUfo(Graphics g) {
-        g.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this);
+    public void piirraUfo(Graphics2D g2d) {
+        g2d.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this);
+        if (g2d.drawImage(ufo.getImage(), ufo.getX(), ufo.getY(), this)) {
+            System.out.println("ufo toimii");
+        }
     }
 
     /**
@@ -38,8 +51,11 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraPelaaja(Graphics g) {
-        g.drawImage(pelaaja.getImage(), pelaaja.getX(), pelaaja.getY(), this);
+    public void piirraPelaaja(Graphics2D g2d) {
+        g2d.drawImage(pelaaja.getImage(), pelaaja.getX(), pelaaja.getY(), this);
+        if (g2d.drawImage(pelaaja.getImage(), pelaaja.getX(), pelaaja.getY(), this)) {
+            System.out.println("pelaaja toimii");
+        }
     }
 
     /**
@@ -47,8 +63,11 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraKuti(Graphics g) {
-        g.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this);
+    public void piirraKuti(Graphics2D g2d) {
+        g2d.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this);
+        if (g2d.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this)) {
+            System.out.println("kuti toimii");
+        }
     }
 
     /**
@@ -56,8 +75,11 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraUfoKuti(Graphics g) {
-        g.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
+    public void piirraUfoKuti(Graphics2D g2d) {
+        g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
+        if (g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this)) {
+            System.out.println("ufokuti toimii");
+        }
     }
 
     /**
@@ -65,7 +87,7 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraTavaratKentalle(Graphics g) {
+    public void piirraTavaratKentalle(Graphics2D g) {
         if (moottori.ingame) {
             g.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
             moottori.ufotKentalle(g);
@@ -84,12 +106,12 @@ public class Grafiikka extends JPanel implements Asetukset {
             Graphics g = this.getGraphics();
 
             System.out.println("lol");
-            g.setColor(Color.white);
+            g.setColor(Color.black);
             g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
 
             g.setColor(new Color(0, 32, 48));
             g.fillRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
-            g.setColor(Color.white);
+            g.setColor(Color.green);
             g.drawRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
 
             Font small = new Font("Comic sans", Font.BOLD, 14);
@@ -99,5 +121,54 @@ public class Grafiikka extends JPanel implements Asetukset {
             g.setFont(small);
             g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
         }
+    }
+
+    /**
+     * Asettaa kuvan pelaajalle.
+     */
+    public void asetaKuvaPelaajalle() {
+ 
+        ImageIcon ii = new ImageIcon(pelaajakuva);
+        pelaaja.leveys = ii.getImage().getWidth(null);
+        pelaaja.setImage(ii.getImage());
+    }
+
+    /**
+     * Asettaa kuvan pelaajan ammuksille.
+     */
+    public void asetaKuvaAmmukselle() {
+        ImageIcon ii = new ImageIcon(ammus);
+        kuti.setImage(ii.getImage());
+    }
+
+    /**
+     * Asettaa kuvan ufolle.
+     */
+    public void asetaKuvaUfolle() {
+        ImageIcon ii = new ImageIcon(UfoKuva);
+        ufo.setImage(ii.getImage());
+
+    }
+
+    /**
+     * Asettaa kuvan räjähdykselle.
+     */
+    public void asetaKuvaRajahdykselle() {
+        objektiKuolee = new ImageIcon(rajahdys);
+    }
+
+    /**
+     * Ette ikinä arvaa.
+     */
+    public void asetaKuvaUfoKudille() {
+        ImageIcon ii = new ImageIcon(ammus);
+        ufokuti.setImage(ii.getImage());
+    }
+
+    /**
+     * @return Noutaa räjähdyksen tuhoutuvia objekteja varten.
+     */
+    public ImageIcon getRajahdys() {
+        return objektiKuolee;
     }
 }
