@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- *
+ *Sisältää peligrafiikat.
  * @author Larppa
  */
 public class Grafiikka extends JPanel implements Asetukset {
@@ -27,12 +27,11 @@ public class Grafiikka extends JPanel implements Asetukset {
     private final String rajahdys = "rajahdys.png";
     private ImageIcon objektiKuolee;
 
-    public Grafiikka() {
+    public Grafiikka(Pelimoottori moottori) {
         kuti = new Kuti();
         pelaaja = new Pelaaja();
         ufo = new Ufo();
         ufokuti = new UfoKuti();
-        moottori = new Pelimoottori();
     }
 
     /**

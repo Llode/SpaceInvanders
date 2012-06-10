@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
+ * Käyttöliittymä ja pelin käynnistävät toiminnot.
  *
  * @author Larppa
  */
@@ -20,10 +21,9 @@ public class GameMain extends JFrame implements Asetukset {
 
     private Pelimoottori moottori;
     private GameCanvas canvas;
-    private Grafiikka grafiikka;
+
 
     public GameMain() {
-        grafiikka = new Grafiikka();
         moottori = new Pelimoottori();
         moottori.GameInit();
         canvas = new GameCanvas();
@@ -40,6 +40,9 @@ public class GameMain extends JFrame implements Asetukset {
         gameStart();
     }
 
+    /**
+     * Käynnistää pelin.
+     */
     public void gameStart() {
         Thread gameThread = new Thread() {
 
@@ -52,51 +55,40 @@ public class GameMain extends JFrame implements Asetukset {
         gameThread.start();
     }
 
+    /**
+     * Pelin logiikan suoritusjärjestys.
+     */
     private void gameLoop() {
 
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
 
-        while (moottori.ingame == true) {
+        while (true) {
             moottori.toiminta();
             repaint();
 
+            timeDiff = (System.currentTimeMillis() - beforeTime);
+            sleep = Delay - timeDiff;
+
+            if (sleep < 0) {
+                sleep = 2;
+            }
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                System.out.println("interrupted");
+            }
+            beforeTime = System.currentTimeMillis();
         }
-        grafiikka.peliLoppuu();
-
-
-
-        timeDiff = (System.currentTimeMillis() - beforeTime);
-        sleep = Delay - timeDiff;
-
-        if (sleep < 0) {
-            sleep = 2;
-        }
-        try {
-            Thread.sleep(sleep);
-        } catch (InterruptedException e) {
-            System.out.println("interrupted");
-        }
-        beforeTime = System.currentTimeMillis();
     }
 }
-//    public void gameDraw(Graphics2D g2d) {
-//        if (moottori.ingame) {
-//            grafiikka.piirraPelaaja(g2d);
-//            System.out.println("pelaaja");
-//            grafiikka.piirraUfo(g2d);
-//            System.out.println("ufo");
-//            grafiikka.piirraKuti(g2d);
-//            System.out.println("kuti");
-//            grafiikka.piirraUfoKuti(g2d);
-//            System.out.println("ufokuti");
-//            g2d.drawLine(0, 100, RuudunLeveys, 150);
-//        } else {
-//            grafiikka.peliLoppuu();
-//        };
-//    }
 
+/**
+ * Pelialueen luonti.
+ *
+ * @author Larppa
+ */
 class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
     private Pelimoottori moottori;
@@ -107,9 +99,8 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         setFocusable(true);
         requestFocus();
         addKeyListener(new TAdapter());
-        grafiikka = new Grafiikka();
         moottori = new Pelimoottori();
-
+        grafiikka = new Grafiikka(moottori);
     }
 
     @Override
@@ -135,6 +126,11 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         this.keyReleased(e);
     }
 
+    /**
+     * Piirtää pelin tapahtumat kentälle.
+     *
+     * @param g2d
+     */
     private void gameDraw(Graphics2D g2d) {
         if (moottori.ingame) {
             grafiikka.piirraPelaaja(g2d);
@@ -150,6 +146,8 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
             g2d.dispose();
         } else {
             grafiikka.peliLoppuu();
-        };
+            Toolkit.getDefaultToolkit().sync();
+            g2d.dispose();
+        }
     }
 }

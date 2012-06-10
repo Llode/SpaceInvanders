@@ -44,17 +44,15 @@ public class Pelimoottori implements Asetukset {
      * ASettaa Luo ufot ja pelaajan, asettaa spritet objekteille.
      */
     public void GameInit() {
-
-        grafiikka = new Grafiikka();
-
         ufot = new ArrayList();
-        asetaUfotRiveihin();
-
-        pelaaja = new Pelaaja();
-        grafiikka.asetaKuvaPelaajalle();
 
         kuti = new Kuti();
+        pelaaja = new Pelaaja();
+
+        grafiikka = new Grafiikka(this);
+        grafiikka.asetaKuvaPelaajalle();
         grafiikka.asetaKuvaAmmukselle();
+        asetaUfotRiveihin();
     }
 
     /**
@@ -132,24 +130,27 @@ public class Pelimoottori implements Asetukset {
      * Sisältää pelin logiikan.
      */
     public void toiminta() {
-        toimitaVarmistus();
-        peliLoppuuUfojenTuhoamiseen();
+        if (ingame == true) {
+            toimitaVarmistus();
+            peliLoppuuUfojenTuhoamiseen();
 
-        //Pelaaja
-        pelaaja.pelaajaLiikkuu();
-        pelaajanAmmuksetToimintaSyklissa();
+            //Pelaaja
+            pelaaja.pelaajaLiikkuu();
+            pelaajanAmmuksetToimintaSyklissa();
 
-        //Ufot
-        Iterator it1 = ufot.iterator();
-        ufotLiikkuvatKentalla(it1);
-        System.out.println("ufot liikkuu");
-        Iterator it = ufot.iterator();
+            //Ufot
+            Iterator it1 = ufot.iterator();
+            ufotLiikkuvatKentalla(it1);
+            System.out.println("ufot liikkuu");
+            Iterator it = ufot.iterator();
 
-        while (it.hasNext()) {
-            ufo = (Ufo) it.next();
-            ufotSaavuttavatMaan(ufo);
+            while (it.hasNext()) {
+                ufo = (Ufo) it.next();
+                ufotSaavuttavatMaan(ufo);
+            }
+            ufonAmmuksetToimintasyklissa();
         }
-        ufonAmmuksetToimintasyklissa();
+        toimitaVarmistus();
     }
 
     private void toimitaVarmistus() {

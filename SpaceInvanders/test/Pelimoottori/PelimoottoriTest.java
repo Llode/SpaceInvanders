@@ -40,7 +40,7 @@ public class PelimoottoriTest {
 
     @Before
     public void setUp() {
-        grafiikka = new Grafiikka();
+
         moottori = new Pelimoottori();
         moottori.GameInit();
         pelaaja = new Pelaaja();
