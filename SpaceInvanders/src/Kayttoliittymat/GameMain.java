@@ -22,7 +22,6 @@ public class GameMain extends JFrame implements Asetukset {
     private Pelimoottori moottori;
     private GameCanvas canvas;
 
-
     public GameMain() {
         moottori = new Pelimoottori();
         moottori.GameInit();
@@ -32,7 +31,7 @@ public class GameMain extends JFrame implements Asetukset {
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
-        this.setTitle("SPACE INVADELS");
+        this.setTitle("SPACE INVANDELS");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -64,7 +63,7 @@ public class GameMain extends JFrame implements Asetukset {
 
         beforeTime = System.currentTimeMillis();
 
-        while (true) {
+        while (moottori.ingame) {
             moottori.toiminta();
             repaint();
 
@@ -81,6 +80,7 @@ public class GameMain extends JFrame implements Asetukset {
             }
             beforeTime = System.currentTimeMillis();
         }
+        repaint();
     }
 }
 
@@ -93,6 +93,7 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
     private Pelimoottori moottori;
     private Grafiikka grafiikka;
+    private String PeliLoppui;
 
     public GameCanvas() {
 
@@ -101,13 +102,14 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         addKeyListener(new TAdapter());
         moottori = new Pelimoottori();
         grafiikka = new Grafiikka(moottori);
+
     }
 
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g2d);
-        setBackground(Color.black);
+        setBackground(Color.red);
         gameDraw(g2d);
     }
 
@@ -132,22 +134,47 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
      * @param g2d
      */
     private void gameDraw(Graphics2D g2d) {
-        if (moottori.ingame) {
-            grafiikka.piirraPelaaja(g2d);
-            System.out.println("pelaaja");
-            grafiikka.piirraUfo(g2d);
-            System.out.println("ufo");
-            grafiikka.piirraKuti(g2d);
-            System.out.println("kuti");
-            grafiikka.piirraUfoKuti(g2d);
-            System.out.println("ufokuti");
-            g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
-            Toolkit.getDefaultToolkit().sync();
-            g2d.dispose();
-        } else {
-            grafiikka.peliLoppuu();
-            Toolkit.getDefaultToolkit().sync();
-            g2d.dispose();
+
+        grafiikka.piirraPelaaja(g2d);
+        System.out.println("pelaaja");
+        grafiikka.piirraUfo(g2d);
+        System.out.println("ufo");
+        grafiikka.piirraKuti(g2d);
+        System.out.println("kuti");
+        grafiikka.piirraUfoKuti(g2d);
+        System.out.println("ufokuti");
+        g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
+        
+        peliLoppuu(g2d);
+        Toolkit.getDefaultToolkit().sync();
+        g2d.dispose();
+    }
+
+    /**
+     * Piirtää game over -ruudun.
+     */
+    public void peliLoppuu(Graphics g) {
+
+        if (!moottori.ingame) {
+            System.out.println("GAME OVER");
+            PeliLoppui = moottori.Loppusanat;
+            g = this.getGraphics();
+
+            System.out.println("lol");
+            g.setColor(Color.green);
+            g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
+
+            g.setColor(new Color(0, 32, 48));
+            g.fillRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
+            g.setColor(Color.green);
+            g.drawRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
+
+            Font small = new Font("Comic sans", Font.BOLD, 14);
+            FontMetrics metr = this.getFontMetrics(small);
+
+            g.setColor(Color.red);
+            g.setFont(small);
+            g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
         }
     }
 }
