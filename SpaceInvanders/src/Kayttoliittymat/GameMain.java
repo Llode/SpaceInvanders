@@ -21,11 +21,13 @@ public class GameMain extends JFrame implements Asetukset {
 
     private Pelimoottori moottori;
     private GameCanvas canvas;
+    private Grafiikka grafiikka;
 
     public GameMain() {
         moottori = new Pelimoottori();
+        grafiikka = new Grafiikka(moottori);
+        canvas = new GameCanvas(grafiikka);
         moottori.GameInit();
-        canvas = new GameCanvas();
         canvas.setPreferredSize(new Dimension(RuudunLeveys, RuudunKorkeus));
         this.setContentPane(canvas);
 
@@ -42,7 +44,7 @@ public class GameMain extends JFrame implements Asetukset {
     /**
      * Käynnistää pelin.
      */
-    public void gameStart() {
+    private void gameStart() {
         Thread gameThread = new Thread() {
 
             @Override
@@ -92,17 +94,16 @@ public class GameMain extends JFrame implements Asetukset {
 class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
     private Pelimoottori moottori;
-    private Grafiikka grafiikka;
+    private Grafiikka grafiikka = new Grafiikka(moottori);
+    ;
     private String PeliLoppui;
 
-    public GameCanvas() {
+    public GameCanvas(Grafiikka grafiikka) {
 
         setFocusable(true);
         requestFocus();
         addKeyListener(new TAdapter());
         moottori = new Pelimoottori();
-        grafiikka = new Grafiikka(moottori);
-
     }
 
     @Override
@@ -144,7 +145,7 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         grafiikka.piirraUfoKuti(g2d);
         System.out.println("ufokuti");
         g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
-        
+
         peliLoppuu(g2d);
         Toolkit.getDefaultToolkit().sync();
         g2d.dispose();
