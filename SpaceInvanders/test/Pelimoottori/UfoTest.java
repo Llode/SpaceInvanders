@@ -61,7 +61,7 @@ public class UfoTest {
     @Test
     public void UfoSisaltaaKudin(){
        ufo.getUfoKuti();
-       assertEquals(ufo.getX(), ufokuti.getX(), vertailutarkkuus);
+       assertTrue(ufokuti.isVisible());
     }
 
 }

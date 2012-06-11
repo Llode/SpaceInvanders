@@ -195,3 +195,23 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         }
     }
 }
+
+/*
+ * kuvapaneeli = new Jpanel
+ * kuvaLbale = new JLaber(new imagegon (,...getKuva
+ * kuvapaneeli.add(kuvalabel)
+ * contntPne.add(kuvapaneeli)
+ */
+
+/*
+ * Graphics2D graffa = ...getKuva().createGraphics/(;
+ */
+
+/*
+ * graffa.drawimage
+ * graffa.dispose;
+ */
+
+/*
+ * kuvalabel.paint(graffa);
+ */

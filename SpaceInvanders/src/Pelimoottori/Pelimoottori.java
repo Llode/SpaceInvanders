@@ -256,7 +256,7 @@ public class Pelimoottori implements Asetukset {
         Random rng = new Random();
 
         while (i3.hasNext()) {
-            int ampuu = rng.nextInt(15);
+            int ampuu = rng.nextInt(6);
             ufo = (Ufo) i3.next();
             ufokuti = ufo.getUfoKuti();
             ufoAmpuuJosArpaSuosii(ampuu, ufo, ufokuti);

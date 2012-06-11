@@ -114,8 +114,8 @@ public class Grafiikka extends JPanel implements Asetukset {
     /**
      * Asettaa kuvan räjähdykselle.
      */
-    public void asetaKuvaRajahdykselle() {
-        objektiKuolee = new ImageIcon(rajahdys);
+    public void asetaKuvaRajahdykselle(ImageIcon objektiKuolee) {
+        this.objektiKuolee = new ImageIcon(rajahdys);
     }
 
     /**
