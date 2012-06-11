@@ -14,7 +14,7 @@ public class Ufo extends Objekti {
 
     
     public Ufo(){
-        
+        setVisible(false);
     }
     /**
      * Luo uuden ufon. Jokaisella ufolla on oma ammuksensa.

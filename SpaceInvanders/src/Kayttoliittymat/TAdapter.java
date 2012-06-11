@@ -38,17 +38,18 @@ public class TAdapter extends KeyAdapter {
 
         if (key == KeyEvent.VK_LEFT) {
             pelaaja.pelaajaLiikkuuVasempaan();
-            System.out.println("vasenoaab");
+            System.out.println("vasenpaan");
         }
         if (key == KeyEvent.VK_RIGHT) {
             pelaaja.pelaajaLiikkuuOikeaan();
             System.out.println("oikeaan");
         }
         if (e.isShiftDown()) {
-            if (kuti.isVisible()) {
+            if (!kuti.isVisible()) {
                 kuti = new Kuti(pelaaja.getX(), pelaaja.getY());
             }
             System.out.println("piupiut");
+
         }
     }
 

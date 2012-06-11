@@ -38,8 +38,9 @@ public class UfoTest {
     
     @Before
     public void setUp() {
-        ufo = new Ufo(50, 50);
         ufokuti = new UfoKuti();
+        ufo = new Ufo(50, 50);
+        
 
     }
     
@@ -56,6 +57,11 @@ public class UfoTest {
     public void UfoLiikkuuKunSuuntaOnOikeaan(){
         ufo.ufoLiikkuu(1);
         assertEquals(51, ufo.getX(), vertailutarkkuus);
+    }
+    @Test
+    public void UfoSisaltaaKudin(){
+       ufo.getUfoKuti();
+       assertEquals(ufo.getX(), ufokuti.getX(), vertailutarkkuus);
     }
 
 }

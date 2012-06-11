@@ -118,7 +118,7 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g2d);
-        setBackground(Color.red);
+        setBackground(Color.black);
         gameDraw(g2d);
     }
 

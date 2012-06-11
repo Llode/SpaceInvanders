@@ -45,8 +45,6 @@ public class Pelimoottori implements Asetukset {
         PiirraPelaaja = false;
         PiirraKuti = false;
         PiirraUfokuti = false;
-
-
     }
 
     /**
@@ -58,7 +56,6 @@ public class Pelimoottori implements Asetukset {
         pelaaja = new Pelaaja();
         grafiikka = new Grafiikka(this);
         grafiikka.asetaKuvaPelaajalle(pelaaja);
-        grafiikka.asetaKuvaAmmukselle(kuti);
         asetaUfotRiveihin();
     }
 
@@ -239,12 +236,22 @@ public class Pelimoottori implements Asetukset {
             kuti.setY(y);
         }
     }
+        protected void ufonAmmusLiikkuu(UfoKuti ufokuti) {
+        int y = ufokuti.getY();
+        y += 2;
+        if (y > 500) {
+            ufokuti.die();
+        } else {
+            ufokuti.setY(y);
+        }
+    }
 
     /**
      * Ohjaa ufokutien toimintaa. SIsältää liikkeen, ampumisen sekä
      * osumatunnistuksen.
      */
     private void ufonAmmuksetToimintasyklissa(Ufo ufo, UfoKuti ufokuti, Pelaaja pelaaja) {
+        System.out.println("ufon ammussykli");
         Iterator i3 = ufot.iterator();
         Random rng = new Random();
 
@@ -263,7 +270,7 @@ public class Pelimoottori implements Asetukset {
                 if (pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY)) {
                     pelaajaTuhoutuuOsumasta(pelaaja, ufokuti);
                 }
-            }
+            }ufonAmmusLiikkuu(ufokuti);
         }
     }
 
@@ -295,6 +302,7 @@ public class Pelimoottori implements Asetukset {
             if (y > UfojenMaaliViiva - UfonKorkeus) {
                 ingame = false;
                 Loppusanat = "Ufot ovat valloittaneet maailman!";
+                System.out.println("maali");
             }
             ufo.ufoLiikkuu(suunta);
         }
@@ -359,6 +367,7 @@ public class Pelimoottori implements Asetukset {
         pelaaja.setImage(grafiikka.getRajahdys().getImage());
         pelaaja.setKuolee(true);
         ufokuti.setKutiTuhoutuu(true);
+        System.out.println("pelaaja kuolee");
     }
 
     /**
@@ -388,6 +397,7 @@ public class Pelimoottori implements Asetukset {
         ufo.setKuolee(true);
         tuhotut++;
         kuti.die();
+        System.out.println("ufo kuolee");
     }
 
     /**
