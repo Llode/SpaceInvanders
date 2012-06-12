@@ -38,18 +38,12 @@ public class TAdapter extends KeyAdapter {
 
         if (key == KeyEvent.VK_LEFT) {
             pelaaja.pelaajaLiikkuuVasempaan();
-            System.out.println("vasenpaan");
         }
         if (key == KeyEvent.VK_RIGHT) {
             pelaaja.pelaajaLiikkuuOikeaan();
-            System.out.println("oikeaan");
         }
         if (e.isShiftDown()) {
-            if (!kuti.isVisible()) {
-                kuti = new Kuti(pelaaja.getX(), pelaaja.getY());
-            }
-            System.out.println("piupiut");
-
+            moottori.pelaajaAmpuu(pelaaja, kuti);
         }
     }
 
@@ -64,11 +58,9 @@ public class TAdapter extends KeyAdapter {
 
         if (key == KeyEvent.VK_LEFT) {
             pelaaja.pelaajaPysahtyy();
-            System.out.println("HALT");
         }
         if (key == KeyEvent.VK_RIGHT) {
             pelaaja.pelaajaPysahtyy();
-            System.out.println("HAMMERZEIT");
         }
 
     }

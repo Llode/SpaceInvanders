@@ -40,6 +40,7 @@ public class Ufo extends Objekti {
      * Metodia kutsutaan, kun ufo ampuu pelaajaa.
      */
     public UfoKuti getUfoKuti() {
+        ufokuti.setVisible(true);
         return ufokuti;
     }
 }

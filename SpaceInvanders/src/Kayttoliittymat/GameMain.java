@@ -8,7 +8,9 @@ import Pelimoottori.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Iterator;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -24,19 +26,19 @@ public class GameMain extends JFrame implements Asetukset {
 
     public GameMain() {
         moottori = new Pelimoottori();
+        grafiikka = new Grafiikka(moottori);
         moottori.GameInit();
 
         canvas = new GameCanvas(grafiikka, moottori);
         canvas.setPreferredSize(new Dimension(RuudunLeveys, RuudunKorkeus));
         this.setContentPane(canvas);
-
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.pack();
         this.setTitle("SPACE INVANDELS");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
+        canvas.add(new JLabel(grafiikka.ufoIcon(moottori.ufo)));
         gameStart();
     }
 
@@ -81,6 +83,7 @@ public class GameMain extends JFrame implements Asetukset {
             }
             beforeTime = System.currentTimeMillis();
         }
+
 //        repaint();
     }
 }
@@ -94,23 +97,24 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
     private Pelimoottori moottori;
     private Grafiikka grafiikka;
-    ;
-    private String PeliLoppui;
-    private Pelaaja pelaaja;
     private Ufo ufo;
+    private Pelaaja pelaaja;
     private UfoKuti ufokuti;
     private Kuti kuti;
+    private String PeliLoppui;
 
     public GameCanvas(Grafiikka grafiikka, Pelimoottori moottori) {
 
         setFocusable(true);
         requestFocus();
+        this.grafiikka = grafiikka;
         this.moottori = moottori;
-        addKeyListener(new TAdapter(moottori));
-        ufokuti = this.moottori.ufokuti;
         ufo = this.moottori.ufo;
-        pelaaja = this.moottori.pelaaja;
         kuti = this.moottori.kuti;
+        pelaaja = this.moottori.pelaaja;
+        ufokuti = this.moottori.ufokuti;
+        addKeyListener(new TAdapter(moottori));
+
 
     }
 
@@ -119,7 +123,10 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g2d);
         setBackground(Color.black);
-        gameDraw(g2d);
+        if(moottori.ingame) {
+            gameDraw(g2d);
+        }
+        peliLoppuu(g2d);
     }
 
     @Override
@@ -143,26 +150,30 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
      * @param g2d
      */
     private void gameDraw(Graphics2D g2d) {
-        if (moottori.PiirraPelaaja) {
-            grafiikka.piirraPelaaja(g2d, pelaaja);
-            System.out.println("pelaaja");
-        }
-        if (moottori.PiirraUfo) {
-            grafiikka.piirraUfo(g2d, ufo);
-            System.out.println("ufo");
-        }
+        g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
+
         if (moottori.PiirraKuti) {
             grafiikka.piirraKuti(g2d, kuti);
             System.out.println("kuti");
         }
-        if (moottori.PiirraUfokuti) {
-            grafiikka.piirraUfoKuti(g2d, ufokuti);
-            System.out.println("ufokuti");
+
+        if (moottori.pelaaja.isVisible()) {
+            grafiikka.piirraPelaaja(g2d, pelaaja);
         }
 
-        g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
+        Iterator it = moottori.ufot.iterator();
+        while (it.hasNext()) {
+            ufo = (Ufo) it.next();
 
-        peliLoppuu(g2d);
+            if (ufo.isVisible()) {
+                grafiikka.piirraUfo(g2d, ufo);
+            }
+            if (moottori.PiirraUfokuti) {
+                grafiikka.piirraUfoKuti(g2d, ufokuti);
+                System.out.println("ufokuti");
+            }
+        }
+
         Toolkit.getDefaultToolkit().sync();
         g2d.dispose();
     }
@@ -172,9 +183,9 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
      */
     public void peliLoppuu(Graphics g) {
 
-        if (!moottori.ingame) {
+        if (!this.moottori.ingame) {
             System.out.println("GAME OVER");
-            PeliLoppui = moottori.Loppusanat;
+            PeliLoppui = this.moottori.Loppusanat;
             g = this.getGraphics();
 
             System.out.println("lol");
@@ -195,23 +206,3 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         }
     }
 }
-
-/*
- * kuvapaneeli = new Jpanel
- * kuvaLbale = new JLaber(new imagegon (,...getKuva
- * kuvapaneeli.add(kuvalabel)
- * contntPne.add(kuvapaneeli)
- */
-
-/*
- * Graphics2D graffa = ...getKuva().createGraphics/(;
- */
-
-/*
- * graffa.drawimage
- * graffa.dispose;
- */
-
-/*
- * kuvalabel.paint(graffa);
- */

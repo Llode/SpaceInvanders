@@ -14,11 +14,10 @@ public class Pelaaja extends Objekti implements Asetukset {
     private final int aloitus_x = 250;
     private final int aloitus_y = 400;
     public int leveys = PelaajanLeveys;
-    Kuti kuti;
 
-/**
- * Luo pelaajan aluksen.
- */
+    /**
+     * Luo pelaajan aluksen.
+     */
     public Pelaaja() {
         setX(aloitus_x);
         setY(aloitus_y);
