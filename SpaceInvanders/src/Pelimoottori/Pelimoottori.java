@@ -149,7 +149,7 @@ public class Pelimoottori implements Asetukset {
             ufotLiikkuvatKentalla(it1);
             Iterator it = ufot.iterator();
             maaliviivaTarkastus(it);
-            ufonAmmuksetToimintasyklissa(ufot, ufokuti, pelaaja);
+            ufonAmmuksetToimintasyklissa(ufot, ufo, pelaaja);
         }
     }
 
@@ -243,7 +243,7 @@ public class Pelimoottori implements Asetukset {
      * Ohjaa ufokutien toimintaa. SIsältää liikkeen, ampumisen sekä
      * osumatunnistuksen.
      */
-    private void ufonAmmuksetToimintasyklissa(ArrayList ufot, UfoKuti ufokuti, Pelaaja pelaaja) {
+    private void ufonAmmuksetToimintasyklissa(ArrayList ufot, Ufo ufo, Pelaaja pelaaja) {
         System.out.println("ufon ammussykli");
         Iterator i3 = ufot.iterator();
         Random rng = new Random();
@@ -259,15 +259,15 @@ public class Pelimoottori implements Asetukset {
             int pelaajaX = pelaaja.getX();
             int pelaajaY = pelaaja.getY();
 
-            if (ufokuti.isVisible()) {
-                ufonAmmusLiikkuu(ufokuti);
-            }
 
             if (pelaaja.isVisible() && !ufokuti.kutiTuhoutuu()) {
                 if (pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY)) {
                     pelaajaTuhoutuuOsumasta(pelaaja, ufokuti);
                     System.out.println("osumatunnistus");
                 }
+            }
+            if (!ufokuti.kutiTuhoutuu()) {
+                ufonAmmusLiikkuu(ufokuti);
             }
         }
     }
@@ -296,11 +296,14 @@ public class Pelimoottori implements Asetukset {
      * @param ufokuti ufon ampuma ammus.
      */
     private void ufoAmpuuJosArpaSuosii(int ampuu, Ufo ufo, UfoKuti ufokuti) {
+        this.ufokuti = ufokuti;
         System.out.println("arpa");
         if (ampuu == UfonAmpumaTodNak && ufo.isVisible() && ufokuti.kutiTuhoutuu()) {
             ufokuti.setKutiTuhoutuu(false);
             ufokuti.setX(ufo.getX());
             ufokuti.setY(ufo.getY());
+            int ufokutiX = ufokuti.getX();
+            int ufokutiY = ufokuti.getY();
         }
     }
 
