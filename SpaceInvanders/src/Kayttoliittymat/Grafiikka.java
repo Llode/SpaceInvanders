@@ -27,11 +27,6 @@ public class Grafiikka extends JPanel implements Asetukset {
     private ImageIcon objektiKuolee;
 
     public Grafiikka(Pelimoottori moottori) {
-//        this.moottori = moottori;
-//        kuti = this.moottori.kuti;
-//        pelaaja = this.moottori.pelaaja;
-//        ufo = this.moottori.ufo;
-//        ufokuti = this.moottori.ufokuti;
     }
 
     /**
@@ -120,22 +115,38 @@ public class Grafiikka extends JPanel implements Asetukset {
     public ImageIcon getRajahdys() {
         return objektiKuolee;
     }
-
+/**
+ * Asettaa imageiconin ufolle.
+ * @param ufo
+ * @return 
+ */
     public ImageIcon ufoIcon(Ufo ufo) {
         ImageIcon ii = new ImageIcon(UfoKuva);
         return ii;
     }
-
+/**
+ * Asettaa imageiconin pelaajalle.
+ * @param pelaaja
+ * @return 
+ */
     public ImageIcon pelaajaIcon(Pelaaja pelaaja) {
         ImageIcon ii = new ImageIcon(pelaajakuva);
         return ii;
     }
-
+/**
+ * Asettaa imageiconin ammuksille.
+ * @param kuti
+ * @return 
+ */
     public ImageIcon kutiIcon(Kuti kuti) {
         ImageIcon ii = new ImageIcon(ammus);
         return ii;
     }
-
+/**
+ * Asettaa imageiconin ufojen ammuksille.
+ * @param ufokuti
+ * @return 
+ */
     public ImageIcon ufoKutiIcon(UfoKuti ufokuti) {
         ImageIcon ii = new ImageIcon(ammus);
         return ii;

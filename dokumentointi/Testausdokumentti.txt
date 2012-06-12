@@ -1,0 +1,20 @@
+Objektilla ja sen aliluokalla on l‰hinn‰ gettereit‰ ja settereit‰.  N‰ist‰ testattiin oleellisimmat metodit.
+
+KutiTest
+Testaa, toimiiko ammuksen keskitys pelaajan kuvan keskikohdalle.
+
+PelaajaTest
+Testaa aloituskoordinaattien toimivuutta sek‰ varmistaa, ettei pelaaja p‰‰se peliruudun ulkopuolelle.
+
+UfoTest
+Testaa ufon liikkumista sek‰ sen sis‰lt‰m‰‰ ufokutia.
+
+UfokutiTest
+Testaa ufokutien n‰kymist‰, katoamista ja tuhoutumista.
+
+
+PelimoottoriTest
+
+Testaa mm. osumantunnistusta ja ufojen toimintaa. Suurin osa metodeista oli joko muiden metodien apumetodeja, tai sitten helpompaa testata manuaalisesti.
+
+Toimintasykli k‰yd‰‰n pariin otteeseen l‰pi, jotta varmistutaan muutaman oleellisen metodin toiminnasta. Coverage-plugin maalaa t‰st‰ hyv‰st‰ suurimman osan Pelimoottori-luokasta testatuksi, joten mit‰‰n t‰ysin rikkin‰ist‰ siell‰ tuskin on.

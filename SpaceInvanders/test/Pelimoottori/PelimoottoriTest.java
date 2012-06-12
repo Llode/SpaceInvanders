@@ -52,7 +52,6 @@ public class PelimoottoriTest {
     public void tearDown() {
     }
 
-
 //    @Test
 //    public void SetUpLuoObjektit(){
 //        moottori.SetUp();
@@ -66,6 +65,12 @@ public class PelimoottoriTest {
         int pelaajaX = pelaaja.getX();
         int pelaajaY = pelaaja.getY();
         assertTrue(moottori.pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY));
+        ufokuti = new UfoKuti(240, 399);
+        ufokutiX = ufokuti.getX();
+        ufokutiY = ufokuti.getY();
+        pelaajaX = pelaaja.getX();
+        pelaajaY = pelaaja.getY();
+        assertFalse(moottori.pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY));
     }
 
     @Test
@@ -85,6 +90,7 @@ public class PelimoottoriTest {
 
     @Test
     public void UfoTuhoutuuKunSaaOsuman() {
+        kuti = new Kuti(50, 50);
         assertTrue(kuti.isVisible());
         moottori.ufoTuhoutuuOsumasta(ufo, kuti);
         assertFalse(kuti.isVisible());
@@ -127,10 +133,12 @@ public class PelimoottoriTest {
         moottori.tuhotut = 40;
         moottori.toiminta();
         assertFalse(moottori.ingame);
+        
         moottori.ingame = true;
         moottori.toiminta();
         pelaaja.setKuolee(true);
         assertFalse(moottori.ingame);
+        
         moottori.ingame = true;
         ufokuti = new UfoKuti(11, 11);
         pelaaja.setX(10);
@@ -138,7 +146,5 @@ public class PelimoottoriTest {
         moottori.toiminta();
         assertTrue(pelaaja.Kuoleeko());
         assertFalse(moottori.ingame);
-
-
     }
 }

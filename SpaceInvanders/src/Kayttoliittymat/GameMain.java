@@ -24,6 +24,9 @@ public class GameMain extends JFrame implements Asetukset {
     private GameCanvas canvas;
     private Grafiikka grafiikka;
 
+    /**
+     * Luo Pelikentän sekä alustaa pelin.
+     */
     public GameMain() {
         moottori = new Pelimoottori();
         grafiikka = new Grafiikka(moottori);
@@ -103,6 +106,11 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
     private Kuti kuti;
     private String PeliLoppui;
 
+    /**
+     * Luo pelialueen.
+     * @param grafiikka Käytettävät grafiikat
+     * @param moottori Käytettävä pelimoottori
+     */
     public GameCanvas(Grafiikka grafiikka, Pelimoottori moottori) {
 
         setFocusable(true);
@@ -146,7 +154,6 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
     /**
      * Piirtää pelin tapahtumat kentälle.
-     *
      * @param g2d
      */
     private void gameDraw(Graphics2D g2d) {

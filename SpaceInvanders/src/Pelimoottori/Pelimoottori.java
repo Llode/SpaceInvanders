@@ -33,7 +33,9 @@ public class Pelimoottori implements Asetukset {
     public boolean PiirraUfokuti;
     Grafiikka grafiikka;
     public String Loppusanat = "";
-
+/**
+ * konstruktori
+ */
     public Pelimoottori() {
 
         tuhotut = 0;
@@ -64,7 +66,7 @@ public class Pelimoottori implements Asetukset {
     }
 
     /**
-     * Piirtää ufot kentälle. Jos ufo on näkyvissä, se saa kuvan. Jos ufo on
+     * Käskee piirtämään ufot kentälle. Jos ufo on näkyvissä, se saa kuvan. Jos ufo on
      * kuollut, se katoaa kentältä.
      */
     public void ufotKentalle() {
@@ -81,7 +83,7 @@ public class Pelimoottori implements Asetukset {
     }
 
     /**
-     * Piirtää pelaajan kentälle. Pelaajan tuhoutuessa peli loppuu.
+     * Käskee piirtämään pelaajan kentälle. Pelaajan tuhoutuessa peli loppuu.
      *
      * @param g grafiikkamoottorin parametri
      */
@@ -94,7 +96,7 @@ public class Pelimoottori implements Asetukset {
     }
 
     /**
-     * Piirtää pelaajan ammukset kentälle
+     * Käskee piirtämään pelaajan ammuksen kentäle.
      *
      * @param g
      */
@@ -106,7 +108,7 @@ public class Pelimoottori implements Asetukset {
     }
 
     /**
-     * piirtää ufojen ammukset kentälle.
+     * Käskee piirtämään ufojen ammukset kentälle.
      *
      * @param g
      */
@@ -122,7 +124,11 @@ public class Pelimoottori implements Asetukset {
             }
         }
     }
-
+/**
+ * Metodia kutsutaan, kun pelaaja ampuu.
+ * @param pelaaja
+ * @param kuti 
+ */
     public void pelaajaAmpuu(Pelaaja pelaaja, Kuti kuti) {
         pelaaja = this.pelaaja;
         if (!this.kuti.isVisible()) {
@@ -161,6 +167,7 @@ public class Pelimoottori implements Asetukset {
     }
 
     //Tästä alaspäin vain apumetodeja.
+    
     /**
      * Asettaa ufot neljään riviin.
      *
