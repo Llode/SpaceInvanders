@@ -33,9 +33,10 @@ public class Pelimoottori implements Asetukset {
     public boolean PiirraUfokuti;
     Grafiikka grafiikka;
     public String Loppusanat = "";
-/**
- * konstruktori
- */
+
+    /**
+     * konstruktori
+     */
     public Pelimoottori() {
 
         tuhotut = 0;
@@ -66,8 +67,8 @@ public class Pelimoottori implements Asetukset {
     }
 
     /**
-     * Käskee piirtämään ufot kentälle. Jos ufo on näkyvissä, se saa kuvan. Jos ufo on
-     * kuollut, se katoaa kentältä.
+     * Käskee piirtämään ufot kentälle. Jos ufo on näkyvissä, se saa kuvan. Jos
+     * ufo on kuollut, se katoaa kentältä.
      */
     public void ufotKentalle() {
         Iterator it = ufot.iterator();
@@ -124,11 +125,13 @@ public class Pelimoottori implements Asetukset {
             }
         }
     }
-/**
- * Metodia kutsutaan, kun pelaaja ampuu.
- * @param pelaaja
- * @param kuti 
- */
+
+    /**
+     * Metodia kutsutaan, kun pelaaja ampuu.
+     *
+     * @param pelaaja
+     * @param kuti
+     */
     public void pelaajaAmpuu(Pelaaja pelaaja, Kuti kuti) {
         pelaaja = this.pelaaja;
         if (!this.kuti.isVisible()) {
@@ -155,7 +158,7 @@ public class Pelimoottori implements Asetukset {
             ufotLiikkuvatKentalla(it1);
             Iterator it = ufot.iterator();
             maaliviivaTarkastus(it);
-            ufonAmmuksetToimintasyklissa(ufot, ufo, pelaaja);
+            ufonAmmuksetToimintasyklissa(ufokuti);
         }
     }
 
@@ -167,7 +170,6 @@ public class Pelimoottori implements Asetukset {
     }
 
     //Tästä alaspäin vain apumetodeja.
-    
     /**
      * Asettaa ufot neljään riviin.
      *
@@ -250,8 +252,7 @@ public class Pelimoottori implements Asetukset {
      * Ohjaa ufokutien toimintaa. SIsältää liikkeen, ampumisen sekä
      * osumatunnistuksen.
      */
-    private void ufonAmmuksetToimintasyklissa(ArrayList ufot, Ufo ufo, Pelaaja pelaaja) {
-        System.out.println("ufon ammussykli");
+    private void ufonAmmuksetToimintasyklissa(UfoKuti ufokuti) {
         Iterator i3 = ufot.iterator();
         Random rng = new Random();
 
@@ -259,7 +260,9 @@ public class Pelimoottori implements Asetukset {
             int ampuu = rng.nextInt(15);
             ufo = (Ufo) i3.next();
             ufokuti = ufo.getUfoKuti();
-            ufoAmpuuJosArpaSuosii(ampuu, ufo, ufokuti);
+            if (!ufokuti.isVisible()) {
+                ufoAmpuuJosArpaSuosii(ampuu, ufo, ufokuti);
+            }
 
             int ufokutiX = ufokuti.getX();
             int ufokutiY = ufokuti.getY();
@@ -269,12 +272,14 @@ public class Pelimoottori implements Asetukset {
 
             if (pelaaja.isVisible() && !ufokuti.kutiTuhoutuu()) {
                 if (pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY)) {
-                    pelaajaTuhoutuuOsumasta(pelaaja, ufokuti);
-                    System.out.println("osumatunnistus");
+                    pelaajaTuhoutuuOsumasta(ufokuti);
+
                 }
             }
-            if (!ufokuti.kutiTuhoutuu()) {
+            if (ufokuti.isVisible()) {
                 ufonAmmusLiikkuu(ufokuti);
+                System.out.println(ufokuti.getX());
+                System.out.println(ufokuti.getY());
             }
         }
     }
@@ -304,13 +309,12 @@ public class Pelimoottori implements Asetukset {
      */
     private void ufoAmpuuJosArpaSuosii(int ampuu, Ufo ufo, UfoKuti ufokuti) {
         this.ufokuti = ufokuti;
+        this.ufo = ufo;
         System.out.println("arpa");
         if (ampuu == UfonAmpumaTodNak && ufo.isVisible() && ufokuti.kutiTuhoutuu()) {
             ufokuti.setKutiTuhoutuu(false);
             ufokuti.setX(ufo.getX());
             ufokuti.setY(ufo.getY());
-            int ufokutiX = ufokuti.getX();
-            int ufokutiY = ufokuti.getY();
         }
     }
 
@@ -374,10 +378,14 @@ public class Pelimoottori implements Asetukset {
      * @return jos tosi, pelaaja tuhoutuu.
      */
     public boolean pelaajanOsumatunnistus(int ufokutiX, int pelaajaX, int ufokutiY, int pelaajaY) {
-        return ufokutiX >= pelaajaX
+        boolean osuma = (ufokutiX >= pelaajaX
                 && ufokutiX <= (pelaajaX + PelaajanLeveys)
                 && ufokutiY >= pelaajaY
-                && ufokutiY <= (pelaajaY + PelaajanKorkeus);
+                && ufokutiY <= (pelaajaY + PelaajanKorkeus));
+        if (osuma) {
+            System.out.println("osumatunnistus");
+        }
+        return osuma;
     }
 
     /**
@@ -385,7 +393,7 @@ public class Pelimoottori implements Asetukset {
      *
      * @param ufokuti
      */
-    private void pelaajaTuhoutuuOsumasta(Pelaaja pelaaja, UfoKuti ufokuti) {
+    private void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
         pelaaja.setImage(grafiikka.getRajahdys().getImage());
         pelaaja.setKuolee(true);
         ufokuti.setKutiTuhoutuu(true);
@@ -415,12 +423,11 @@ public class Pelimoottori implements Asetukset {
      * @param ufo ufo, jota tarkastellaan.
      */
     protected void ufoTuhoutuuOsumasta(Ufo ufo, Kuti kuti) {
+        kuti.die();
         grafiikka.asetaKuvaRajahdykselle();
         ufo.setImage(grafiikka.getRajahdys().getImage());
         ufo.setKuolee(true);
         tuhotut++;
-        kuti.die();
-        System.out.println("ufo kuolee");
     }
 
     /**

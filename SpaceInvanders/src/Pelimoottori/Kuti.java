@@ -15,6 +15,7 @@ public class Kuti extends Objekti {
     private final int keskitysKorkeus = 1;
 
     public Kuti() {
+        super();
         setVisible(false);
     }
 
@@ -25,8 +26,10 @@ public class Kuti extends Objekti {
      * @param keskitysLeveys Ammus lähtee pelaajan aluksen keskeltä
      */
     public Kuti(int x, int y) {
+        super();
         setVisible(true);
-        setX(x + keskitysLeveys);
-        setY(y - keskitysKorkeus);
+        setX (x + keskitysLeveys);
+        setY (y - keskitysKorkeus);
+
     }
 }

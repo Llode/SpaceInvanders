@@ -26,6 +26,11 @@ public class Objekti {
     public Objekti() {
         spriteNakyy = true;
     }
+    public Objekti(int x, int y){
+        spriteNakyy = true;
+        this.x = x;
+        this.y = y;
+    }
 
     /**
      * Objekti katoaa kentältä.

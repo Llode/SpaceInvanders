@@ -41,14 +41,14 @@ public class Pelaaja extends Objekti implements Asetukset {
      * pelaaja liikesuunta muuttuu vasempaan.
      */
     public void pelaajaLiikkuuVasempaan() {
-        liike = -2;
+        liike = -3;
     }
 
     /**
      * Pelaajan liikesuunta muuttuu oikeaan
      */
     public void pelaajaLiikkuuOikeaan() {
-        liike = 2;
+        liike = 3;
     }
 
     /**

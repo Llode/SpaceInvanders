@@ -6,6 +6,8 @@ package Kayttoliittymat;
 
 import Pelimoottori.*;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -20,6 +22,8 @@ public class Grafiikka extends JPanel implements Asetukset {
     Pelaaja pelaaja;
     Ufo ufo;
     Kuti kuti;
+    ArrayList ufot;
+    public Pelimoottori moottori;
     private final String ammus = "ammus.png";
     private final String pelaajakuva = "pelaaja.png";
     private final String UfoKuva = "ufo.png";
@@ -27,6 +31,7 @@ public class Grafiikka extends JPanel implements Asetukset {
     private ImageIcon objektiKuolee;
 
     public Grafiikka(Pelimoottori moottori) {
+        this.moottori = moottori;
     }
 
     /**
@@ -53,8 +58,11 @@ public class Grafiikka extends JPanel implements Asetukset {
      * @param g
      */
     public void piirraKuti(Graphics2D g2d, Kuti kuti) {
+        kuti = moottori.kuti;
         g2d.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this);
         if (g2d.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this)) {
+            System.out.println(kuti.getX());
+            System.out.println(kuti.getY());
             System.out.println("kuti toimii");
         }
     }
@@ -65,9 +73,13 @@ public class Grafiikka extends JPanel implements Asetukset {
      * @param g
      */
     public void piirraUfoKuti(Graphics2D g2d, UfoKuti ufokuti) {
-        g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
-        if (g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this)) {
-            System.out.println("ufokuti toimii");
+        Iterator it = moottori.ufot.iterator();
+        while (it.hasNext()) {
+            ufokuti = moottori.ufokuti;
+            g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
+            if (g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this)) {
+                System.out.println("ufokuti toimii");
+            }
         }
     }
 
@@ -115,38 +127,46 @@ public class Grafiikka extends JPanel implements Asetukset {
     public ImageIcon getRajahdys() {
         return objektiKuolee;
     }
-/**
- * Asettaa imageiconin ufolle.
- * @param ufo
- * @return 
- */
+
+    /**
+     * Asettaa imageiconin ufolle.
+     *
+     * @param ufo
+     * @return
+     */
     public ImageIcon ufoIcon(Ufo ufo) {
         ImageIcon ii = new ImageIcon(UfoKuva);
         return ii;
     }
-/**
- * Asettaa imageiconin pelaajalle.
- * @param pelaaja
- * @return 
- */
+
+    /**
+     * Asettaa imageiconin pelaajalle.
+     *
+     * @param pelaaja
+     * @return
+     */
     public ImageIcon pelaajaIcon(Pelaaja pelaaja) {
         ImageIcon ii = new ImageIcon(pelaajakuva);
         return ii;
     }
-/**
- * Asettaa imageiconin ammuksille.
- * @param kuti
- * @return 
- */
+
+    /**
+     * Asettaa imageiconin ammuksille.
+     *
+     * @param kuti
+     * @return
+     */
     public ImageIcon kutiIcon(Kuti kuti) {
         ImageIcon ii = new ImageIcon(ammus);
         return ii;
     }
-/**
- * Asettaa imageiconin ufojen ammuksille.
- * @param ufokuti
- * @return 
- */
+
+    /**
+     * Asettaa imageiconin ufojen ammuksille.
+     *
+     * @param ufokuti
+     * @return
+     */
     public ImageIcon ufoKutiIcon(UfoKuti ufokuti) {
         ImageIcon ii = new ImageIcon(ammus);
         return ii;
