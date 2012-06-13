@@ -72,14 +72,12 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraUfoKuti(Graphics2D g2d, UfoKuti ufokuti) {
-        Iterator it = moottori.ufot.iterator();
-        while (it.hasNext()) {
-            ufokuti = moottori.ufokuti;
-            g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
-            if (g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this)) {
-                System.out.println("ufokuti toimii");
-            }
+    public void piirraUfoKuti(Graphics2D g2d, Ufo ufo, UfoKuti ufokuti) {
+
+//        ufokuti = moottori.ufo.getUfoKuti();
+        g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
+        if (g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this)) {
+            System.out.println("ufokuti toimii");
         }
     }
 

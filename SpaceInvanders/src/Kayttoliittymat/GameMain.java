@@ -8,6 +8,7 @@ import Pelimoottori.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -105,9 +106,11 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
     private UfoKuti ufokuti;
     private Kuti kuti;
     private String PeliLoppui;
+    private ArrayList ufot;
 
     /**
      * Luo pelialueen.
+     *
      * @param grafiikka Käytettävät grafiikat
      * @param moottori Käytettävä pelimoottori
      */
@@ -131,10 +134,12 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         Graphics2D g2d = (Graphics2D) g;
         super.paintComponent(g2d);
         setBackground(Color.black);
-        if(moottori.ingame) {
+        if (moottori.ingame) {
             gameDraw(g2d);
         }
-        peliLoppuu(g2d);
+        if (!moottori.ingame) {
+            peliLoppuu(g2d);
+        }
     }
 
     @Override
@@ -154,6 +159,7 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
 
     /**
      * Piirtää pelin tapahtumat kentälle.
+     *
      * @param g2d
      */
     private void gameDraw(Graphics2D g2d) {
@@ -169,14 +175,15 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         }
 
         Iterator it = moottori.ufot.iterator();
+        ufot = moottori.ufot;
         while (it.hasNext()) {
             ufo = (Ufo) it.next();
-
+            ufokuti = ufo.getUfoKuti();
             if (ufo.isVisible()) {
                 grafiikka.piirraUfo(g2d, ufo);
             }
-            if (moottori.PiirraUfokuti) {
-                grafiikka.piirraUfoKuti(g2d, ufokuti);
+            if (ufokuti.isVisible()) {
+                grafiikka.piirraUfoKuti(g2d, ufo, ufokuti);
                 System.out.println("ufokuti");
             }
         }
@@ -202,7 +209,7 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
             g.setColor(new Color(0, 32, 48));
             g.fillRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
             g.setColor(Color.green);
-            g.drawRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
+            g.drawRect(50, (RuudunLeveys / 2 - 30), (RuudunLeveys - 100), 50);
 
             Font small = new Font("Comic sans", Font.BOLD, 14);
             FontMetrics metr = this.getFontMetrics(small);

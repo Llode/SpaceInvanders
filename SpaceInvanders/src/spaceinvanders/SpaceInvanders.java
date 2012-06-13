@@ -19,20 +19,7 @@ public class SpaceInvanders extends JFrame implements Asetukset {
     /**
      * Peli-ikkunan asetukset.
      */
-//    Pelimoottori moottori = new Pelimoottori();
-//
-//    public SpaceInvanders() {
-//        GameCanvas canvas = new GameCanvas(moottori);
-//        canvas.(moottori);
-//        canvas.setPreferredSize(new Dimension(RuudunLeveys, RuudunKorkeus));
-//        this.setContentPane(canvas);
-//        setTitle("Space Invanders");
-//        setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        this.pack();
-//        setLocationRelativeTo(null);
-//        setVisible(true);
-//        setResizable(false);
-//    }
+
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(new Runnable() {
