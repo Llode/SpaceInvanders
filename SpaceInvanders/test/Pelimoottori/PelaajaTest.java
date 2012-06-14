@@ -36,7 +36,6 @@ public class PelaajaTest {
     public void setUp() {
         pelaaja = new Pelaaja();
         kuti = new Kuti();
-
     }
 
     @After

@@ -116,7 +116,6 @@ public class PelimoottoriTest {
 
         assertTrue(kuti.isVisible());
         moottori.pelaajanAmmusLiikkuu(kuti);
-//        assertEquals(4, kuti.getY(), vertailutarkkuus);
         assertFalse(kuti.isVisible());
     }
 

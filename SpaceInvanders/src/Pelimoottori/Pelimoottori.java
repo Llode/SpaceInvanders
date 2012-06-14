@@ -148,13 +148,16 @@ public class Pelimoottori implements Asetukset {
             ufonAmmuksetToimintasyklissa();
         }
     }
-/**
- * Huolehtii osumatunnistuksesta ja ufojen tuhotumisesta. Toimintametodien siistimiseksi.
- * @param it ufot-listaa läpikäyvä iteraattori
- * @param kuti tutkittava ammus
- * @param kutiX kudin koordinaatit
- * @param kutiY kudin koordinaatit
- */
+
+    /**
+     * Huolehtii osumatunnistuksesta ja ufojen tuhotumisesta. Toimintametodien
+     * siistimiseksi.
+     *
+     * @param it ufot-listaa läpikäyvä iteraattori
+     * @param kuti tutkittava ammus
+     * @param kutiX kudin koordinaatit
+     * @param kutiY kudin koordinaatit
+     */
     private void pelaajanAmmustenOsumatunnistusKokonaisuus(Iterator it, Kuti kuti, int kutiX, int kutiY) {
         while (it.hasNext()) {
             ufo = (Ufo) it.next();
@@ -204,10 +207,10 @@ public class Pelimoottori implements Asetukset {
     private void ufotLiikkuvatAlaspain() {
         Iterator it = ufot.iterator();
         while (it.hasNext()) {
-            Ufo ufo1 = (Ufo) it.next();
-            int x = ufo1.getX();
-            ufotAlemmasOikeassaReunassa(x);
-            ufotAlemmasVasReunassa(x);
+            Ufo ufo = (Ufo) it.next();
+            int x = ufo.getX();
+            ufotAlemmasOikeassaReunassa(ufo, x);
+            ufotAlemmasVasReunassa(ufo, x);
         }
     }
 
@@ -217,7 +220,7 @@ public class Pelimoottori implements Asetukset {
     private void peliLoppuuUfojenTuhoamiseen() {
         if (tuhotut == Ufolkm) {
             ingame = false;
-            Loppusanat = "Voitit pelin!";
+            Loppusanat = "STEVE HOLT!";
         }
     }
 
@@ -296,10 +299,13 @@ public class Pelimoottori implements Asetukset {
             ufoKutiPiirretaanJosNakyvissa(ufokuti);
         }
     }
-/**
- * Sisältää ufojen ampumismetodin sekä ammusten ja pelaajan osumatunnistusmetodit.
- * @param ampuu Satunnainen luku, jolla arvotaan ufojen ampumat pommit.
- */
+
+    /**
+     * Sisältää ufojen ampumismetodin sekä ammusten ja pelaajan
+     * osumatunnistusmetodit.
+     *
+     * @param ampuu Satunnainen luku, jolla arvotaan ufojen ampumat pommit.
+     */
     private void ufonAmpuminenJaOsumatunnistus(int ampuu) {
         ufoAmpuuJosArpaSuosii(ampuu, ufo, ufokuti);
 
@@ -356,7 +362,6 @@ public class Pelimoottori implements Asetukset {
         pelaaja.setImage(grafiikka.getRajahdys().getImage());
         pelaaja.setKuolee(true);
         ufokuti.setDestroyed(true);
-        System.out.println("pelaaja kuolee");
         peliLoppuuPelaajanKuollessa();
     }
 
@@ -395,13 +400,15 @@ public class Pelimoottori implements Asetukset {
      *
      * @param x Ufojen koordinaatti
      */
-    private void ufotAlemmasVasReunassa(int x) {
-        if (x <= RuudunVasenReuna && suunta != 1) {
-            suunta = 1;
-            Iterator i2 = ufot.iterator();
-            while (i2.hasNext()) {
-                ufo = (Ufo) i2.next();
-                ufo.setY(ufo.getY() + UfotLiikkuvatRivinALas);
+    private void ufotAlemmasVasReunassa(Ufo ufo, int x) {
+        if (ufo.isVisible()) {
+            if (x <= RuudunVasenReuna && suunta != 1) {
+                suunta = 1;
+                Iterator i2 = ufot.iterator();
+                while (i2.hasNext()) {
+                    ufo = (Ufo) i2.next();
+                    ufo.setY(ufo.getY() + UfotLiikkuvatRivinALas);
+                }
             }
         }
     }
@@ -411,13 +418,15 @@ public class Pelimoottori implements Asetukset {
      *
      * @param x Ufojen koordinaatti
      */
-    private void ufotAlemmasOikeassaReunassa(int x) {
-        if (x >= RuudunLeveys - RuudunOikeaReuna && suunta != -1) {
-            suunta = -1;
-            Iterator i1 = ufot.iterator();
-            while (i1.hasNext()) {
-                Ufo ufo2 = (Ufo) i1.next();
-                ufo2.setY(ufo2.getY() + UfotLiikkuvatRivinALas);
+    private void ufotAlemmasOikeassaReunassa(Ufo ufo, int x) {
+        if (ufo.isVisible()) {
+            if (x >= RuudunLeveys - RuudunOikeaReuna && suunta != -1) {
+                suunta = -1;
+                Iterator i1 = ufot.iterator();
+                while (i1.hasNext()) {
+                    Ufo ufo2 = (Ufo) i1.next();
+                    ufo2.setY(ufo2.getY() + UfotLiikkuvatRivinALas);
+                }
             }
         }
     }

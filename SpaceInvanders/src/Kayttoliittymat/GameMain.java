@@ -220,7 +220,6 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
      * Piirtää game over -ruudun.
      */
     public void peliLoppuu() {
-        System.out.println("GAME OVER");
         PeliLoppui = this.moottori.Loppusanat;
         Graphics g = this.getGraphics();
 

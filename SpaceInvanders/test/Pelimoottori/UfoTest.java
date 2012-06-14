@@ -40,8 +40,6 @@ public class UfoTest {
     public void setUp() {
         ufokuti = new UfoKuti();
         ufo = new Ufo(50, 50);
-        
-
     }
     
     @After
@@ -63,5 +61,4 @@ public class UfoTest {
        ufo.getUfoKuti();
        assertTrue(ufokuti.isVisible());
     }
-
 }

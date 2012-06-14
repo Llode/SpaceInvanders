@@ -23,8 +23,6 @@ public class SpaceInvanders extends JFrame implements Asetukset {
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(new Runnable() {
-
-
             @Override
             public void run() {
                 GameMain gameMain = new GameMain();
