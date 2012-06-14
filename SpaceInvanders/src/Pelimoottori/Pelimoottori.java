@@ -21,7 +21,6 @@ public class Pelimoottori implements Asetukset {
     public Ufo ufo;
     public UfoKuti ufokuti;
     public ArrayList ufot;
-    public ArrayList kudit;
     private int ufoX;
     private int ufoY;
     private int suunta;
@@ -55,7 +54,6 @@ public class Pelimoottori implements Asetukset {
      */
     public void GameInit() {
         ufot = new ArrayList();
-        kudit = new ArrayList();
         kuti = new Kuti();
         pelaaja = new Pelaaja();
         ufokuti = new UfoKuti();
@@ -129,6 +127,7 @@ public class Pelimoottori implements Asetukset {
             ufo = (Ufo) i3.next();
             ufokuti = ufo.getUfoKuti();
             ufokuti.setDestroyed(true);
+            ufokuti.setVisible(false);
         }
     }
 
@@ -141,23 +140,38 @@ public class Pelimoottori implements Asetukset {
             ufotKentalle();
             ammusKentalle();
 
-            //Pelaaja
             pelaaja.pelaajaLiikkuu();
             pelaajanAmmuksetToimintaSyklissa(kuti);
 
-            //Ufot
-            Iterator it = ufot.iterator();
-            ufotLiikkuvatKentalla(it);
-            it = ufot.iterator();
-            maaliviivaTarkastus(it);
+            ufotLiikkuvatAlaspain();
+            ufotLiikkuvatVaakatasossa();
             ufonAmmuksetToimintasyklissa();
         }
     }
 
-    private void maaliviivaTarkastus(Iterator it) {
+    /**
+     * Liikuttaa ufoja vaakatasossa sekä valvoo Maaliviivan ylittämistä.
+     */
+    private void ufotLiikkuvatVaakatasossa() {
+        Iterator it = ufot.iterator();
         while (it.hasNext()) {
             ufo = (Ufo) it.next();
             ufotSaavuttavatMaan(ufo);
+            ufo.ufoLiikkuu(suunta);
+        }
+    }
+
+    /**
+     * Peli hävitään, mikäli ufot pääsevät laskeutumaan liian alas.
+     *
+     * @param ufo
+     */
+    protected void ufotSaavuttavatMaan(Ufo ufo) {
+        if (ufo.isVisible()) {
+            if (ufo.getY() > UfojenMaaliViiva - UfonKorkeus) {
+                ingame = false;
+                Loppusanat = "Ufot ovat valloittaneet maailman!";
+            }
         }
     }
 
@@ -167,9 +181,10 @@ public class Pelimoottori implements Asetukset {
      *
      * @param it1
      */
-    private void ufotLiikkuvatKentalla(Iterator it1) {
-        while (it1.hasNext()) {
-            Ufo ufo1 = (Ufo) it1.next();
+    private void ufotLiikkuvatAlaspain() {
+        Iterator it = ufot.iterator();
+        while (it.hasNext()) {
+            Ufo ufo1 = (Ufo) it.next();
             int x = ufo1.getX();
             ufotAlemmasOikeassaReunassa(x);
             ufotAlemmasVasReunassa(x);
@@ -263,30 +278,33 @@ public class Pelimoottori implements Asetukset {
         Random rng = new Random();
 
         while (i3.hasNext()) {
-            int ampuu = rng.nextInt(15);
+            int ampuu = rng.nextInt(750);
             ufo = (Ufo) i3.next();
             ufokuti = ufo.getUfoKuti();
             grafiikka.asetaKuvaUfoKudille(grafiikka.ufoKutiIcon(ufokuti), ufokuti);
-            ufoAmpuuJosArpaSuosii(ampuu, ufo, ufokuti);
+            ufonAmpuminenJaOsumatunnistus(ampuu);
+            ufonAmmusLiikkuu(ufokuti);
+            ufoKutiPiirretaanJosNakyvissa(ufokuti);
+        }
+    }
+/**
+ * Sisältää ufojen ampumismetodin sekä ammusten ja pelaajan osumatunnistusmetodit.
+ * @param ampuu Satunnainen luku, jolla arvotaan ufojen ampumat pommit.
+ */
+    private void ufonAmpuminenJaOsumatunnistus(int ampuu) {
+        ufoAmpuuJosArpaSuosii(ampuu, ufo, ufokuti);
 
-//            Iterator i4 = kudit.iterator();
-//            while (i4.hasNext()) {
-//                ufokuti = (UfoKuti) i4.next();
-                int ufokutiX = ufokuti.getX();
-                int ufokutiY = ufokuti.getY();
-                int pelaajaX = pelaaja.getX();
-                int pelaajaY = pelaaja.getY();
+        int ufokutiX = ufokuti.getX();
+        int ufokutiY = ufokuti.getY();
+        int pelaajaX = pelaaja.getX();
+        int pelaajaY = pelaaja.getY();
 
-                if (pelaaja.isVisible() && !ufokuti.isDestroyed()) {
-                    if (pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY)) {
-                        pelaajaTuhoutuuOsumasta(ufokuti);
-                    }
-                }
-                ufonAmmusLiikkuu(ufokuti);
-                ufoKutiPiirretaanJosNakyvissa(ufokuti);
+        if (pelaaja.isVisible() && !ufokuti.isDestroyed()) {
+            if (pelaajanOsumatunnistus(ufokutiX, pelaajaX, ufokutiY, pelaajaY)) {
+                pelaajaTuhoutuuOsumasta(ufokuti);
             }
         }
-//    }
+    }
 
     /**
      * Ufot ampuvat, mikäli todennäköisyydet osuvat kohdalleen.
@@ -299,9 +317,9 @@ public class Pelimoottori implements Asetukset {
         if (ampuu == UfonAmpumaTodNak && ufo.isVisible() && ufokuti.isDestroyed()) {
             ufokuti.setDestroyed(false);
             ufokuti.setVisible(true);
-//            ufokuti.setX(ufo.getX());
-//            ufokuti.setY(ufo.getY());
-            kudit.add(ufokuti);
+            ufokuti.setX(ufo.getX());
+            ufokuti.setY(ufo.getY());
+//            kudit.add(ufokuti);
             System.out.println("arpa");
         }
     }
@@ -316,22 +334,21 @@ public class Pelimoottori implements Asetukset {
      * @return jos tosi, pelaaja tuhoutuu.
      */
     protected boolean pelaajanOsumatunnistus(int ufokutiX, int pelaajaX, int ufokutiY, int pelaajaY) {
-        boolean osuma = (ufokutiX >= pelaajaX
+        return (ufokutiX >= pelaajaX
                 && ufokutiX <= (pelaajaX + PelaajanLeveys)
                 && ufokutiY >= pelaajaY
                 && ufokutiY <= (pelaajaY + PelaajanKorkeus));
-        return osuma;
     }
 
     /**
      * Pelaajan alus tuhoutuu, kun ufojen ammukset osuvat siihen.
      *
-     * @param ufokuti
+     * @param ufo
      */
     private void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
         pelaaja.setImage(grafiikka.getRajahdys().getImage());
         pelaaja.setKuolee(true);
-        ufo.ufokuti.setDestroyed(true);
+        ufokuti.setDestroyed(true);
         System.out.println("pelaaja kuolee");
         peliLoppuuPelaajanKuollessa();
     }
@@ -343,9 +360,10 @@ public class Pelimoottori implements Asetukset {
      */
     protected void ufonAmmusLiikkuu(UfoKuti ufokuti) {
         if (!ufokuti.isDestroyed()) {
-            ufokuti.setY(ufokuti.getX() + 1);
-            if (ufokuti.getY() >= RuudunKorkeus) {
+            ufokuti.setY(ufokuti.getY() + 1);
+            if (ufokuti.getY() >= 450) {
                 ufo.ufokuti.setDestroyed(true);
+                ufo.ufokuti.setVisible(false);
             }
         }
     }
@@ -362,23 +380,6 @@ public class Pelimoottori implements Asetukset {
         } else {
             ufokuti.setVisible(false);
             PiirraUfokuti = false;
-        }
-    }
-
-    /**
-     * Peli hävitään, mikäli ufot pääsevät laskeutumaan liian alas.
-     *
-     * @param ufo
-     */
-    protected void ufotSaavuttavatMaan(Ufo ufo) {
-        if (ufo.isVisible()) {
-            int y = ufo.getY();
-
-            if (y > UfojenMaaliViiva - UfonKorkeus) {
-                ingame = false;
-                Loppusanat = "Ufot ovat valloittaneet maailman!";
-            }
-            ufo.ufoLiikkuu(suunta);
         }
     }
 

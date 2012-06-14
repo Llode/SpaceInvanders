@@ -147,4 +147,16 @@ public class PelimoottoriTest {
         assertTrue(pelaaja.Kuoleeko());
         assertFalse(moottori.ingame);
     }
+    @Test
+    public void UfokutiLiikkuu(){
+        ufokuti = ufo.getUfoKuti();
+        assertEquals(ufo.getX(), ufokuti.getX(), vertailutarkkuus);
+        assertEquals(ufo.getY(), ufokuti.getY(), vertailutarkkuus);
+        moottori.ufonAmmusLiikkuu(ufokuti);
+        assertEquals(ufo.getY()+1, ufokuti.getY(), vertailutarkkuus);
+    }
+    @Test
+    public void PelaajaTUhoutuuOsumasta(){
+        
+    }
 }

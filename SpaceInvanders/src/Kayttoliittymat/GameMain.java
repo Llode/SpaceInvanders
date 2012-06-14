@@ -70,7 +70,7 @@ public class GameMain extends JFrame implements Asetukset {
         while (moottori.ingame) {
             repaint();
             moottori.toiminta();
-            
+
             timeDiff = (System.currentTimeMillis() - beforeTime);
             sleep = Delay - timeDiff;
 
@@ -162,21 +162,20 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
      */
     private void gameDraw(Graphics2D g2d) {
         g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
-        Iterator it = ufot.iterator();
         kutiPiirretaan(g2d);
         pelaajaPiirretaan(g2d);
-        ufoPiirretaan(it, g2d);
-        it = ufot.iterator();
-        ufokuditPiirretaan(it, g2d);
+        ufoPiirretaan(g2d);
+        ufokuditPiirretaan(g2d);
 
         Toolkit.getDefaultToolkit().sync();
         g2d.dispose();
     }
 
-    private void ufokuditPiirretaan(Iterator it, Graphics2D g2d) {
+    private void ufokuditPiirretaan(Graphics2D g2d) {
+        Iterator it = ufot.iterator();
         while (it.hasNext()) {
             iteraattoriOliot(it);
-            if (moottori.PiirraUfokuti) {
+            if (!ufokuti.isDestroyed()) {
                 grafiikka.piirraUfoKuti(g2d, ufokuti);
             }
         }
@@ -187,7 +186,8 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         ufokuti = ufo.getUfoKuti();
     }
 
-    private void ufoPiirretaan(Iterator it, Graphics2D g2d) {
+    private void ufoPiirretaan(Graphics2D g2d) {
+        Iterator it = ufot.iterator();
         while (it.hasNext()) {
             iteraattoriOliot(it);
             if (ufo.isVisible()) {
@@ -221,9 +221,9 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
 
         g.setColor(new Color(0, 32, 48));
-        g.fillRect(50, (RuudunLeveys/2) - 30, RuudunLeveys - 100, 50);
+        g.fillRect(50, (RuudunLeveys / 2) - 30, RuudunLeveys - 100, 50);
         g.setColor(Color.green);
-        g.drawRect(50, (RuudunLeveys/2) - 30, (RuudunLeveys - 100), 50);
+        g.drawRect(50, (RuudunLeveys / 2) - 30, (RuudunLeveys - 100), 50);
 
         Font small = new Font("Comic sans", Font.BOLD, 14);
         FontMetrics metr = this.getFontMetrics(small);
