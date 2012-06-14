@@ -60,11 +60,6 @@ public class Grafiikka extends JPanel implements Asetukset {
     public void piirraKuti(Graphics2D g2d, Kuti kuti) {
         kuti = moottori.kuti;
         g2d.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this);
-        if (g2d.drawImage(kuti.getImage(), kuti.getX(), kuti.getY(), this)) {
-            System.out.println(kuti.getX());
-            System.out.println(kuti.getY());
-            System.out.println("kuti toimii");
-        }
     }
 
     /**
@@ -72,13 +67,8 @@ public class Grafiikka extends JPanel implements Asetukset {
      *
      * @param g
      */
-    public void piirraUfoKuti(Graphics2D g2d, Ufo ufo, UfoKuti ufokuti) {
-
-//        ufokuti = moottori.ufo.getUfoKuti();
+    public void piirraUfoKuti(Graphics2D g2d, UfoKuti ufokuti) {
         g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this);
-        if (g2d.drawImage(ufokuti.getImage(), ufokuti.getX(), ufokuti.getY(), this)) {
-            System.out.println("ufokuti toimii");
-        }
     }
 
     /**

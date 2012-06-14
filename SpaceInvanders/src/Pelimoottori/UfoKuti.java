@@ -11,7 +11,7 @@ package Pelimoottori;
  */
 public class UfoKuti extends Objekti {
 
-    private boolean tuhoutuu;
+    private boolean destroyed;
 
     public UfoKuti(){
         
@@ -31,14 +31,14 @@ public class UfoKuti extends Objekti {
      * Ammuttu ammus tuhoutuu, kun se osuu johonkin. Käytetään
      * osumantunnistukseen.
      */
-    public void setKutiTuhoutuu(boolean tuhoutuu) {
-        this.tuhoutuu = tuhoutuu;
+    public void setDestroyed(boolean tuhoutuu) {
+        this.destroyed = tuhoutuu;
     }
 
     /**
      * Kertoo, onko ammus tuhoutunut.
      */
-    public boolean kutiTuhoutuu() {
-        return tuhoutuu;
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }

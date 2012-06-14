@@ -50,7 +50,7 @@ public class UfoKutiTest {
     }
     @Test
     public void UfokutiTuhoutuu(){
-        ufokuti.setKutiTuhoutuu(true);
-        assertTrue(ufokuti.kutiTuhoutuu());
+        ufokuti.setDestroyed(true);
+        assertTrue(ufokuti.isDestroyed());
     }
 }

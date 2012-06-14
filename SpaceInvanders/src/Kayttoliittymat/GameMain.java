@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -42,7 +41,6 @@ public class GameMain extends JFrame implements Asetukset {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        canvas.add(new JLabel(grafiikka.ufoIcon(moottori.ufo)));
         gameStart();
     }
 
@@ -54,8 +52,7 @@ public class GameMain extends JFrame implements Asetukset {
 
             @Override
             public void run() {
-                //loop
-                gameLoop();
+                gameLoop(moottori);
             }
         };
         gameThread.start();
@@ -64,16 +61,16 @@ public class GameMain extends JFrame implements Asetukset {
     /**
      * Pelin logiikan suoritusjärjestys.
      */
-    private void gameLoop() {
+    private void gameLoop(Pelimoottori moottori) {
 
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
 
         while (moottori.ingame) {
-            moottori.toiminta();
             repaint();
-
+            moottori.toiminta();
+            
             timeDiff = (System.currentTimeMillis() - beforeTime);
             sleep = Delay - timeDiff;
 
@@ -124,6 +121,7 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         kuti = this.moottori.kuti;
         pelaaja = this.moottori.pelaaja;
         ufokuti = this.moottori.ufokuti;
+        ufot = this.moottori.ufot;
         addKeyListener(new TAdapter(moottori));
 
 
@@ -164,32 +162,50 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
      */
     private void gameDraw(Graphics2D g2d) {
         g2d.drawLine(0, UfojenMaaliViiva, RuudunLeveys, UfojenMaaliViiva);
-
-        if (moottori.PiirraKuti) {
-            grafiikka.piirraKuti(g2d, kuti);
-            System.out.println("kuti");
-        }
-
-        if (moottori.pelaaja.isVisible()) {
-            grafiikka.piirraPelaaja(g2d, pelaaja);
-        }
-
-        Iterator it = moottori.ufot.iterator();
-        ufot = moottori.ufot;
-        while (it.hasNext()) {
-            ufo = (Ufo) it.next();
-            ufokuti = ufo.getUfoKuti();
-            if (ufo.isVisible()) {
-                grafiikka.piirraUfo(g2d, ufo);
-            }
-            if (ufokuti.isVisible()) {
-                grafiikka.piirraUfoKuti(g2d, ufo, ufokuti);
-                System.out.println("ufokuti");
-            }
-        }
+        Iterator it = ufot.iterator();
+        kutiPiirretaan(g2d);
+        pelaajaPiirretaan(g2d);
+        ufoPiirretaan(it, g2d);
+        it = ufot.iterator();
+        ufokuditPiirretaan(it, g2d);
 
         Toolkit.getDefaultToolkit().sync();
         g2d.dispose();
+    }
+
+    private void ufokuditPiirretaan(Iterator it, Graphics2D g2d) {
+        while (it.hasNext()) {
+            iteraattoriOliot(it);
+            if (moottori.PiirraUfokuti) {
+                grafiikka.piirraUfoKuti(g2d, ufokuti);
+            }
+        }
+    }
+
+    private void iteraattoriOliot(Iterator it) {
+        ufo = (Ufo) it.next();
+        ufokuti = ufo.getUfoKuti();
+    }
+
+    private void ufoPiirretaan(Iterator it, Graphics2D g2d) {
+        while (it.hasNext()) {
+            iteraattoriOliot(it);
+            if (ufo.isVisible()) {
+                grafiikka.piirraUfo(g2d, ufo);
+            }
+        }
+    }
+
+    private void pelaajaPiirretaan(Graphics2D g2d) {
+        if (moottori.pelaaja.isVisible()) {
+            grafiikka.piirraPelaaja(g2d, pelaaja);
+        }
+    }
+
+    private void kutiPiirretaan(Graphics2D g2d) {
+        if (moottori.PiirraKuti) {
+            grafiikka.piirraKuti(g2d, kuti);
+        }
     }
 
     /**
@@ -197,26 +213,23 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
      */
     public void peliLoppuu(Graphics g) {
 
-        if (!this.moottori.ingame) {
-            System.out.println("GAME OVER");
-            PeliLoppui = this.moottori.Loppusanat;
-            g = this.getGraphics();
+        System.out.println("GAME OVER");
+        PeliLoppui = this.moottori.Loppusanat;
+        g = this.getGraphics();
 
-            System.out.println("lol");
-            g.setColor(Color.green);
-            g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
+        g.setColor(Color.green);
+        g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
 
-            g.setColor(new Color(0, 32, 48));
-            g.fillRect(50, RuudunLeveys / 2 - 30, RuudunLeveys - 100, 50);
-            g.setColor(Color.green);
-            g.drawRect(50, (RuudunLeveys / 2 - 30), (RuudunLeveys - 100), 50);
+        g.setColor(new Color(0, 32, 48));
+        g.fillRect(50, (RuudunLeveys/2) - 30, RuudunLeveys - 100, 50);
+        g.setColor(Color.green);
+        g.drawRect(50, (RuudunLeveys/2) - 30, (RuudunLeveys - 100), 50);
 
-            Font small = new Font("Comic sans", Font.BOLD, 14);
-            FontMetrics metr = this.getFontMetrics(small);
+        Font small = new Font("Comic sans", Font.BOLD, 14);
+        FontMetrics metr = this.getFontMetrics(small);
 
-            g.setColor(Color.red);
-            g.setFont(small);
-            g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
-        }
+        g.setColor(Color.red);
+        g.setFont(small);
+        g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
     }
 }
