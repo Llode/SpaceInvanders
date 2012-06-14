@@ -148,6 +148,26 @@ public class Pelimoottori implements Asetukset {
             ufonAmmuksetToimintasyklissa();
         }
     }
+/**
+ * Huolehtii osumatunnistuksesta ja ufojen tuhotumisesta. Toimintametodien siistimiseksi.
+ * @param it ufot-listaa läpikäyvä iteraattori
+ * @param kuti tutkittava ammus
+ * @param kutiX kudin koordinaatit
+ * @param kutiY kudin koordinaatit
+ */
+    private void pelaajanAmmustenOsumatunnistusKokonaisuus(Iterator it, Kuti kuti, int kutiX, int kutiY) {
+        while (it.hasNext()) {
+            ufo = (Ufo) it.next();
+            int ufox = ufo.getX();
+            int ufoy = ufo.getY();
+
+            if (ufo.isVisible() && kuti.isVisible()) {
+                if (ufonOsumaTunnistus(kutiX, ufox, kutiY, ufoy)) {
+                    ufoTuhoutuuOsumasta(ufo, kuti);
+                }
+            }
+        }
+    }
 
     /**
      * Liikuttaa ufoja vaakatasossa sekä valvoo Maaliviivan ylittämistä.
@@ -209,18 +229,7 @@ public class Pelimoottori implements Asetukset {
             Iterator it = ufot.iterator();
             int kutiX = kuti.getX();
             int kutiY = kuti.getY();
-
-            while (it.hasNext()) {
-                ufo = (Ufo) it.next();
-                int ufox = ufo.getX();
-                int ufoy = ufo.getY();
-
-                if (ufo.isVisible() && kuti.isVisible()) {
-                    if (ufonOsumaTunnistus(kutiX, ufox, kutiY, ufoy)) {
-                        ufoTuhoutuuOsumasta(ufo, kuti);
-                    }
-                }
-            }
+            pelaajanAmmustenOsumatunnistusKokonaisuus(it, kuti, kutiX, kutiY);
             pelaajanAmmusLiikkuu(kuti);
         }
     }
@@ -319,8 +328,6 @@ public class Pelimoottori implements Asetukset {
             ufokuti.setVisible(true);
             ufokuti.setX(ufo.getX());
             ufokuti.setY(ufo.getY());
-//            kudit.add(ufokuti);
-            System.out.println("arpa");
         }
     }
 
@@ -343,7 +350,7 @@ public class Pelimoottori implements Asetukset {
     /**
      * Pelaajan alus tuhoutuu, kun ufojen ammukset osuvat siihen.
      *
-     * @param ufo
+     * @param ufokuti pelaajaan osunut ammnus
      */
     private void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
         pelaaja.setImage(grafiikka.getRajahdys().getImage());
@@ -431,7 +438,7 @@ public class Pelimoottori implements Asetukset {
     /**
      * ufo.setKuolee() johtaa ufon katoamiseen kentältä.
      *
-     * @param ufo
+     * @param ufo tuhoutuva ufo.
      */
     protected void ufoKatoaaKuollessaan(Ufo ufo) {
         if (ufo.Kuoleeko()) {

@@ -31,7 +31,6 @@ public class GameMain extends JFrame implements Asetukset {
         moottori = new Pelimoottori();
         grafiikka = new Grafiikka(moottori);
         moottori.GameInit();
-
         canvas = new GameCanvas(grafiikka, moottori);
         canvas.setPreferredSize(new Dimension(RuudunLeveys, RuudunKorkeus));
         this.setContentPane(canvas);
@@ -64,7 +63,6 @@ public class GameMain extends JFrame implements Asetukset {
     private void gameLoop(Pelimoottori moottori) {
 
         long beforeTime, timeDiff, sleep;
-
         beforeTime = System.currentTimeMillis();
 
         while (moottori.ingame) {
@@ -84,8 +82,7 @@ public class GameMain extends JFrame implements Asetukset {
             }
             beforeTime = System.currentTimeMillis();
         }
-
-//        repaint();
+        canvas.peliLoppuu();
     }
 }
 
@@ -135,9 +132,6 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         if (moottori.ingame) {
             gameDraw(g2d);
         }
-        if (!moottori.ingame) {
-            peliLoppuu(g2d);
-        }
     }
 
     @Override
@@ -156,8 +150,7 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
     }
 
     /**
-     * Piirtää pelin tapahtumat kentälle.
-     *
+     * Piirtää pelin tapahtumat kentälle kutsumalla objektien piirtometodeja.
      * @param g2d
      */
     private void gameDraw(Graphics2D g2d) {
@@ -170,7 +163,10 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         Toolkit.getDefaultToolkit().sync();
         g2d.dispose();
     }
-
+/**
+ * Piirtää ufokudit kentälle.
+ * @param g2d 
+ */
     private void ufokuditPiirretaan(Graphics2D g2d) {
         Iterator it = ufot.iterator();
         while (it.hasNext()) {
@@ -180,12 +176,18 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
             }
         }
     }
-
+/**
+ * Ufokutien läpikäymiseen tarkoitetut oliot.
+ * @param it ufot-ArrayListiä läpikäyvä iteraattori.
+ */
     private void iteraattoriOliot(Iterator it) {
         ufo = (Ufo) it.next();
         ufokuti = ufo.getUfoKuti();
     }
-
+/**
+ * Piirtää ufot kentälle.
+ * @param g2d 
+ */
     private void ufoPiirretaan(Graphics2D g2d) {
         Iterator it = ufot.iterator();
         while (it.hasNext()) {
@@ -195,13 +197,19 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
             }
         }
     }
-
+/**
+ * Piirtää pelaajan kenätlle.
+ * @param g2d 
+ */
     private void pelaajaPiirretaan(Graphics2D g2d) {
         if (moottori.pelaaja.isVisible()) {
             grafiikka.piirraPelaaja(g2d, pelaaja);
         }
     }
-
+/**
+ * Piirtää pelaajan ammukset kentälle.
+ * @param g2d 
+ */
     private void kutiPiirretaan(Graphics2D g2d) {
         if (moottori.PiirraKuti) {
             grafiikka.piirraKuti(g2d, kuti);
@@ -211,11 +219,10 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
     /**
      * Piirtää game over -ruudun.
      */
-    public void peliLoppuu(Graphics g) {
-
+    public void peliLoppuu() {
         System.out.println("GAME OVER");
         PeliLoppui = this.moottori.Loppusanat;
-        g = this.getGraphics();
+        Graphics g = this.getGraphics();
 
         g.setColor(Color.green);
         g.fillRect(0, 0, RuudunLeveys, RuudunKorkeus);
@@ -231,5 +238,6 @@ class GameCanvas extends JPanel implements Asetukset, KeyListener {
         g.setColor(Color.red);
         g.setFont(small);
         g.drawString(PeliLoppui, (RuudunLeveys - metr.stringWidth(PeliLoppui)) / 2, RuudunLeveys / 2);
+        g.dispose();
     }
 }
