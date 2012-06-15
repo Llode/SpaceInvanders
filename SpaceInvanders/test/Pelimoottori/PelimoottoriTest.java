@@ -127,35 +127,47 @@ public class PelimoottoriTest {
     }
 
     @Test
-    public void ToimintaSykliTOimii() {
+    public void UfojenTuhoaminenLopettaaPelin() {
         assertTrue(moottori.ingame);
         moottori.tuhotut = 40;
         moottori.toiminta();
         assertFalse(moottori.ingame);
-        
-        moottori.ingame = true;
+    }
+
+    @Test
+    public void ToimintasykliToimii2() {
+        moottori.ufo.ufokuti = new UfoKuti(255, 399);
+        pelaaja = moottori.pelaaja;
+        ufokuti = moottori.ufo.ufokuti;
         moottori.toiminta();
-        pelaaja.setKuolee(true);
-        assertFalse(moottori.ingame);
-        
-        moottori.ingame = true;
-        ufokuti = new UfoKuti(11, 11);
-        pelaaja.setX(10);
-        pelaaja.setY(10);
+        assertEquals(400, ufokuti.getY(), vertailutarkkuus);
         moottori.toiminta();
-        assertTrue(pelaaja.Kuoleeko());
         assertFalse(moottori.ingame);
     }
+
     @Test
-    public void UfokutiLiikkuu(){
+    public void UfokutiLiikkuu() {
         ufokuti = ufo.getUfoKuti();
         assertEquals(ufo.getX(), ufokuti.getX(), vertailutarkkuus);
         assertEquals(ufo.getY(), ufokuti.getY(), vertailutarkkuus);
         moottori.ufonAmmusLiikkuu(ufokuti);
-        assertEquals(ufo.getY()+1, ufokuti.getY(), vertailutarkkuus);
+        assertEquals(ufo.getY() + 1, ufokuti.getY(), vertailutarkkuus);
     }
+
     @Test
-    public void PelaajaTUhoutuuOsumasta(){
-        
+    public void AmpuminenToimii() {
+        kuti.setVisible(false);
+        moottori.pelaajaAmpuu(pelaaja, kuti);
+        kuti = moottori.kuti;
+        assertEquals(pelaaja.getX() + 15, kuti.getX(), vertailutarkkuus);
+        moottori.toiminta();
+        assertEquals(pelaaja.getY() - 5, kuti.getY(), vertailutarkkuus);
+        moottori.ufo = new Ufo(265, 391);
+        ufo = moottori.ufo;
+        moottori.toiminta();
+        assertEquals(pelaaja.getY() - 9, kuti.getY(), vertailutarkkuus);
+        assertEquals(265, ufo.getX(), vertailutarkkuus);
+        assertEquals(391, ufo.getY(), vertailutarkkuus);
+        assertTrue(moottori.ufonOsumaTunnistus(kuti.getX(), ufo.getX(), kuti.getY(), ufo.getY()));
     }
 }

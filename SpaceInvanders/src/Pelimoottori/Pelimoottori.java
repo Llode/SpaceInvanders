@@ -358,7 +358,7 @@ public class Pelimoottori implements Asetukset {
      *
      * @param ufokuti pelaajaan osunut ammnus
      */
-    private void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
+    protected void pelaajaTuhoutuuOsumasta(UfoKuti ufokuti) {
         pelaaja.setImage(grafiikka.getRajahdys().getImage());
         pelaaja.setKuolee(true);
         ufokuti.setDestroyed(true);
@@ -424,8 +424,8 @@ public class Pelimoottori implements Asetukset {
                 suunta = -1;
                 Iterator i1 = ufot.iterator();
                 while (i1.hasNext()) {
-                    Ufo ufo2 = (Ufo) i1.next();
-                    ufo2.setY(ufo2.getY() + UfotLiikkuvatRivinALas);
+                    ufo = (Ufo) i1.next();
+                    ufo.setY(ufo.getY() + UfotLiikkuvatRivinALas);
                 }
             }
         }
